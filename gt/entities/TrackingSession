@@ -1,0 +1,54 @@
+{
+  "name": "TrackingSession",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Unique session identifier"
+    },
+    "round": {
+      "type": "number",
+      "description": "1 or 2"
+    },
+    "total_time_ms": {
+      "type": "number",
+      "description": "Total time spent browsing in milliseconds"
+    },
+    "scroll_depth_percent": {
+      "type": "number",
+      "description": "Maximum scroll depth percentage"
+    },
+    "articles_data": {
+      "type": "array",
+      "description": "Array of article interaction data",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "hover_time_ms": {
+            "type": "number"
+          },
+          "clicked": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "exposure_score": {
+      "type": "number",
+      "description": "Calculated exposure score"
+    }
+  },
+  "required": [
+    "session_id",
+    "round"
+  ]
+}

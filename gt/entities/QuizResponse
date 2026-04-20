@@ -1,0 +1,48 @@
+{
+  "name": "QuizResponse",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Unique session identifier"
+    },
+    "quiz_type": {
+      "type": "string",
+      "enum": [
+        "pre",
+        "post"
+      ],
+      "description": "Pre or post quiz"
+    },
+    "answers": {
+      "type": "array",
+      "description": "Array of question answers",
+      "items": {
+        "type": "object",
+        "properties": {
+          "question_id": {
+            "type": "number"
+          },
+          "selected_answer": {
+            "type": "number"
+          },
+          "correct": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "score": {
+      "type": "number",
+      "description": "Number of correct answers"
+    },
+    "total_questions": {
+      "type": "number",
+      "description": "Total number of questions"
+    }
+  },
+  "required": [
+    "session_id",
+    "quiz_type"
+  ]
+}
