@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GhostTrace — Browse 1</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbarInner">
+      <div class="row">
+        <span class="pill" data-round-label>Round 1</span>
+        <span class="pill">⏱ <span data-elapsed>0s</span></span>
+        <span class="pill">⬇ Scroll: <span data-scroll>0%</span></span>
+      </div>
+      <button class="btn primary" data-finish>Finish Browsing →</button>
+    </div>
+  </div>
+
+  <div class="container" data-browse>
+    <div class="stack">
+      <div class="row space-between">
+        <div>
+          <div class="h1" style="font-size:28px;margin:0 0 6px;">Daily Digest</div>
+          <div class="muted small">Your personalized news feed</div>
+        </div>
+      </div>
+
+      <div class="newsGrid">
+        <!-- cards (mock). data-card-id needed for hover/click tracking -->
+        <div class="newsCard" data-card-id="c1">
+          <div class="thumb"></div>
+          <div class="newsBody">
+            <span class="tag">Technology</span>
+            <div class="newsTitle">Breakthrough in Quantum Computing</div>
+            <div class="newsDesc">Researchers report a new milestone in stability and scaling…</div>
+            <div class="meta"><span>⏱ 5 min read</span></div>
+          </div>
+        </div>
+
+        <div class="newsCard" data-card-id="c2">
+          <div class="thumb"></div>
+          <div class="newsBody">
+            <span class="tag">Lifestyle</span>
+            <div class="newsTitle">Mindful Technology: Balance Screen Time</div>
+            <div class="newsDesc">Practical strategies for healthier digital habits in 2024…</div>
+            <div class="meta"><span>⏱ 4 min read</span></div>
+          </div>
+        </div>
+
+        <div class="newsCard" data-card-id="c3">
+          <div class="thumb"></div>
+          <div class="newsBody">
+            <span class="tag">Entertainment</span>
+            <div class="newsTitle">Streaming Wars Heat Up</div>
+            <div class="newsDesc">New platforms launch as subscription bundles evolve…</div>
+            <div class="meta"><span>⏱ 3 min read</span></div>
+          </div>
+        </div>
+
+        <div class="newsCard" data-card-id="c4">
+          <div class="thumb"></div>
+          <div class="newsBody">
+            <span class="tag">Sports</span>
+            <div class="newsTitle">College Athletics Embrace Analytics</div>
+            <div class="newsDesc">Teams use data to optimize performance and training…</div>
+            <div class="meta"><span>⏱ 4 min read</span></div>
+          </div>
+        </div>
+
+        <div class="newsCard" data-card-id="c5">
+          <div class="thumb"></div>
+          <div class="newsBody">
+            <span class="tag">Technology</span>
+            <div class="newsTitle">Privacy Concerns Rise in Smart Devices</div>
+            <div class="newsDesc">Security researchers warn about cross-site tracking signals…</div>
+            <div class="meta"><span>⏱ 6 min read</span></div>
+          </div>
+        </div>
+
+        <div class="newsCard" data-card-id="c6">
+          <div class="thumb"></div>
+          <div class="newsBody">
+            <span class="tag">Health</span>
+            <div class="newsTitle">Sleep Science: Optimal Rest Patterns</div>
+            <div class="newsDesc">A new study links sleep timing with performance outcomes…</div>
+            <div class="meta"><span>⏱ 5 min read</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card muted small">
+        Tip: 이 화면은 “시뮬레이션”이야. 나중에 여기 카드/기사/iframe로 교체하면 됨. 핵심은 지금처럼
+        <b>time / scroll / hover / click</b>이벤트가 수집되도록 구조를 잡는 것.
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script>
+    GT.renderStepper("b1");
+    GT.initBrowse(1);
+  </script>
+</body>
+</html>

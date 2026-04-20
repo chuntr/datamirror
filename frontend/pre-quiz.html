@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GhostTrace — Pre Quiz</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="stepper" data-stepper></div>
+
+    <div class="card glow-teal quizBox" data-quiz>
+      <div class="qTop">
+        <div data-q-index>Question 1 of 8</div>
+        <div><span data-q-progress>13% complete</span></div>
+      </div>
+
+      <div class="progressBar" data-qbar><div></div></div>
+
+      <div class="qTitle" data-q-title></div>
+      <div class="stack" data-q-options></div>
+
+      <div class="footerNav">
+        <button class="btn ghost" data-prev>← Previous</button>
+        <button class="btn primary" data-next>Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script>
+    GT.renderStepper("pre");
+    GT.initQuiz("pre");
+  </script>
+</body>
+</html>

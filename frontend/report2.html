@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GhostTrace — Report 2</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="stepper" data-stepper></div>
+
+    <div class="stack">
+      <div style="text-align:center;">
+        <div class="muted small" style="letter-spacing:.18em;">05 //</div>
+        <div class="h1" style="font-size:34px;margin:6px 0 6px;">Round 2 Results</div>
+        <div class="muted small">Let’s see how mindful browsing compared to natural browsing.</div>
+      </div>
+
+      <div class="alert">
+        <div style="font-weight:900;">Room for Improvement</div>
+        <div class="muted small">
+          <span data-diff-msg>Changing browsing habits takes practice.</span>
+          <b style="margin-left:6px;">Δ <span data-diff>0</span></b>
+        </div>
+      </div>
+
+      <div class="card glow-purple" data-report>
+        <div class="scoreLabel">DATA EXPOSURE SCORE</div>
+        <div class="bigScore"><span data-score>0</span><span class="muted" style="font-size:18px;">/100</span></div>
+
+        <div class="hr"></div>
+
+        <div class="slider" data-slider><div></div></div>
+        <div class="muted small" style="text-align:center;margin-top:10px;" data-level>EXPOSURE LEVEL: Low</div>
+
+        <div class="hr"></div>
+
+        <div class="statGrid">
+          <div class="stat"><div class="statNum" data-time>0.0s</div><div class="muted small">Time on Page</div></div>
+          <div class="stat"><div class="statNum" data-scroll>0%</div><div class="muted small">Scroll Depth</div></div>
+          <div class="stat"><div class="statNum" data-clicks>0</div><div class="muted small">Cards Clicked</div></div>
+          <div class="stat"><div class="statNum" data-hover>0.0s</div><div class="muted small">Total Hover Time</div></div>
+        </div>
+
+        <div class="footerNav">
+          <button class="btn ghost" data-back>← Back</button>
+          <button class="btn purple" data-next>Continue →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script>
+    GT.renderStepper("r2");
+    GT.initReport(2);
+  </script>
+</body>
+</html>

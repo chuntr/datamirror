@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GhostTrace — Intro</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="stepper" data-stepper></div>
+
+    <section class="hero">
+      <div class="badge">👁️ Educational Experience</div>
+      <div class="h1">Discover How <span class="glow">Websites Track You</span></div>
+      <p class="sub">
+        Browse a simulated news feed while we quietly measure your behavior (time, scroll, hovers, clicks).
+        Then compare Round 1 vs Round 2 to see how your choices change the “data exposure” score.
+      </p>
+
+      <div class="row" style="justify-content:center; margin-top:18px;">
+        <button class="btn primary" data-start>Start the Experience →</button>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="stack" style="margin-top:12px;">
+      <div class="howTitle">// How It Works</div>
+
+      <div class="howList card">
+        <div class="howItem">
+          <div class="howNum">1</div>
+          <div>
+            <div class="howName">Take the Pre-Quiz</div>
+            <div class="howDesc">Test your current knowledge about online tracking.</div>
+          </div>
+        </div>
+
+        <div class="howItem">
+          <div class="howNum">2</div>
+          <div>
+            <div class="howName">Browse Round 1</div>
+            <div class="howDesc">Explore a simulated news feed while behavior is recorded.</div>
+          </div>
+        </div>
+
+        <div class="howItem">
+          <div class="howNum">3</div>
+          <div>
+            <div class="howName">View Report 1</div>
+            <div class="howDesc">See what was collected and what it could reveal.</div>
+          </div>
+        </div>
+
+        <div class="howItem">
+          <div class="howNum">4</div>
+          <div>
+            <div class="howName">Browse Round 2</div>
+            <div class="howDesc">Try again with strategies to reduce exposure.</div>
+          </div>
+        </div>
+
+        <div class="howItem">
+          <div class="howNum">5</div>
+          <div>
+            <div class="howName">Compare Results</div>
+            <div class="howDesc">See how your behavior changed from Round 1 → Round 2.</div>
+          </div>
+        </div>
+
+        <div class="howItem">
+          <div class="howNum">6</div>
+          <div>
+            <div class="howName">Take the Post-Quiz</div>
+            <div class="howDesc">Measure how your understanding improved.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="warning card">
+        <div class="warningIcon">⚠️</div>
+        <div class="warningBody">
+          <div class="warningTitle">This is Educational</div>
+          <div class="warningText">
+            The tracking shown here is a simplified demo. Real-world tracking can be more pervasive and harder to notice.
+            This experience is designed to help UW students think critically about online privacy.
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script>
+    GT.renderStepper("intro");
+    GT.initIntro();
+  </script>
+</body>
+</html>

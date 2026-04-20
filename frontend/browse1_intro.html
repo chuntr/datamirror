@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GhostTrace — Browse 1 Intro</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="container center">
+    <div class="stack" style="width:min(820px,100%);">
+      <div class="stepper" data-stepper></div>
+
+      <div class="card glow-teal" style="padding:22px;text-align:center;">
+        <div class="badge">Round 1</div>
+        <div class="h1" style="font-size:34px;margin:12px 0 8px;">Browse Naturally</div>
+        <p class="sub" style="max-width:680px;">
+          Scroll through the feed. Hover on what looks interesting. Click anything you’d like.
+          This simulates what sites can observe during browsing.
+        </p>
+
+        <div class="card" style="max-width:680px;margin:14px auto 0;text-align:left;">
+          <div class="cardTitle">What we’ll track</div>
+          <ul class="muted small" style="margin:0; padding-left:18px; line-height:1.7;">
+            <li>Time spent on the page</li>
+            <li>Scroll depth</li>
+            <li>Hover time on each card</li>
+            <li>Clicks on cards</li>
+          </ul>
+          <div class="hr"></div>
+          <div class="muted small">Recommended: 1–2 minutes</div>
+        </div>
+
+        <div class="row" style="justify-content:center;margin-top:14px;">
+          <a class="btn primary" href="browse1.html">Start Browsing →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script>
+    GT.renderStepper("b1");
+  </script>
+</body>
+</html>
