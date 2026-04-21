@@ -225,7 +225,7 @@ function initQuiz(kind /* "pre" | "post" */) {
     setDone(kind === "pre" ? "pre" : "post", true);
 
     // routing
-    if (kind === "pre") window.location.href = "browse-1-intro.html";
+    if (kind === "pre") window.location.href = "browse1_intro.html";
     else window.location.href = "index.html";
   });
 
@@ -244,7 +244,7 @@ function initBrowse(round /* 1 or 2 */) {
   let clicks = 0;
 
   // hover tracking per card
-  const hover = {}; // id -> ms
+  const hover = {};
   let currentHoverId = null;
   let hoverStart = 0;
 
@@ -287,7 +287,7 @@ function initBrowse(round /* 1 or 2 */) {
     setDone(round === 1 ? "b1" : "b2", true);
     saveState(state);
 
-    window.location.href = round === 1 ? "report-1.html" : "report-2.html";
+    window.location.href = round === 1 ? "report1.html" : "report2.html";
   }
 
   root.addEventListener("click", (e) => {
@@ -373,13 +373,13 @@ function initReport(round /* 1 or 2 */) {
 
   // next button
   qs("[data-next]").addEventListener("click", () => {
-    if (round === 1) window.location.href = "browse-2-intro.html";
+    if (round === 1) window.location.href = "browse2_intro.html";
     else window.location.href = "post-quiz.html";
   });
 
   // back
   qs("[data-back]").addEventListener("click", () => {
-    window.location.href = round === 1 ? "browse-1.html" : "browse-2.html";
+    window.location.href = round === 1 ? "browse1.html" : "browse2.html";
   });
 
   // improvement banner (only for round2 compare)
