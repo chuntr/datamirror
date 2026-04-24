@@ -198,13 +198,31 @@ function initQuiz(kind /* "pre" | "post" */) {
     return correct;
   }
 
+  function submitQuiz() {
+    computeScore();
+    setDone(kind === "pre" ? "pre" : "post", true);
+    // routing (keep your existing destinations)
+    if (kind === "pre") window.location.href = "browse-1-intro.html";
+    else window.location.href = "index.html";
+  }
+
+  // Click anywhere inside the quiz box
   box.addEventListener("click", (e) => {
     const opt = e.target.closest("[data-opt]");
     if (opt) {
       const i = Number(opt.getAttribute("data-opt"));
       state[slot].answers[index] = i;
       saveState(state);
-      render();
+
+      const isLast = index === QUIZ_QUESTIONS.length - 1;
+      if (!isLast) {
+        // Auto‑advance to the next question
+        index++;
+        render();
+      } else {
+        // On the last question, submit immediately
+        submitQuiz();
+      }
     }
   });
 
@@ -218,15 +236,9 @@ function initQuiz(kind /* "pre" | "post" */) {
     if (!isLast) {
       index++;
       render();
-      return;
+    } else {
+      submitQuiz();
     }
-    // submit
-    computeScore();
-    setDone(kind === "pre" ? "pre" : "post", true);
-
-    // routing
-    if (kind === "pre") window.location.href = "browse-1-intro.html";
-    else window.location.href = "index.html";
   });
 
   render();
