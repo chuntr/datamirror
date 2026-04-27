@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GhostTrace - Next_Steps</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbarInner">
+      <nav aria-label="Progress">
+        <div class="stepper" data-stepper></div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1 class="h1">Protect Your Privacy</h1>
+      <p class="sub">Simple, practical steps you can take today to reduce your data exposure</p>
+    </section>
+
+    <section class="gridCards">
+      <article class="privacyCard">
+        <span class="cardIndex">01</span>
+        <h2 class="cardTitle">Use a Privacy-Focused Browser</h2>
+        <p class="cardDesc">Switch to Firefox or Brave, which block trackers by default. They stop most invisible tracking without any extra effort.</p>
+        <div class="pillRow">
+          <span class="tagPill">Easy</span>
+          <span class="tagPill impact">High Impact</span>
+        </div>
+      </article>
+
+      <article class="privacyCard">
+        <span class="cardIndex">02</span>
+        <h2 class="cardTitle">Install a Tracker Blocker</h2>
+        <p class="cardDesc">Add uBlock Origin to your browser. It blocks ads and trackers, making pages load faster while protecting your privacy.</p>
+        <div class="pillRow">
+          <span class="tagPill">Easy</span>
+          <span class="tagPill impact">High Impact</span>
+        </div>
+      </article>
+
+      <article class="privacyCard">
+        <span class="cardIndex">03</span>
+        <h2 class="cardTitle">Review App Permissions</h2>
+        <p class="cardDesc">Check which apps have access to your location, contacts, and microphone. Remove permissions that aren't necessary.</p>
+        <div class="pillRow">
+          <span class="tagPill">Easy</span>
+          <span class="tagPill medium">Medium Impact</span>
+        </div>
+      </article>
+
+      <article class="privacyCard">
+        <span class="cardIndex">04</span>
+        <h2 class="cardTitle">Use a VPN on Public Wi‑Fi</h2>
+        <p class="cardDesc">A VPN encrypts your connection, preventing others on the same network from seeing your browsing activity.</p>
+        <div class="pillRow">
+          <span class="tagPill">Medium</span>
+          <span class="tagPill impact">High Impact</span>
+        </div>
+      </article>
+
+      <article class="privacyCard">
+        <span class="cardIndex">05</span>
+        <h2 class="cardTitle">Clear Cookies Regularly</h2>
+        <p class="cardDesc">Set your browser to clear cookies when you close it, or use a cookie auto-delete extension.</p>
+        <div class="pillRow">
+          <span class="tagPill">Easy</span>
+          <span class="tagPill medium">Medium Impact</span>
+        </div>
+      </article>
+
+      <article class="privacyCard">
+        <span class="cardIndex">06</span>
+        <h2 class="cardTitle">Limit Social Media Tracking</h2>
+        <p class="cardDesc">Adjust privacy settings on social platforms. Disable off-platform activity tracking in Facebook, Instagram, and similar apps.</p>
+        <div class="pillRow">
+          <span class="tagPill">Medium</span>
+          <span class="tagPill impact">High Impact</span>
+        </div>
+      </article>
+
+      <article class="privacyCard">
+        <span class="cardIndex">07</span>
+        <h2 class="cardTitle">Use Separate Browsers</h2>
+        <p class="cardDesc">Use one browser for social media and another for general browsing. This prevents cross-site tracking between the two.</p>
+        <div class="pillRow">
+          <span class="tagPill">Medium</span>
+          <span class="tagPill medium">Medium Impact</span>
+        </div>
+      </article>
+
+      <article class="privacyCard">
+        <span class="cardIndex">08</span>
+        <h2 class="cardTitle">Check Your Digital Footprint</h2>
+        <p class="cardDesc">Search your name online and request removal of unwanted personal data from data broker sites.</p>
+        <div class="pillRow">
+          <span class="tagPill">Hard</span>
+          <span class="tagPill impact">High Impact</span>
+        </div>
+      </article>
+    </section>
+
+    <div class="ctaWrap">
+      <button class="btn" type="button" data-go-resources>
+        <span>Learn More</span>
+      </button>
+    </div>
+  </main>
+
+  <script src="assets/app.js"></script>
+  <script>
+    GT.renderStepper("next");
+    GT.initNextSteps();
+  </script>
+</body>
+</html>

@@ -9,6 +9,8 @@ const STEPS = [
   { id: "b2", label: "Browse 2", href: "browse2_intro.html" },
   { id: "r2", label: "Report 2", href: "report2.html" },
   { id: "post", label: "Post-Quiz", href: "post-quiz.html" },
+  { id: "next", label: "Next Steps", href: "next-steps.html" },
+  { id: "resources", label: "Resources", href: "resources.html" },
 ];
 
 function loadState() {
@@ -34,9 +36,11 @@ function loadState() {
     };
   }
 }
+
 function saveState(s) {
   localStorage.setItem(KEY, JSON.stringify(s));
 }
+
 function setDone(stepId, value = true) {
   const s = loadState();
   s.done[stepId] = value;
@@ -56,11 +60,11 @@ function renderStepper(activeId) {
   el.innerHTML = STEPS.map((st, idx) => {
     const done = !!s.done[st.id];
     const active = st.id === activeId;
-
     const cls = ["step", done ? "done" : "", active ? "active" : ""].filter(Boolean).join(" ");
     const dot = done ? "✓" : (idx + 1);
+
     return `
-      <a class="${cls}" href="${st.href}">
+      <a class="${cls}" href="${st.href}" ${active ? 'aria-current="page"' : ""}>
         <span class="dot">${dot}</span>
         <span>${st.label}</span>
       </a>
@@ -69,7 +73,6 @@ function renderStepper(activeId) {
 }
 
 /* QUIZ (Pre/Post) */
-
 const QUIZ_QUESTIONS = [
   {
     q: "Which of the following actions can websites track even if you don't click anything?",
@@ -159,7 +162,6 @@ function initQuiz(kind /* "pre" | "post" */) {
 
   const state = loadState();
   const slot = kind === "pre" ? "preQuiz" : "postQuiz";
-
   let index = 0;
 
   function render() {
@@ -181,8 +183,8 @@ function initQuiz(kind /* "pre" | "post" */) {
         </div>
       `;
     }).join("");
-    qs("[data-q-options]").innerHTML = options;
 
+    qs("[data-q-options]").innerHTML = options;
     qs("[data-prev]").disabled = index === 0;
     const isLast = index === total - 1;
     qs("[data-next]").textContent = isLast ? "Submit Quiz" : "Next →";
@@ -201,12 +203,10 @@ function initQuiz(kind /* "pre" | "post" */) {
   function submitQuiz() {
     computeScore();
     setDone(kind === "pre" ? "pre" : "post", true);
-    // routing (keep your existing destinations)
-    if (kind === "pre") window.location.href = "browse-1-intro.html";
-    else window.location.href = "index.html";
+    if (kind === "pre") window.location.href = "browse1_intro.html";
+    else window.location.href = "next-steps.html";
   }
 
-  // Click anywhere inside the quiz box
   box.addEventListener("click", (e) => {
     const opt = e.target.closest("[data-opt]");
     if (opt) {
@@ -216,11 +216,9 @@ function initQuiz(kind /* "pre" | "post" */) {
 
       const isLast = index === QUIZ_QUESTIONS.length - 1;
       if (!isLast) {
-        // Auto‑advance to the next question
         index++;
         render();
       } else {
-        // On the last question, submit immediately
         submitQuiz();
       }
     }
@@ -254,8 +252,6 @@ function initBrowse(round /* 1 or 2 */) {
 
   const startTs = now();
   let clicks = 0;
-
-  // hover tracking per card
   const hover = {};
   let currentHoverId = null;
   let hoverStart = 0;
@@ -356,10 +352,8 @@ function initReport(round /* 1 or 2 */) {
   const state = loadState();
   const slot = round === 1 ? "round1" : "round2";
   const metrics = state[slot];
-
   const exp = computeExposure(metrics);
 
-  // render
   qs("[data-score]").textContent = `${exp.score}`;
   qs("[data-level]").textContent = `EXPOSURE LEVEL: ${exp.level}`;
   qs("[data-time]").textContent = `${((metrics?.timeMs || 0) / 1000).toFixed(1)}s`;
@@ -367,7 +361,6 @@ function initReport(round /* 1 or 2 */) {
   qs("[data-clicks]").textContent = `${metrics?.clicks || 0}`;
   qs("[data-hover]").textContent = `${((metrics?.hoverMs || 0) / 1000).toFixed(1)}s`;
 
-  // slider fill
   qs("[data-slider] > div").style.width = `${clamp(exp.score, 0, 100)}%`;
   qs("[data-slider] > div").style.background =
     exp.level === "Low" ? "rgba(48,214,124,.65)"
@@ -375,26 +368,21 @@ function initReport(round /* 1 or 2 */) {
     : exp.level === "High" ? "rgba(241,200,75,.55)"
     : "rgba(255,90,90,.55)";
 
-  // persist exposure back to state for compare screen
   metrics.exposure = exp;
   state[slot] = metrics;
   saveState(state);
 
-  // mark report done
   setDone(round === 1 ? "r1" : "r2", true);
 
-  // next button
   qs("[data-next]").addEventListener("click", () => {
     if (round === 1) window.location.href = "browse2_intro.html";
     else window.location.href = "post-quiz.html";
   });
 
-  // back
   qs("[data-back]").addEventListener("click", () => {
     window.location.href = round === 1 ? "browse1.html" : "browse2.html";
   });
 
-  // improvement banner (only for round2 compare)
   if (round === 2) {
     const r1 = state.round1?.exposure?.score ?? null;
     const r2 = state.round2?.exposure?.score ?? null;
@@ -432,6 +420,31 @@ function initIntro() {
   }
 }
 
+/* NEXT STEPS */
+function initNextSteps() {
+  const btn = qs("[data-go-resources]");
+  if (!btn) return;
+
+  setDone("next", true);
+
+  btn.addEventListener("click", () => {
+    window.location.href = "resources.html";
+  });
+}
+
+/* RESOURCES */
+function initResources() {
+  setDone("resources", true);
+
+  const btn = qs("[data-start-over]");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    localStorage.removeItem(KEY);
+    window.location.href = "index.html";
+  });
+}
+
 /* PAGE BOOTSTRAP */
 window.GT = {
   renderStepper,
@@ -439,6 +452,8 @@ window.GT = {
   initQuiz,
   initBrowse,
   initReport,
+  initNextSteps,
+  initResources,
   loadState,
   saveState,
 };
