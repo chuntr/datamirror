@@ -30,17 +30,25 @@
             </div>
           </div>
 
-          <div class="row" style="justify-content:center;margin-top:10px;">
-            <a class="btn purple" href="browse2.html">Start Mindful Browsing →</a>
+          <div class="mission-cta">
+            <a href="browse2.html" class="btn-primary">
+              Start Mindful Browsing <span aria-hidden="true">→</span>
+            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="assets/app.js"></script>
-  <script>
+  <script src="./assets/app.js"></script>
+<script>
+  if (window.GT && typeof GT.renderStepper === "function") {
     GT.renderStepper("b2");
-  </script>
+  }
+
+  document.querySelector("[data-begin-browse]")?.addEventListener("click", () => {
+    window.location.href = "browse2.html";
+  });
+</script>
 </body>
 </html>

@@ -3,44 +3,126 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GhostTrace — Browse 1 Intro</title>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <title>Mission · Browse 1</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
 </head>
+
 <body>
-  <div class="container center">
-    <div class="stack" style="width:min(820px,100%);">
-      <div class="stepper" data-stepper></div>
-
-      <div class="card glow-teal" style="padding:22px;text-align:center;">
-        <div class="badge">Round 1</div>
-        <div class="h1" style="font-size:34px;margin:12px 0 8px;">Browse Naturally</div>
-        <p class="sub" style="max-width:680px;">
-          Scroll through the feed. Hover on what looks interesting. Click anything you’d like.
-          This simulates what sites can observe during browsing.
-        </p>
-
-        <div class="card" style="max-width:680px;margin:14px auto 0;text-align:left;">
-          <div class="cardTitle">What we’ll track</div>
-          <ul class="muted small" style="margin:0; padding-left:18px; line-height:1.7;">
-            <li>Time spent on the page</li>
-            <li>Scroll depth</li>
-            <li>Hover time on each card</li>
-            <li>Clicks on cards</li>
-          </ul>
-          <div class="hr"></div>
-          <div class="muted small">Recommended: 1–2 minutes</div>
-        </div>
-
-        <div class="row" style="justify-content:center;margin-top:14px;">
-          <a class="btn primary" href="browse1.html">Start Browsing →</a>
-        </div>
-      </div>
+  <!-- TOP PROGRESS -->
+  <header class="top-progress">
+    <div class="container">
+      <nav class="stepper" data-stepper aria-label="Experience progress"></nav>
     </div>
-  </div>
+  </header>
 
-  <script src="assets/app.js"></script>
+  <main class="mission-page">
+    <div class="container mission-wrap">
+
+      <!-- Challenge Score Box -->
+      <section class="challenge-box" aria-label="Challenge score">
+        <div class="challenge-label">Challenge Score</div>
+        <div class="challenge-score">
+          <span data-challenge-score>0</span>/<span data-challenge-total>8</span>
+        </div>
+        <div class="challenge-sub" data-challenge-sub>
+          Good awareness! Now let’s see it in action.
+        </div>
+      </section>
+
+      <!-- Icon -->
+      <div class="mission-icon" aria-hidden="true">◎</div>
+
+      <!-- Title -->
+      <h1 class="mission-title">Your Mission</h1>
+      <p class="mission-sub">
+        Browse a simulated news feed while minimizing your data exposure.
+        Every action creates a signal.
+      </p>
+
+      <!-- Mission cards -->
+      <section class="mission-cards" aria-label="Mission steps">
+        <article class="mission-card">
+          <div class="mission-card-left">
+            <div class="mission-card-ic" aria-hidden="true">↗</div>
+            <div>
+              <div class="mission-card-title">Browse Carefully</div>
+              <div class="mission-card-desc">Click, scroll, and hover through a simulated news feed</div>
+            </div>
+          </div>
+          <div class="mission-card-num" aria-hidden="true">01</div>
+        </article>
+
+        <article class="mission-card">
+          <div class="mission-card-left">
+            <div class="mission-card-ic" aria-hidden="true">◉</div>
+            <div>
+              <div class="mission-card-title">Be Observed</div>
+              <div class="mission-card-desc">Every action you take will be tracked — just like the real web</div>
+            </div>
+          </div>
+          <div class="mission-card-num" aria-hidden="true">02</div>
+        </article>
+
+        <article class="mission-card">
+          <div class="mission-card-left">
+            <div class="mission-card-ic" aria-hidden="true">⏱</div>
+            <div>
+              <div class="mission-card-title">See Your Data</div>
+              <div class="mission-card-desc">Discover what companies can infer about you from your behavior</div>
+            </div>
+          </div>
+          <div class="mission-card-num" aria-hidden="true">03</div>
+        </article>
+      </section>
+
+      <!-- Reminder -->
+      <section class="remember-box" role="note" aria-label="Reminder">
+        <span class="remember-ic" aria-hidden="true">⚡</span>
+        <span>
+          Remember: less interaction = less data exposure. But you need to explore to learn. Find the balance.
+        </span>
+      </section>
+
+      <!-- CTA -->
+      <div class="mission-cta">
+        <button class="btn-primary" type="button" data-begin-browse>
+          Begin Browsing <span aria-hidden="true">→</span>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="./assets/app.js"></script>
   <script>
-    GT.renderStepper("b1");
+    if (window.GT && typeof GT.renderStepper === "function") {
+      GT.renderStepper("pre");
+    }
+
+    (function () {
+      if (!window.GT || typeof GT.loadState !== "function") return;
+      const s = GT.loadState();
+
+      const scoreEl = document.querySelector("[data-challenge-score]");
+      const totalEl = document.querySelector("[data-challenge-total]");
+      const subEl = document.querySelector("[data-challenge-sub]");
+
+      const total = 8;
+      const score = Number(s?.preQuiz?.score ?? 0);
+
+      if (totalEl) totalEl.textContent = String(total);
+      if (scoreEl) scoreEl.textContent = String(score);
+
+      if (subEl) {
+        if (score >= 6) subEl.textContent = "Strong awareness! Now let’s see it in action.";
+        else if (score >= 3) subEl.textContent = "Good awareness! Now let’s see it in action.";
+        else subEl.textContent = "No worries — you’ll learn fast. Let’s see it in action.";
+      }
+    })();
+
+    document.querySelector("[data-begin-browse]")?.addEventListener("click", () => {
+      window.location.href = "browse1.html";
+    });
   </script>
 </body>
 </html>

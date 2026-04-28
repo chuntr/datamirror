@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Compare</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="has-fixed-topbar">
+  <header class="top-progress">
+    <div class="container">
+      <nav class="stepper" data-stepper aria-label="Experience progress"></nav>
+    </div>
+  </header>
+
+  <main class="page compare-page">
+    <div class="container compareWrap">
+
+      <div class="compareIcon" aria-hidden="true">🏆</div>
+      <h1 class="compareTitle">Before vs After</h1>
+      <p class="compareSub">Let’s see how your knowledge and behavior compared.</p>
+
+      <section class="compareSection">
+        <h2 class="sectionTitle">Quiz Score Comparison</h2>
+
+        <div class="compareCards">
+          <div class="compareCard">
+            <div class="compareCardLabel">Before Experience</div>
+            <div class="compareCardScore" data-pre-score>0/8</div>
+            <div class="compareCardMeta" data-pre-pct>0% correct</div>
+          </div>
+
+          <div class="compareCard">
+            <div class="compareCardLabel">After Experience</div>
+            <div class="compareCardScore" data-post-score>0/8</div>
+            <div class="compareCardMeta" data-post-pct>0% correct</div>
+          </div>
+        </div>
+
+        <div class="deltaBox" data-quiz-delta-box>
+          <div class="deltaNum"><span data-quiz-delta>0</span> questions</div>
+          <div class="deltaMsg" data-quiz-delta-msg>Same score — but awareness is the first step.</div>
+        </div>
+      </section>
+
+      <section class="compareSection">
+        <h2 class="sectionTitle">Browse 1 vs Browse 2 Comparison</h2>
+
+        <div class="compareCards">
+          <div class="compareCard compareGaugeCard">
+            <div class="compareCardLabel">Round 1</div>
+
+            <div class="gauge gaugeSmall">
+              <svg viewBox="0 0 36 36" class="gaugeSvg" aria-hidden="true">
+                <path class="gaugeBg"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="gaugeFill" data-gauge-fill-round1
+                  stroke-dasharray="100, 100" stroke-dashoffset="100"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+              <div class="gaugeCenter">
+                <div class="gaugeNum"><span data-round1-score>0</span></div>
+                <div class="gaugeDen">/100</div>
+              </div>
+            </div>
+
+            <div class="compareCardMeta">First Session</div>
+          </div>
+
+          <div class="compareCard compareGaugeCard">
+            <div class="compareCardLabel">Round 2</div>
+
+            <div class="gauge gaugeSmall">
+              <svg viewBox="0 0 36 36" class="gaugeSvg" aria-hidden="true">
+                <path class="gaugeBg"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="gaugeFill" data-gauge-fill-round2
+                  stroke-dasharray="100, 100" stroke-dashoffset="100"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+              <div class="gaugeCenter">
+                <div class="gaugeNum"><span data-round2-score>0</span></div>
+                <div class="gaugeDen">/100</div>
+              </div>
+            </div>
+
+            <div class="compareCardMeta">Second Session</div>
+          </div>
+        </div>
+
+        <div class="pointsPanel">
+          <div class="pointsNum" data-points>0 points</div>
+          <div class="pointsMsg" data-points-msg>Same exposure both rounds. Awareness is the first step.</div>
+        </div>
+
+        <div class="tableWrap">
+          <table class="compareTable">
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Round 1</th>
+                <th>Round 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Clicks</td>
+                <td data-metric="clicks" data-round="1">0</td>
+                <td data-metric="clicks" data-round="2">0</td>
+              </tr>
+              <tr>
+                <td>Articles Opened</td>
+                <td data-metric="articles" data-round="1">0</td>
+                <td data-metric="articles" data-round="2">0</td>
+              </tr>
+              <tr>
+                <td>Time Spent (s)</td>
+                <td data-metric="timeMs" data-round="1">0</td>
+                <td data-metric="timeMs" data-round="2">0</td>
+              </tr>
+              <tr>
+                <td>Hover Targets</td>
+                <td data-metric="hovers" data-round="1">0</td>
+                <td data-metric="hovers" data-round="2">0</td>
+              </tr>
+              <tr>
+                <td>Categories</td>
+                <td data-metric="categories" data-round="1">0</td>
+                <td data-metric="categories" data-round="2">0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="ctaRow">
+        <a class="btn-primary" href="recommendation.html">See Recommendations →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="assets/app.js"></script>
+  <script>
+    window.GT?.renderStepper?.("compare");
+    window.GT?.initCompare?.();
+  </script>
+</body>
+</html>

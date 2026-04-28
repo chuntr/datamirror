@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GhostTrace - Resources</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbarInner">
+      <nav aria-label="Progress">
+        <div class="stepper" data-stepper></div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1 class="h1">Learn More</h1>
+      <p class="sub">Key concepts explained in plain language</p>
+    </section>
+
+    <section class="learnWrap">
+      <div class="faqList">
+        <details class="faqItem">
+          <summary>What Are Cookies?</summary>
+          <div class="faqBody">
+            Cookies are small files stored by websites on your device to remember preferences, login sessions, and browsing behavior.
+          </div>
+        </details>
+
+        <details class="faqItem">
+          <summary>What Is Browser Fingerprinting?</summary>
+          <div class="faqBody">
+            Browser fingerprinting is a tracking method that combines details about your device, browser, and settings to identify you.
+          </div>
+        </details>
+
+        <details class="faqItem">
+          <summary>What Is a Data Broker?</summary>
+          <div class="faqBody">
+            A data broker collects, packages, and sells personal information gathered from public records, apps, purchases, and online activity.
+          </div>
+        </details>
+
+        <details class="faqItem">
+          <summary>What Is End-to-End Encryption?</summary>
+          <div class="faqBody">
+            End-to-end encryption means only the sender and receiver can read the message, not the service provider in between.
+          </div>
+        </details>
+
+        <details class="faqItem">
+          <summary>What Are Tracking Pixels?</summary>
+          <div class="faqBody">
+            Tracking pixels are tiny invisible images or snippets of code used to tell when a page or email has been viewed.
+          </div>
+        </details>
+
+        <details class="faqItem" open>
+          <summary>What Is a VPN?</summary>
+          <div class="faqBody">
+            A Virtual Private Network creates a secure tunnel for your internet traffic, hiding your real IP address and location from websites and your internet provider.
+          </div>
+        </details>
+      </div>
+
+      <h2 class="sectionTitle">Recommended Tools</h2>
+      <div class="toolsGrid">
+        <div class="toolCard">
+          <div class="toolIcon">U</div>
+          <div>
+            <div class="toolName">uBlock Origin</div>
+            <div class="toolDesc">Free ad & tracker blocker</div>
+          </div>
+        </div>
+
+        <div class="toolCard">
+          <div class="toolIcon">F</div>
+          <div>
+            <div class="toolName">Firefox Browser</div>
+            <div class="toolDesc">Privacy-focused web browser</div>
+          </div>
+        </div>
+
+        <div class="toolCard">
+          <div class="toolIcon">B</div>
+          <div>
+            <div class="toolName">Brave Browser</div>
+            <div class="toolDesc">Blocks trackers by default</div>
+          </div>
+        </div>
+
+        <div class="toolCard">
+          <div class="toolIcon">D</div>
+          <div>
+            <div class="toolName">DuckDuckGo</div>
+            <div class="toolDesc">Private search engine</div>
+          </div>
+        </div>
+
+        <div class="toolCard">
+          <div class="toolIcon">S</div>
+          <div>
+            <div class="toolName">Signal</div>
+            <div class="toolDesc">Encrypted messaging app</div>
+          </div>
+        </div>
+
+        <div class="toolCard">
+          <div class="toolIcon">B</div>
+          <div>
+            <div class="toolName">Bitwarden</div>
+            <div class="toolDesc">Free password manager</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="completeBox">
+        <h2 class="completeTitle">Experience Complete</h2>
+        <p class="completeText">
+          You now understand how invisible tracking works. Share this with someone who should know.
+        </p>
+      </div>
+
+      <div class="restartWrap">
+        <button class="restartBtn" type="button" data-start-over>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Start Over</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/app.js"></script>
+  <script>
+    GT.renderStepper("resources");
+    GT.initResources();
+  </script>
+</body>
+</html>

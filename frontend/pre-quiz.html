@@ -3,35 +3,54 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GhostTrace — Pre Quiz</title>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <title>Pre-Quiz</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
 </head>
-<body>
-  <div class="container">
-    <div class="stepper" data-stepper></div>
-
-    <div class="card glow-teal quizBox" data-quiz>
-      <div class="qTop">
-        <div data-q-index>Question 1 of 8</div>
-        <div><span data-q-progress>13% complete</span></div>
-      </div>
-
-      <div class="progressBar" data-qbar><div></div></div>
-
-      <div class="qTitle" data-q-title></div>
-      <div class="stack" data-q-options></div>
-
-      <div class="footerNav">
-        <button class="btn ghost" data-prev>← Previous</button>
-        <button class="btn primary" data-next>Next →</button>
-      </div>
+<body data-quiz-kind="pre">
+  <!-- TOP PROGRESS -->
+  <header class="top-progress">
+    <div class="container">
+      <nav class="stepper" data-stepper aria-label="Experience progress"></nav>
     </div>
-  </div>
+  </header>
 
-  <script src="assets/app.js"></script>
+  <main class="quiz-page">
+    <div class="container quiz-wrap" data-quiz>
+      <div class="pill">🧠 PRE-EXPERIENCE QUIZ</div>
+      <h1 class="quiz-title">Before We Begin</h1>
+      <p class="quiz-sub">
+        Let's see what you already know about online tracking. Don't worry — this is just to measure your starting point.
+      </p>
+
+      <!-- progress row -->
+      <div class="quiz-progress">
+        <div class="quiz-progress-left" data-qcount>Question 1 of 8</div>
+        <div class="quiz-progress-right" data-qpercent>0% complete</div>
+      </div>
+      <div class="quiz-progress-bar" aria-hidden="true">
+        <div class="quiz-progress-fill" data-qfill style="width:0%"></div>
+      </div>
+
+      <!-- card -->
+      <section class="quiz-card" data-card>
+        <div class="quiz-kicker" data-qkicker>Question 1</div>
+        <h2 class="quiz-question" data-qtitle></h2>
+
+        <div class="quiz-options" data-options></div>
+      </section>
+
+      <!-- feedback -->
+      <section class="quiz-feedback" data-feedback hidden>
+        <div class="quiz-feedback-title" data-feedback-title></div>
+        <div class="quiz-feedback-text" data-feedback-text></div>
+      </section>
+    </div>
+  </main>
+
+  <script src="./assets/app.js"></script>
   <script>
-    GT.renderStepper("pre");
-    GT.initQuiz("pre");
+    if (window.GT && typeof GT.renderStepper === "function") GT.renderStepper("pre");
+    if (window.GT && typeof GT.initQuizV2 === "function") GT.initQuizV2({ kind: "pre" });
   </script>
 </body>
 </html>

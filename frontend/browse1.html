@@ -3,103 +3,332 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GhostTrace — Browse 1</title>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <title>Browse 1</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
 </head>
+
 <body>
+  <!-- TOP PROGRESS -->
+  <header class="top-progress">
+    <div class="container">
+      <nav class="stepper" data-stepper aria-label="Experience progress"></nav>
+    </div>
+  </header>
 
-  <div class="topbar">
-    <div class="topbarInner">
-      <div class="row">
-        <span class="pill" data-round-label>Round 1</span>
-        <span class="pill">⏱ <span data-elapsed>0s</span></span>
-        <span class="pill">⬇ Scroll: <span data-scroll>0%</span></span>
+  <!-- TRACKING BAR -->
+  <section class="tracking-bar" aria-label="Tracking status">
+    <div class="container tracking-inner">
+      <div class="tracking-left">
+        <span class="dot" aria-hidden="true">●</span>
+        <span class="tracking-text">TRACKING ACTIVE</span>
       </div>
-      <button class="btn primary" data-finish>Finish Browsing →</button>
+
+      <div class="tracking-mid" aria-label="Live counters">
+        <span class="metric">
+          <span aria-hidden="true">↗</span>
+          <span data-ui-clicks>0</span> clicks
+        </span>
+        <span class="metric">
+          <span aria-hidden="true">◉</span>
+          <span data-ui-articles>0</span> articles
+        </span>
+        <span class="metric">
+          <span aria-hidden="true">⏱</span>
+          <span data-ui-time>0:00</span>
+        </span>
+
+        <span data-scroll style="display:none;">0%</span>
+        <span data-round-label style="display:none;">Round 1</span>
+      </div>
+
+      <div class="tracking-right">
+        <button class="btn-primary" type="button" data-finish>
+          Finish Browsing <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <main class="browse-page" data-browse>
+    <div class="container">
+      <header class="feed-header">
+        <div class="feed-title-row">
+          <span class="feed-ic" aria-hidden="true">🗎</span>
+          <h1 class="feed-title">Daily Feed</h1>
+        </div>
+        <p class="feed-sub">Browse freely. We’ll show you what gets tracked.</p>
+      </header>
+
+      <!-- GRID -->
+      <section class="feed-grid" aria-label="Article feed">
+        <!-- Card 1 -->
+        <button
+          class="article-card"
+          type="button"
+          data-card-id="a1"
+          data-category="Technology"
+          data-readtime="4 min read"
+          data-title="New Smart Home Devices Are Listening More Than You Think"
+          data-body="A recent study reveals that smart speakers activate up to 19 times per day without a wake word. Researchers found background triggers, acoustic misfires, and always-on pipelines can create continuous behavioral signals. Even when audio isn’t “stored,” metadata and interaction patterns can be used to infer routines, presence, and preferences."
+          data-tags="smart-home,tracking,audio"
+        >
+          <div class="card-media" aria-hidden="true"></div>
+          <div class="card-content">
+            <span class="pill">Technology</span>
+            <h3 class="card-title">New Smart Home Devices Are Listening More Than You Think</h3>
+            <p class="card-desc">A recent study reveals that smart speakers activate up to 19 times per day without a wake...</p>
+            <div class="card-meta">
+              <span class="meta">⏱ 4 min read</span>
+            </div>
+          </div>
+        </button>
+
+        <!-- Card 2 -->
+        <button
+          class="article-card"
+          type="button"
+          data-card-id="a2"
+          data-category="Health"
+          data-readtime="3 min read"
+          data-title="Your Fitness App Knows More About You Than Your Doctor"
+          data-body="Health tracking apps often share intimate behavioral data with multiple third parties. Even without explicit identifiers, patterns like active hours, location cadence, and repeated interests can be linked back to a person through device identifiers and fingerprinting."
+          data-tags="health,wearables,inference"
+        >
+          <div class="card-media" aria-hidden="true"></div>
+          <div class="card-content">
+            <span class="pill">Health</span>
+            <h3 class="card-title">Your Fitness App Knows More About You Than Your Doctor</h3>
+            <p class="card-desc">Health tracking apps share intimate data with third parties—more than most users expect...</p>
+            <div class="card-meta">
+              <span class="meta">⏱ 3 min read</span>
+            </div>
+          </div>
+        </button>
+
+        <!-- Card 3 -->
+        <button
+          class="article-card"
+          type="button"
+          data-card-id="a3"
+          data-category="Shopping"
+          data-readtime="5 min read"
+          data-title="Online Stores Change Prices Based on Your Browsing History"
+          data-body="Dynamic pricing can adjust costs based on inferred intent. Signals like return visits, scroll depth, dwell time, and cart behavior may suggest urgency or price sensitivity—leading to different experiences across users."
+          data-tags="shopping,pricing,behavior"
+        >
+          <div class="card-media" aria-hidden="true"></div>
+          <div class="card-content">
+            <span class="pill">Shopping</span>
+            <h3 class="card-title">Online Stores Change Prices Based on Your Browsing History</h3>
+            <p class="card-desc">Dynamic pricing algorithms adjust costs based on location, device, and browsing signals...</p>
+            <div class="card-meta">
+              <span class="meta">⏱ 5 min read</span>
+            </div>
+          </div>
+        </button>
+
+        <!-- Card 4 -->
+        <button
+          class="article-card"
+          type="button"
+          data-card-id="a4"
+          data-category="Social Media"
+          data-readtime="4 min read"
+          data-title="How Social Platforms Map Your Entire Social Network"
+          data-body="You might be careful about what you share online, but your friends might not be. When someone uploads contacts to a social platform, your phone number, email, and relationship to that person can become part of the platform’s social graph. This “shadow profile” data can exist even if you’ve never created an account."
+          data-tags="social media,contacts,network"
+        >
+          <div class="card-media" aria-hidden="true"></div>
+          <div class="card-content">
+            <span class="pill">Social Media</span>
+            <h3 class="card-title">How Social Platforms Map Your Entire Social Network</h3>
+            <p class="card-desc">Even if you’re careful, your friends’ contact uploads can expose your network relationships...</p>
+            <div class="card-meta">
+              <span class="meta">⏱ 4 min read</span>
+            </div>
+          </div>
+        </button>
+
+        <!-- Card 5 -->
+        <button
+          class="article-card"
+          type="button"
+          data-card-id="a5"
+          data-category="Finance"
+          data-readtime="3 min read"
+          data-title="Banks Are Using Social Media to Assess Your Creditworthiness"
+          data-body="Financial profiling can incorporate non-traditional signals. Engagement patterns, consistency of identity signals, and inferred stability may influence risk scoring—often without explicit user awareness."
+          data-tags="finance,profiling,risk"
+        >
+          <div class="card-media" aria-hidden="true"></div>
+          <div class="card-content">
+            <span class="pill">Finance</span>
+            <h3 class="card-title">Banks Are Using Social Media to Assess Your Creditworthiness</h3>
+            <p class="card-desc">Online behavior can influence financial decisions through profiling and risk scoring...</p>
+            <div class="card-meta">
+              <span class="meta">⏱ 3 min read</span>
+            </div>
+          </div>
+        </button>
+
+        <!-- Card 6 -->
+        <button
+          class="article-card"
+          type="button"
+          data-card-id="a6"
+          data-category="Education"
+          data-readtime="4 min read"
+          data-title="Student Monitoring Software Tracks More Than Cheating"
+          data-body="Proctoring tools can record eye movements, keystrokes, and device signals. Even when used for “integrity,” these tools can create detailed behavioral profiles of attention, stress patterns, and environment context."
+          data-tags="education,proctoring,signals"
+        >
+          <div class="card-media" aria-hidden="true"></div>
+          <div class="card-content">
+            <span class="pill">Education</span>
+            <h3 class="card-title">Student Monitoring Software Tracks More Than Cheating</h3>
+            <p class="card-desc">Proctoring tools record eye movements, keystrokes, and room signals—creating behavior profiles...</p>
+            <div class="card-meta">
+              <span class="meta">⏱ 4 min read</span>
+            </div>
+          </div>
+        </button>
+      </section>
+    </div>
+  </main>
+
+  <!-- Bottom-right toast -->
+  <aside class="toast" aria-live="polite">
+    <div class="toast-inner">
+      <div class="toast-title">Your behavior is being analyzed in real-time.</div>
+      <div class="toast-sub">Click “Finish Browsing” when you’re done.</div>
+    </div>
+  </aside>
+
+  <!-- MODAL (article detail) -->
+  <div class="modal" data-modal hidden>
+    <div class="modal-backdrop" data-modal-close></div>
+
+    <div class="modal-card" role="dialog" aria-modal="true" aria-label="Article detail">
+      <button class="modal-close" type="button" aria-label="Close" data-modal-close>×</button>
+
+      <div class="modal-top">
+        <span class="pill" data-modal-category>Category</span>
+      </div>
+
+      <div class="modal-hero" aria-hidden="true"></div>
+
+      <h2 class="modal-title" data-modal-title>Title</h2>
+
+      <div class="modal-meta">
+        <span class="meta" data-modal-readtime>⏱ 4 min read</span>
+        <span class="meta" data-modal-cattext>• Category</span>
+      </div>
+
+      <div class="modal-body" data-modal-body>
+        Body text…
+      </div>
+
+      <div class="modal-tags" data-modal-tags></div>
     </div>
   </div>
 
-  <div class="container" data-browse>
-    <div class="stack">
-      <div class="row space-between">
-        <div>
-          <div class="h1" style="font-size:28px;margin:0 0 6px;">Daily Digest</div>
-          <div class="muted small">Your personalized news feed</div>
-        </div>
-      </div>
-
-      <div class="newsGrid">
-        <!-- cards (mock). data-card-id needed for hover/click tracking -->
-        <div class="newsCard" data-card-id="c1">
-          <div class="thumb"></div>
-          <div class="newsBody">
-            <span class="tag">Technology</span>
-            <div class="newsTitle">Breakthrough in Quantum Computing</div>
-            <div class="newsDesc">Researchers report a new milestone in stability and scaling…</div>
-            <div class="meta"><span>⏱ 5 min read</span></div>
-          </div>
-        </div>
-
-        <div class="newsCard" data-card-id="c2">
-          <div class="thumb"></div>
-          <div class="newsBody">
-            <span class="tag">Lifestyle</span>
-            <div class="newsTitle">Mindful Technology: Balance Screen Time</div>
-            <div class="newsDesc">Practical strategies for healthier digital habits in 2024…</div>
-            <div class="meta"><span>⏱ 4 min read</span></div>
-          </div>
-        </div>
-
-        <div class="newsCard" data-card-id="c3">
-          <div class="thumb"></div>
-          <div class="newsBody">
-            <span class="tag">Entertainment</span>
-            <div class="newsTitle">Streaming Wars Heat Up</div>
-            <div class="newsDesc">New platforms launch as subscription bundles evolve…</div>
-            <div class="meta"><span>⏱ 3 min read</span></div>
-          </div>
-        </div>
-
-        <div class="newsCard" data-card-id="c4">
-          <div class="thumb"></div>
-          <div class="newsBody">
-            <span class="tag">Sports</span>
-            <div class="newsTitle">College Athletics Embrace Analytics</div>
-            <div class="newsDesc">Teams use data to optimize performance and training…</div>
-            <div class="meta"><span>⏱ 4 min read</span></div>
-          </div>
-        </div>
-
-        <div class="newsCard" data-card-id="c5">
-          <div class="thumb"></div>
-          <div class="newsBody">
-            <span class="tag">Technology</span>
-            <div class="newsTitle">Privacy Concerns Rise in Smart Devices</div>
-            <div class="newsDesc">Security researchers warn about cross-site tracking signals…</div>
-            <div class="meta"><span>⏱ 6 min read</span></div>
-          </div>
-        </div>
-
-        <div class="newsCard" data-card-id="c6">
-          <div class="thumb"></div>
-          <div class="newsBody">
-            <span class="tag">Health</span>
-            <div class="newsTitle">Sleep Science: Optimal Rest Patterns</div>
-            <div class="newsDesc">A new study links sleep timing with performance outcomes…</div>
-            <div class="meta"><span>⏱ 5 min read</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card muted small">
-      </div>
-    </div>
-  </div>
-
-  <script src="assets/app.js"></script>
+  <script src="./assets/app.js"></script>
   <script>
-    GT.renderStepper("b1");
-    GT.initBrowse(1);
+    // Stepper: Browse 1 active
+    if (window.GT && typeof GT.renderStepper === "function") GT.renderStepper("b1");
+
+    // Tracking metrics(report1.html)
+    if (window.GT && typeof GT.initBrowse === "function") GT.initBrowse(1);
+
+    // ===== UI Counters (clicks/articles/time) =====
+    (function () {
+      const clicksEl = document.querySelector("[data-ui-clicks]");
+      const articlesEl = document.querySelector("[data-ui-articles]");
+      const timeEl = document.querySelector("[data-ui-time]");
+
+      let clicks = 0;
+      const uniqueArticles = new Set();
+
+      const start = performance.now();
+      function fmt(ms) {
+        const total = Math.floor(ms / 1000);
+        const m = String(Math.floor(total / 60));
+        const s = String(total % 60).padStart(2, "0");
+        return `${m}:${s}`;
+      }
+      const timer = setInterval(() => {
+        if (timeEl) timeEl.textContent = fmt(performance.now() - start);
+      }, 250);
+
+      document.addEventListener("click", (e) => {
+        const card = e.target.closest("[data-card-id]");
+        if (!card) return;
+
+        clicks += 1;
+        uniqueArticles.add(card.getAttribute("data-card-id"));
+
+        if (clicksEl) clicksEl.textContent = String(clicks);
+        if (articlesEl) articlesEl.textContent = String(uniqueArticles.size);
+      });
+
+      // Stop timer on navigation
+      window.addEventListener("beforeunload", () => clearInterval(timer));
+    })();
+
+    // ===== Modal open/close =====
+    (function () {
+      const modal = document.querySelector("[data-modal]");
+      if (!modal) return;
+
+      const catEl = modal.querySelector("[data-modal-category]");
+      const titleEl = modal.querySelector("[data-modal-title]");
+      const bodyEl = modal.querySelector("[data-modal-body]");
+      const readEl = modal.querySelector("[data-modal-readtime]");
+      const catTextEl = modal.querySelector("[data-modal-cattext]");
+      const tagsEl = modal.querySelector("[data-modal-tags]");
+
+      function openFromCard(card) {
+        const title = card.getAttribute("data-title") || "Untitled";
+        const category = card.getAttribute("data-category") || "Category";
+        const readtime = card.getAttribute("data-readtime") || "";
+        const body = card.getAttribute("data-body") || "";
+        const tags = (card.getAttribute("data-tags") || "")
+          .split(",")
+          .map(t => t.trim())
+          .filter(Boolean);
+
+        if (catEl) catEl.textContent = category;
+        if (titleEl) titleEl.textContent = title;
+        if (readEl) readEl.textContent = `⏱ ${readtime}`;
+        if (catTextEl) catTextEl.textContent = `• ${category}`;
+        if (bodyEl) bodyEl.textContent = body;
+
+        if (tagsEl) {
+          tagsEl.innerHTML = tags.map(t => `<span class="tag">#${t}</span>`).join("");
+        }
+
+        modal.hidden = false;
+        document.body.classList.add("modal-open");
+      }
+
+      function close() {
+        modal.hidden = true;
+        document.body.classList.remove("modal-open");
+      }
+
+      document.addEventListener("click", (e) => {
+        const closeBtn = e.target.closest("[data-modal-close]");
+        if (closeBtn) close();
+
+        const card = e.target.closest("[data-card-id]");
+        if (card) openFromCard(card);
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.hidden) close();
+      });
+    })();
   </script>
 </body>
 </html>

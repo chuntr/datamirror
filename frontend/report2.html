@@ -3,58 +3,270 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GhostTrace — Report 2</title>
+  <title>Report 2</title>
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <div class="container">
-    <div class="stepper" data-stepper></div>
+  <!-- TOP PROGRESS -->
+  <header class="topbar">
+    <nav class="stepper" data-stepper aria-label="Experience progress"></nav>
+  </header>
 
-    <div class="stack">
-      <div style="text-align:center;">
-        <div class="muted small" style="letter-spacing:.18em;">05 //</div>
-        <div class="h1" style="font-size:34px;margin:6px 0 6px;">Round 2 Results</div>
-        <div class="muted small">Let’s see how mindful browsing compared to natural browsing.</div>
+  <main class="page report-page report2-page" data-report data-round="2">
+    <div class="container">
+
+      <section class="report-head">
+        <div class="pill">ROUND 2 REPORT</div>
+        <h1 class="report-title">Your Data Report</h1>
+        <p class="report-sub muted">
+          Here's what we learned about you from your browsing session.
+        </p>
+      </section>
+
+      <!-- Gauge -->
+      <section class="gauge-wrap">
+        <div class="card gaugeCard">
+          <div class="gauge">
+            <svg class="gaugeSvg" viewBox="0 0 100 50" aria-hidden="true">
+              <path d="M10 45 A40 40 0 0 1 90 45" stroke="rgba(255,255,255,.12)" stroke-width="10" fill="none" stroke-linecap="round"></path>
+              <path data-gauge-fill d="M10 45 A40 40 0 0 1 90 45" stroke="rgba(0,255,153,.9)" stroke-width="10" fill="none" stroke-linecap="round"
+                    stroke-dasharray="100" stroke-dashoffset="100"></path>
+            </svg>
+
+            <div class="gaugeMeta">
+              <div class="gaugeScore"><span data-score>0</span><span class="muted">/100</span></div>
+              <div class="gaugeLevel" data-level>Moderate</div>
+              <div class="gaugeLabel muted">Data Exposure</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Inferences -->
+      <section class="report-section">
+        <h2>What We Can Infer About You</h2>
+        <div class="grid-2" data-inferences></div>
+      </section>
+
+      <!-- Signals -->
+      <section class="report-section">
+        <h2>Behavior Signals Captured</h2>
+
+        <div class="grid-4">
+          <div class="card stat-card">
+            <div class="stat-num" data-clicks>0</div>
+            <div class="stat-label">Clicks</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-num" data-articles>0</div>
+            <div class="stat-label">Articles Opened</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-num" data-time>0:00</div>
+            <div class="stat-label">Time Spent</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-num" data-cats>0</div>
+            <div class="stat-label">Categories</div>
+          </div>
+        </div>
+
+        <div class="card topics-card" style="margin-top:14px;">
+          <div class="topicsTitle">Topics that interest you:</div>
+          <div class="topicsChips" data-topics></div>
+        </div>
+      </section>
+
+      <!-- Browse comparison goes inside Report 2
+      <section class="report-section">
+        <h2>Browse 1 vs Browse 2 Comparison</h2>
+
+        <div class="compareCards">
+          <div class="card compareCard">
+            <div class="compareTitle">Round 1 Score</div>
+            <div class="compareScore"><span data-round1-score>0</span> <span class="muted">/ 100</span></div>
+          </div>
+
+          <div class="card compareCard">
+            <div class="compareTitle">Round 2 Score</div>
+            <div class="compareScore"><span data-round2-score>0</span> <span class="muted">/ 100</span></div>
+          </div>
+        </div>
+
+        <div class="pointsPanel">
+          <div class="pointsNum" data-points>0 points</div>
+          <div class="pointsMsg" data-points-msg>Same exposure both rounds.</div>
+        </div>
+
+        <div class="tableWrap">
+          <table class="compareTable">
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Round 1</th>
+                <th>Round 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Clicks</td>
+                <td data-metric="clicks" data-round="1">0</td>
+                <td data-metric="clicks" data-round="2">0</td>
+              </tr>
+              <tr>
+                <td>Articles Opened</td>
+                <td data-metric="articles" data-round="1">0</td>
+                <td data-metric="articles" data-round="2">0</td>
+              </tr>
+              <tr>
+                <td>Time Spent (s)</td>
+                <td data-metric="time_s" data-round="1">0</td>
+                <td data-metric="time_s" data-round="2">0</td>
+              </tr>
+              <tr>
+                <td>Hover Targets</td>
+                <td data-metric="hovers" data-round="1">0</td>
+                <td data-metric="hovers" data-round="2">0</td>
+              </tr>
+              <tr>
+                <td>Categories</td>
+                <td data-metric="categories" data-round="1">0</td>
+                <td data-metric="categories" data-round="2">0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section> -->
+
+      <div class="ctaRow">
+        <a class="btn btn-primary" data-next href="post-quiz.html">
+          Take Post-Quiz <span aria-hidden="true">→</span>
+        </a>
       </div>
 
-      <div class="alert">
-        <div style="font-weight:900;">Room for Improvement</div>
-        <div class="muted small">
-          <span data-diff-msg>Changing browsing habits takes practice.</span>
-          <b style="margin-left:6px;">Δ <span data-diff>0</span></b>
-        </div>
-      </div>
-
-      <div class="card glow-purple" data-report>
-        <div class="scoreLabel">DATA EXPOSURE SCORE</div>
-        <div class="bigScore"><span data-score>0</span><span class="muted" style="font-size:18px;">/100</span></div>
-
-        <div class="hr"></div>
-
-        <div class="slider" data-slider><div></div></div>
-        <div class="muted small" style="text-align:center;margin-top:10px;" data-level>EXPOSURE LEVEL: Low</div>
-
-        <div class="hr"></div>
-
-        <div class="statGrid">
-          <div class="stat"><div class="statNum" data-time>0.0s</div><div class="muted small">Time on Page</div></div>
-          <div class="stat"><div class="statNum" data-scroll>0%</div><div class="muted small">Scroll Depth</div></div>
-          <div class="stat"><div class="statNum" data-clicks>0</div><div class="muted small">Cards Clicked</div></div>
-          <div class="stat"><div class="statNum" data-hover>0.0s</div><div class="muted small">Total Hover Time</div></div>
-        </div>
-
-        <div class="footerNav">
-          <button class="btn ghost" data-back>← Back</button>
-          <button class="btn purple" data-next>Continue →</button>
-        </div>
-      </div>
     </div>
-  </div>
+  </main>
 
   <script src="assets/app.js"></script>
   <script>
-    GT.renderStepper("r2");
-    GT.initReport(2);
+    // Stepper
+    window.GT?.renderStepper?.("r2");
+
+    (function () {
+      const GT = window.GT;
+      if (!GT) return;
+
+      const state = GT.loadState();
+
+      function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+      function formatTime(ms) {
+        const s = Math.max(0, Math.round(ms / 1000));
+        const m = Math.floor(s / 60);
+        const r = s % 60;
+        return `${m}:${String(r).padStart(2, "0")}`;
+      }
+
+      function scoreToLevel(score) {
+        if (score <= 30) return "Low";
+        if (score <= 60) return "Moderate";
+        return "High";
+      }
+
+      const m2 = state.round2?.metrics || { clicks:0, articles:0, timeMs:0, hoverTargets:0, categories:[] };
+      const score2 = Number(state.round2?.exposure?.score ?? 0);
+      const level2 = state.round2?.exposure?.level || scoreToLevel(score2);
+
+      const scoreEl = document.querySelector("[data-score]");
+      const levelEl = document.querySelector("[data-level]");
+      const fill = document.querySelector("[data-gauge-fill]");
+      const pct = clamp(score2, 0, 100);
+
+      if (scoreEl) scoreEl.textContent = String(pct);
+      if (levelEl) levelEl.textContent = level2;
+      if (fill) fill.style.strokeDashoffset = String(100 - pct);
+
+      document.querySelector("[data-clicks]") && (document.querySelector("[data-clicks]").textContent = String(m2.clicks ?? 0));
+      document.querySelector("[data-articles]") && (document.querySelector("[data-articles]").textContent = String(m2.articles ?? 0));
+      document.querySelector("[data-time]") && (document.querySelector("[data-time]").textContent = formatTime(m2.timeMs ?? 0));
+
+      const catCount = Array.isArray(m2.categories) ? m2.categories.length : 0;
+      document.querySelector("[data-cats]") && (document.querySelector("[data-cats]").textContent = String(catCount));
+
+      const topicsWrap = document.querySelector("[data-topics]");
+      if (topicsWrap) {
+        const topics = Array.isArray(m2.categories) ? m2.categories : [];
+        if (topics.length === 0) {
+          topicsWrap.innerHTML = '<span class="topic-chip muted">No clear topic signal yet</span>';
+        } else {
+          topicsWrap.innerHTML = topics.map((t) => `<span class="topic-chip">${t}</span>`).join("");
+        }
+      }
+
+      const inferWrap = document.querySelector("[data-inferences]");
+      if (inferWrap) {
+        const inferences = [];
+        if ((m2.timeMs ?? 0) > 4 * 60 * 1000) {
+          inferences.push({ title: "Deep reader / engaged user", badge: "High confidence", badgeClass: "", sub: "Longer time suggests stronger interest signals for personalization." });
+        } else {
+          inferences.push({ title: "Quick scanner", badge: "Medium confidence", badgeClass: "mid", sub: "Short sessions still create a profile, just with less certainty." });
+        }
+
+        if (catCount >= 2) inferences.push({ title: "Multi-topic curiosity", badge: "Medium confidence", badgeClass: "mid", sub: "You explored multiple categories, widening your interest graph." });
+        else if (catCount === 1) inferences.push({ title: "Focused interest", badge: "Medium confidence", badgeClass: "mid", sub: "A single category can still be a strong signal for targeting." });
+        else inferences.push({ title: "Unclear topic signal", badge: "Low confidence", badgeClass: "mid", sub: "Without category clicks, platforms rely more on subtle signals." });
+
+        inferWrap.innerHTML = inferences.slice(0, 2).map((x) => `
+          <div class="card infer-card">
+            <div class="infer-ic" aria-hidden="true">◎</div>
+            <div>
+              <div class="infer-title">${x.title}</div>
+              <p class="infer-sub">${x.sub}</p>
+              <span class="infer-badge ${x.badgeClass}">${x.badge}</span>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      const m1 = state.round1?.metrics || { clicks:0, articles:0, timeMs:0, hoverTargets:0, categories:[] };
+      const score1 = Number(state.round1?.exposure?.score ?? 0);
+
+      const r1ScoreEl = document.querySelector("[data-round1-score]");
+      const r2ScoreEl = document.querySelector("[data-round2-score]");
+      if (r1ScoreEl) r1ScoreEl.textContent = String(score1);
+      if (r2ScoreEl) r2ScoreEl.textContent = String(score2);
+
+      const points = score1 - score2;
+      const pointsEl = document.querySelector("[data-points]");
+      const msgEl = document.querySelector("[data-points-msg]");
+
+      if (pointsEl) pointsEl.textContent = `${points} point${Math.abs(points) === 1 ? "" : "s"}`;
+      if (msgEl) {
+        if (points > 0) msgEl.textContent = "Nice — less exposure in Round 2. Awareness helps.";
+        else if (points < 0) msgEl.textContent = "More exposure in Round 2. Small changes make a difference.";
+        else msgEl.textContent = "Same exposure both rounds. Awareness is the first step.";
+      }
+
+      function setMetric(metric, round, val) {
+        const cell = document.querySelector(`[data-metric="${metric}"][data-round="${round}"]`);
+        if (cell) cell.textContent = String(val);
+      }
+
+      setMetric("clicks", 1, m1.clicks ?? 0);
+      setMetric("clicks", 2, m2.clicks ?? 0);
+      setMetric("articles", 1, m1.articles ?? 0);
+      setMetric("articles", 2, m2.articles ?? 0);
+      setMetric("time_s", 1, Math.round((m1.timeMs ?? 0) / 1000));
+      setMetric("time_s", 2, Math.round((m2.timeMs ?? 0) / 1000));
+      setMetric("hovers", 1, m1.hoverTargets ?? 0);
+      setMetric("hovers", 2, m2.hoverTargets ?? 0);
+      setMetric("categories", 1, Array.isArray(m1.categories) ? m1.categories.length : 0);
+      setMetric("categories", 2, Array.isArray(m2.categories) ? m2.categories.length : 0);
+
+      GT.setDone("r2", true);
+    })();
   </script>
 </body>
 </html>

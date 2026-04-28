@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GhostTrace - Recommendations</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body data-quiz-kind="pre">
+  <!-- TOP PROGRESS -->
+  <header class="top-progress">
+    <div class="container">
+      <nav class="stepper" data-stepper></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="iconBadge">✨</div>
+      <h1 class="h1">Protect Your Privacy</h1>
+      <p class="sub">Simple, practical steps you can take today to reduce your data exposure</p>
+    </section>
+
+    <section class="recGrid">
+      <div class="recCard">
+        <div class="recTitle">Use a Privacy-Focused Browser</div>
+        <div class="recBody">Try Firefox or Brave. They block many trackers by default.</div>
+        <div class="recTags"><span class="tag">Easy</span><span class="tag">High Impact</span></div>
+      </div>
+
+      <div class="recCard">
+        <div class="recTitle">Install a Tracker Blocker</div>
+        <div class="recBody">uBlock Origin can block many ads + tracking scripts.</div>
+        <div class="recTags"><span class="tag">Easy</span><span class="tag">High Impact</span></div>
+      </div>
+
+      <div class="recCard">
+        <div class="recTitle">Review App Permissions</div>
+        <div class="recBody">Remove permissions (location/mic/contacts) you don’t need.</div>
+        <div class="recTags"><span class="tag">Easy</span><span class="tag">Medium Impact</span></div>
+      </div>
+
+      <div class="recCard">
+        <div class="recTitle">Use a VPN on Public Wi-Fi</div>
+        <div class="recBody">Encrypts traffic so others on the network can’t easily snoop.</div>
+        <div class="recTags"><span class="tag">Medium</span><span class="tag">High Impact</span></div>
+      </div>
+
+      <div class="recCard">
+        <div class="recTitle">Clear Cookies Regularly</div>
+        <div class="recBody">Reduce long-term cross-site tracking by clearing cookies.</div>
+        <div class="recTags"><span class="tag">Easy</span><span class="tag">Medium Impact</span></div>
+      </div>
+
+      <div class="recCard">
+        <div class="recTitle">Limit Social Media Tracking</div>
+        <div class="recBody">Disable off-platform activity tracking in settings.</div>
+        <div class="recTags"><span class="tag">Medium</span><span class="tag">High Impact</span></div>
+      </div>
+    </section>
+
+    <div class="ctaWrap">
+      <button class="primaryBtn" type="button" data-learn-more>
+        Learn More →
+      </button>
+    </div>
+  </main>
+
+  <script src="assets/app.js"></script>
+  <script>
+    GT.renderStepper("compare");
+    GT.initRecommendation();
+  </script>
+</body>
+</html>

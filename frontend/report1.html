@@ -3,50 +3,283 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GhostTrace — Report 1</title>
+  <title>Report 1 • GhostTrace</title>
+
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
+
 <body>
-  <div class="container">
-    <div class="stepper" data-stepper></div>
+  <!-- TOP PROGRESS -->
+  <header class="topbar">
+    <nav class="stepper" data-stepper></nav>
+  </header>
 
-    <div class="stack">
-      <div style="text-align:center;">
-        <div class="muted small" style="letter-spacing:.18em;">03 //</div>
-        <div class="h1" style="font-size:34px;margin:6px 0 6px;">Your Data Report</div>
-        <div class="muted small">Here’s what we collected during your browsing session.</div>
-      </div>
-
-      <div class="card glow-teal" data-report>
-        <div class="scoreLabel">DATA EXPOSURE SCORE</div>
-        <div class="bigScore"><span data-score>0</span><span class="muted" style="font-size:18px;">/100</span></div>
-
-        <div class="hr"></div>
-
-        <div class="slider" data-slider><div></div></div>
-        <div class="muted small" style="text-align:center;margin-top:10px;" data-level>EXPOSURE LEVEL: Low</div>
-
-        <div class="hr"></div>
-
-        <div class="statGrid">
-          <div class="stat"><div class="statNum" data-time>0.0s</div><div class="muted small">Time on Page</div></div>
-          <div class="stat"><div class="statNum" data-scroll>0%</div><div class="muted small">Scroll Depth</div></div>
-          <div class="stat"><div class="statNum" data-clicks>0</div><div class="muted small">Cards Clicked</div></div>
-          <div class="stat"><div class="statNum" data-hover>0.0s</div><div class="muted small">Total Hover Time</div></div>
+  <main class="page report-page" data-report data-round="1">
+    <section class="container">
+      <!-- Header -->
+      <div class="report-head">
+        <div class="pill pill-danger" aria-label="Round 1 Report">
+          <span class="pill-dot">●</span>
+          <span>ROUND 1 REPORT</span>
         </div>
 
-        <div class="footerNav">
-          <button class="btn ghost" data-back>← Back</button>
-          <button class="btn primary" data-next>Continue →</button>
-        </div>
+        <h1 class="h1">Your Data Report</h1>
+        <p class="subtle">
+          Here's what we learned about you from your browsing session
+        </p>
       </div>
-    </div>
-  </div>
+
+      <!-- Gauge -->
+      <section class="gauge-wrap" aria-label="Data Exposure Score">
+        <div class="gauge">
+          <svg viewBox="0 0 240 140" width="240" height="140" role="img" aria-label="Exposure gauge">
+            <!-- background arc -->
+            <path
+              d="M 20 120 A 100 100 0 0 1 220 120"
+              fill="none"
+              stroke="rgba(255,255,255,0.12)"
+              stroke-width="14"
+              stroke-linecap="round"
+            />
+            <!-- fill arc (animated) -->
+            <path
+              d="M 20 120 A 100 100 0 0 1 220 120"
+              fill="none"
+              stroke="#f2c94c"
+              stroke-width="14"
+              stroke-linecap="round"
+              pathLength="100"
+              stroke-dasharray="100"
+              stroke-dashoffset="100"
+              data-gauge-fill
+            />
+          </svg>
+
+          <div class="gauge-center">
+            <div class="gauge-score">
+              <span data-score>0</span><span class="gauge-max">/100</span>
+            </div>
+            <div class="gauge-level" data-level>Moderate</div>
+            <div class="gauge-label">Data Exposure</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Inferences -->
+      <section class="section">
+        <div class="section-title">
+          <span class="icon-dot">◎</span>
+          <h2>What We Can Infer About You</h2>
+        </div>
+
+        <div class="grid-2" data-inferences>
+        </div>
+      </section>
+
+      <!-- Signals -->
+      <section class="section">
+        <div class="section-title">
+          <span class="icon-doc">▦</span>
+          <h2>Behavior Signals Captured</h2>
+        </div>
+
+        <div class="grid-4">
+          <div class="stat-card">
+            <div class="stat-num" data-stat-clicks>0</div>
+            <div class="stat-label">Clicks</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" data-stat-articles>0</div>
+            <div class="stat-label">Articles Read</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" data-stat-time>0:00</div>
+            <div class="stat-label">Time Spent</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" data-stat-cats>0</div>
+            <div class="stat-label">Categories</div>
+          </div>
+        </div>
+
+        <div class="topics-card">
+          <div class="topics-title">Topics that interest you:</div>
+          <div class="topics-chips" data-topics>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta">
+        <button class="btn-primary" type="button" data-next>
+          Continue →
+        </button>
+      </section>
+
+    </section>
+  </main>
 
   <script src="assets/app.js"></script>
+
   <script>
-    GT.renderStepper("r1");
-    GT.initReport(1);
+    (function () {
+      const qs = (sel, root = document) => root.querySelector(sel);
+
+      function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
+
+      function formatTime(ms) {
+        const s = Math.max(0, Math.round((ms || 0) / 1000));
+        const m = Math.floor(s / 60);
+        const r = s % 60;
+        return `${m}:${String(r).padStart(2, "0")}`;
+      }
+
+      function computeExposure(metrics) {
+        const timeS = (metrics?.timeMs || 0) / 1000;
+        const scroll = metrics?.scrollPct || 0;
+        const hoverS = (metrics?.hoverMs || 0) / 1000;
+        const clicks = metrics?.clicks || 0;
+
+        const raw = (timeS * 0.9) + (hoverS * 1.2) + (clicks * 6) + (scroll * 0.25);
+        const score = clamp(Math.round(raw), 0, 100);
+        const level = score < 25 ? "Low" : score < 50 ? "Moderate" : score < 75 ? "High" : "Very High";
+        return { score, level };
+      }
+
+      // If backend later injects a computed report, this is where we pick it up.
+      // Supported options:
+      // 1) window.GT_BACKEND_REPORTS.round1
+      // 2) state.round1.report  (ONLY if backend decides to store it there)
+      function getBackendReport(state) {
+        if (window.GT_BACKEND_REPORTS && window.GT_BACKEND_REPORTS.round1) return window.GT_BACKEND_REPORTS.round1;
+        if (state?.round1 && state.round1.report) return state.round1.report;
+        return null;
+      }
+
+      function buildFallbackReport(metrics, exposure) {
+        const timeS = (metrics?.timeMs || 0) / 1000;
+        const hoverS = (metrics?.hoverMs || 0) / 1000;
+        const scroll = metrics?.scrollPct || 0;
+        const clicks = metrics?.clicks || 0;
+
+        // Very lightweight heuristic inferences (placeholder until backend is ready)
+        const inferences = [];
+
+        if (timeS >= 120 || hoverS >= 15) {
+          inferences.push({ title: "Deep reader / engaged user", confidence: "High confidence" });
+        } else if (timeS >= 45) {
+          inferences.push({ title: "Moderate engagement", confidence: "Medium confidence" });
+        } else {
+          inferences.push({ title: "Quick scanner", confidence: "Medium confidence" });
+        }
+
+        if (scroll >= 60) {
+          inferences.push({ title: "Likely to explore content sections", confidence: "Medium confidence" });
+        } else if (clicks >= 1) {
+          inferences.push({ title: "Selective clicker", confidence: "Medium confidence" });
+        } else {
+          inferences.push({ title: "Low interaction footprint", confidence: "High confidence" });
+        }
+
+        // Topics are placeholders without card/category IDs (backend can replace)
+        const topics = clicks > 0 ? ["Social Media"] : [];
+
+        return {
+          exposure,
+          signals: {
+            clicks,
+            articlesRead: clicks,             // placeholder until backend provides true reads
+            timeSpentMs: metrics?.timeMs || 0,
+            categories: topics.length ? 1 : 0 // placeholder
+          },
+          topics,
+          inferences
+        };
+      }
+
+      function render(report) {
+        // score + level
+        qs("[data-score]").textContent = report.exposure.score;
+        qs("[data-level]").textContent = report.exposure.level;
+
+        // gauge fill (0..100)
+        const fill = qs("[data-gauge-fill]");
+        const pct = clamp(report.exposure.score, 0, 100);
+        // animate dashoffset (pathLength=100)
+        requestAnimationFrame(() => {
+          fill.style.transition = "stroke-dashoffset 700ms ease";
+          fill.style.strokeDashoffset = String(100 - pct);
+        });
+
+        // signals
+        qs("[data-stat-clicks]").textContent = report.signals.clicks;
+        qs("[data-stat-articles]").textContent = report.signals.articlesRead;
+        qs("[data-stat-time]").textContent = formatTime(report.signals.timeSpentMs);
+        qs("[data-stat-cats]").textContent = report.signals.categories;
+
+        // topics
+        const topicsWrap = qs("[data-topics]");
+        topicsWrap.innerHTML = "";
+        (report.topics || []).forEach(t => {
+          const chip = document.createElement("span");
+          chip.className = "chip chip-green";
+          chip.textContent = t;
+          topicsWrap.appendChild(chip);
+        });
+        if (!report.topics || report.topics.length === 0) {
+          const empty = document.createElement("span");
+          empty.className = "chip chip-muted";
+          empty.textContent = "No clear topic signal yet";
+          topicsWrap.appendChild(empty);
+        }
+
+        // inferences
+        const infWrap = qs("[data-inferences]");
+        infWrap.innerHTML = "";
+        (report.inferences || []).slice(0, 4).forEach(item => {
+          const card = document.createElement("div");
+          card.className = "infer-card";
+          card.innerHTML = `
+            <div class="infer-title">${item.title}</div>
+            <div class="infer-pill">${item.confidence || "—"}</div>
+          `;
+          infWrap.appendChild(card);
+        });
+      }
+
+ 
+      if (!window.GT) {
+        console.warn("assets/app.js not loaded (window.GT missing).");
+        return;
+      }
+
+      // Stepper
+      window.GT.renderStepper("r1");
+
+      // Load state + metrics
+      const state = window.GT.loadState();
+      const metrics = state.round1 || { timeMs: 0, scrollPct: 0, clicks: 0, hoverMs: 0, hoverByCard: {} };
+
+      const backendReport = getBackendReport(state);
+      const exposure = computeExposure(metrics);
+
+      const report = backendReport
+        ? backendReport
+        : buildFallbackReport(metrics, exposure);
+
+      state.round1 = state.round1 || metrics;
+      state.round1.exposure = report.exposure;
+      state.done = state.done || {};
+      state.done.r1 = true;
+      window.GT.saveState(state);
+
+      // Render UI
+      render(report);
+
+      qs("[data-next]").addEventListener("click", () => {
+        window.location.href = "report1_explain.html";
+      });
+    })();
   </script>
 </body>
 </html>

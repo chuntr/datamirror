@@ -1,99 +1,180 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GhostTrace — Intro</title>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trace Your Digital Footprint</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
 </head>
-<body>
-  <div class="container">
-    <div class="stepper" data-stepper></div>
+<body class="landing-page">
+  <!-- TOP PROGRESS -->
+  <header class="top-progress">
+    <div class="container">
+      <nav class="stepper" data-stepper aria-label="Experience progress"></nav>
+    </div>
+  </header>
 
+  <main>
+    <!-- HERO -->
     <section class="hero">
-      <div class="badge">👁️ Educational Experience</div>
-      <div class="h1">Discover How <span class="glow">Websites Track You</span></div>
-      <p class="sub">
-        Browse a simulated news feed while we quietly measure your behavior (time, scroll, hovers, clicks).
-        Then compare Round 1 vs Round 2 to see how your choices change the “data exposure” score.
-      </p>
+      <div class="hero-bg"></div>
+      <div class="hero-content container">
+        <div class="eyebrow">DIGITAL I-D · PRIVACY WALKTHROUGH</div>
 
-      <div class="row" style="justify-content:center; margin-top:18px;">
-        <button class="btn primary" data-start>Start the Experience →</button>
+        <h1 class="hero-title">
+          Trace Your <span>Digital Footprint</span>
+        </h1>
+
+        <p class="hero-description">
+          This interactive experience shows how your everyday online actions — like
+          clicking, scrolling, and time spent — can generate data and shape what you
+          see online. As you move through the experience, you'll explore how tracking
+          works and what it reveals about you.
+        </p>
+
+        <a class="primary-btn" href="pre-quiz.html">
+          Begin Experience <span class="arrow">→</span>
+        </a>
+
+        <p class="hero-time">Takes about 10–15 minutes to complete</p>
+      </div>
+    </section>
+
+    <!-- WHAT YOU'LL DISCOVER -->
+    <section class="section container">
+      <h2 class="section-title">What You'll Discover</h2>
+      <div class="section-underline"></div>
+
+      <div class="card-grid three">
+        <article class="info-card">
+          <div class="icon-box">↗</div>
+          <h3>Silent Tracking</h3>
+          <p>
+            See how websites record your mouse movements, scroll depth,
+            and dwell time without any visible indication.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="icon-box">✦</div>
+          <h3>Data Inference</h3>
+          <p>
+            Learn what companies can deduce about your interests, engagement
+            patterns, and potential demographics.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="icon-box">▣</div>
+          <h3>Privacy Strategies</h3>
+          <p>
+            Discover practical techniques to reduce your data footprint
+            while browsing online.
+          </p>
+        </article>
       </div>
     </section>
 
     <!-- HOW IT WORKS -->
-    <section class="stack" style="margin-top:12px;">
-      <div class="howTitle">// How It Works</div>
+    <section class="section container">
+      <h2 class="section-title">How It Works</h2>
+      <div class="section-underline"></div>
 
-      <div class="howList card">
-        <div class="howItem">
-          <div class="howNum">1</div>
+      <div class="steps-list">
+        <div class="step-card">
+          <div class="step-number">1</div>
           <div>
-            <div class="howName">Take the Pre-Quiz</div>
-            <div class="howDesc">Test your current knowledge about online tracking.</div>
+            <h3>Take the Pre-Quiz</h3>
+            <p>Test your current knowledge about online tracking.</p>
           </div>
         </div>
 
-        <div class="howItem">
-          <div class="howNum">2</div>
+        <div class="step-card">
+          <div class="step-number">2</div>
           <div>
-            <div class="howName">Browse Round 1</div>
-            <div class="howDesc">Explore a simulated news feed while behavior is recorded.</div>
+            <h3>Browse Round 1</h3>
+            <p>Explore a simulated news feed while we silently track your behavior.</p>
           </div>
         </div>
 
-        <div class="howItem">
-          <div class="howNum">3</div>
+        <div class="step-card">
+          <div class="step-number">3</div>
           <div>
-            <div class="howName">View Report 1</div>
-            <div class="howDesc">See what was collected and what it could reveal.</div>
+            <h3>View Report 1</h3>
+            <p>See exactly what data was collected and what it reveals about you.</p>
           </div>
         </div>
 
-        <div class="howItem">
-          <div class="howNum">4</div>
+        <div class="step-card">
+          <div class="step-number">4</div>
           <div>
-            <div class="howName">Browse Round 2</div>
-            <div class="howDesc">Try again with strategies to reduce exposure.</div>
+            <h3>Browse Round 2</h3>
+            <p>Try again, but this time with awareness — can you reduce your exposure?</p>
           </div>
         </div>
 
-        <div class="howItem">
-          <div class="howNum">5</div>
+        <div class="step-card">
+          <div class="step-number">5</div>
           <div>
-            <div class="howName">Compare Results</div>
-            <div class="howDesc">See how your behavior changed from Round 1 → Round 2.</div>
+            <h3>Compare Results</h3>
+            <p>See how your behavior changed and what you learned.</p>
           </div>
         </div>
 
-        <div class="howItem">
-          <div class="howNum">6</div>
+        <div class="step-card">
+          <div class="step-number">6</div>
           <div>
-            <div class="howName">Take the Post-Quiz</div>
-            <div class="howDesc">Measure how your understanding improved.</div>
+            <h3>Take the Post-Quiz</h3>
+            <p>Measure how much your understanding has improved.</p>
           </div>
         </div>
-      </div>
 
-      <div class="warning card">
-        <div class="warningIcon">⚠️</div>
-        <div class="warningBody">
-          <div class="warningTitle">This is Educational</div>
-          <div class="warningText">
-            The tracking shown here is a simplified demo. Real-world tracking can be more pervasive and harder to notice.
-            This experience is designed to help UW students think critically about online privacy.
+        <div class="step-card">
+          <div class="step-number">7</div>
+          <div>
+            <h3>Review Resources</h3>
+            <p>Look over curated resources and tools based on your session.</p>
           </div>
         </div>
       </div>
     </section>
-  </div>
 
-  <script src="assets/app.js"></script>
+    <!-- WARNING -->
+    <section class="warning-section">
+      <div class="container">
+        <div class="warning-box">
+          <div class="warning-icon">⚠</div>
+          <div>
+            <h3>For Educational Purposes Only</h3>
+            <p>
+              This experience was designed by UW students for a capstone project.
+              The tracking demonstrated in this app is a simplified version of
+              real-world practices. Actual data collection by companies is far more
+              sophisticated and pervasive. This experience is designed to help UW
+              students understand and think critically about online privacy.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+      <div class="container final-cta-inner">
+        <h2>Ready to see what <span>they</span> see?</h2>
+        <p>Takes about 10–15 minutes to complete</p>
+        <a class="primary-btn" href="pre-quiz.html">
+          Begin Experience <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="./assets/app.js"></script>
   <script>
-    GT.renderStepper("intro");
-    GT.initIntro();
+    if (window.GT && typeof GT.renderStepper === "function") {
+      GT.renderStepper("intro");
+    }
   </script>
 </body>
 </html>
