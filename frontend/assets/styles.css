@@ -1639,3 +1639,174 @@ main[data-resources] {
   text-align:center;
 }
 .quote strong{ color: var(--accent); }
+
+/* =========================================================
+   INDEX PAGE — DI-D hero layout
+   ========================================================= */
+
+   .did-hero {
+    position: relative;
+    min-height: 75vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 48px;
+    padding: 80px 0 72px;
+    overflow: hidden;
+  }
+  
+  /* ── Left column ── */
+  .did-left {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  
+  .did-project-name {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .did-project-accent {
+    font-family: 'Rajdhani', ui-sans-serif, sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #e8e8e8;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .did-project-d {
+    font-family: 'Rajdhani', ui-sans-serif, sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #00ff41;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .did-project-sub {
+    font-family: ui-monospace, 'Courier New', monospace;
+    font-size: 11px;
+    color: #3a6a3a;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-left: 8px;
+  }
+  
+  .did-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: ui-monospace, 'Courier New', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: #00b32c;
+    text-transform: uppercase;
+    margin-top: -12px;
+  }
+  .did-eyebrow-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff2222;
+    flex-shrink: 0;
+    animation: did-pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes did-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255,34,34,0.5); }
+    50%       { opacity: 0.6; box-shadow: 0 0 0 6px rgba(255,34,34,0); }
+  }
+  
+  .did-heading {
+    font-family: 'Rajdhani', ui-sans-serif, sans-serif;
+    font-size: clamp(44px, 5vw, 72px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #e8e8e8;
+    margin: 0;
+  }
+  .did-heading-accent {
+    color: #00ff41;
+  }
+  
+  .did-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 32px;
+    background: transparent;
+    border: 2px solid #00ff41;
+    border-radius: 4px;
+    color: #00ff41;
+    font-family: 'Rajdhani', ui-sans-serif, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    align-self: flex-start;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .did-cta:hover {
+    background: rgba(0,255,65,0.08);
+    box-shadow: 0 0 24px rgba(0,255,65,0.22);
+  }
+  .did-cta-chevron {
+    font-size: 13px;
+    opacity: 0.7;
+    letter-spacing: -0.02em;
+  }
+  
+  /* ── Right column ── */
+  .did-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .did-mission {
+    background: rgba(0,0,0,0.45);
+    border: 1px solid rgba(0,255,65,0.14);
+    border-radius: 8px;
+    padding: 20px 22px;
+  }
+  .did-mission-label {
+    font-family: ui-monospace, 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: #3a6a3a;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+  }
+  .did-mission-title {
+    font-family: 'Rajdhani', ui-sans-serif, sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #e8e8e8;
+    margin: 0 0 10px;
+  }
+  .did-mission-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.55);
+    margin: 0;
+  }
+  
+  /* ── Session log (sr-*) sits inside .did-right naturally ── */
+  /* Force the log to full width inside right col */
+  .did-right .sr-wrap {
+    width: 100%;
+  }
+  
+  @media (max-width: 860px) {
+    .did-hero {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .did-right {
+      order: -1;
+    }
+  }
+  

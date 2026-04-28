@@ -920,6 +920,97 @@
     }
   });
 
+  // ---------- SESSION LOG ----------
+function initSessionLog() {
+  const body    = document.getElementById('sr-body');
+  const counter = document.getElementById('sr-count');
+  const evCount = document.getElementById('sr-ev-count');
+  const cx      = document.getElementById('sr-cx');
+  const cy      = document.getElementById('sr-cy');
+
+  if (!body) return;
+
+  const startTime = Date.now();
+  let eventCount  = 0;
+  const lastLog   = { mouse: 0, scroll: 0, hover: 0 };
+  const THROTTLE  = { mouse: 5000, scroll: 1200, hover: 5000 };
+
+  function fmtTime(ms) {
+    const cs  = Math.floor(ms / 10) % 100;
+    const sec = Math.floor(ms / 1000) % 60;
+    const min = Math.floor(ms / 60000);
+    return [min, sec, cs].map(n => String(n).padStart(2, '0')).join(':');
+  }
+
+  function addEntry(type, message) {
+    eventCount++;
+    const ts  = fmtTime(Date.now() - startTime);
+    const row = document.createElement('div');
+    row.className = 'sr-row';
+    row.innerHTML =
+      `<span class="sr-ts">${ts}</span>` +
+      `<span class="sr-type sr-type-${type}">(${type})</span>` +
+      `<span class="sr-msg">${message}</span>`;
+    const cursor = body.querySelector('.sr-cursor-blink');
+    body.insertBefore(row, cursor);
+    body.scrollTop = body.scrollHeight;
+    if (counter) counter.textContent = eventCount + ' event' + (eventCount === 1 ? '' : 's');
+    if (evCount) evCount.textContent = eventCount;
+  }
+
+  setTimeout(() => addEntry('INIT',  'Session replay initialized...'), 80);
+  setTimeout(() => addEntry('LOAD',  'Page fully loaded'), 480);
+  setTimeout(() => addEntry('TRACK', 'Mouse tracking enabled'), 820);
+
+  window.addEventListener('mousemove', function(e) {
+    if (cx) cx.textContent = Math.round(e.clientX);
+    if (cy) cy.textContent = Math.round(e.clientY);
+    const now = Date.now();
+    if (now - lastLog.mouse >= THROTTLE.mouse) {
+      lastLog.mouse = now;
+      addEntry('MOUSE', 'cursor at (' + e.clientX + ', ' + e.clientY + ')');
+    }
+  }, { passive: true });
+
+  window.addEventListener('click', function(e) {
+    addEntry('CLICK', 'clicked at (' + e.clientX + ', ' + e.clientY + ')');
+  });
+
+  window.addEventListener('scroll', function() {
+    const now = Date.now();
+    if (now - lastLog.scroll >= THROTTLE.scroll) {
+      lastLog.scroll = now;
+      addEntry('SCROLL', 'scroll offset ' + Math.round(window.scrollY) + 'px');
+    }
+  }, { passive: true });
+
+  document.addEventListener('mouseenter', function(e) {
+    const tag = e.target?.tagName?.toLowerCase();
+    if (!['a','button','input','select','textarea'].includes(tag)) return;
+    const now = Date.now();
+    if (now - lastLog.hover >= THROTTLE.hover) {
+      lastLog.hover = now;
+      const label = (e.target.textContent || '').trim().slice(0, 30) || tag;
+      addEntry('HOVER', 'hovering "' + label + '"');
+    }
+  }, true);
+}
+
+// ---------- INTRO ----------
+function initIntro() {
+  applyTopbarPaddingFix();
+  renderStepper("intro");
+  initSessionLog();
+
+  const btn = qs("[data-begin]");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      setDone("intro", true);
+      window.location.href = "pre-quiz.html";
+    });
+  }
+}
+
   // ---------- expose API ----------
   const GT = {
     renderStepper,
@@ -932,6 +1023,7 @@
     initQuizComparison,
     initRecommendations,
     initResources,
+    initSessionLog,
     loadState,
     saveState,
     setDone,
@@ -946,3 +1038,4 @@
   window.initReport = (round = 1) => initReport(Number(round) || 1);
   window.initBrowse = (round = 1) => initBrowse(Number(round) || 1);
 })();
+
