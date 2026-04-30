@@ -464,120 +464,566 @@
   }
 
   // ---------- BROWSE ----------
-  function initBrowse(round) {
-    applyTopbarPaddingFix();
+  // ---------- BROWSE ----------
+function initBrowse(round) {
+  applyTopbarPaddingFix();
 
-    const root = qs("[data-browse]") || document.body;
-    const pageRound = Number(root.dataset.round || round || 1);
-    const key = pageRound === 1 ? "browse1" : "browse2";
+  const root = qs("[data-browse]") || document.body;
+  const pageRound = Number(root.dataset.round || round || 1);
+  const key = pageRound === 1 ? "browse1" : "browse2";
 
-    if (root.dataset.gtWiredBrowse === String(pageRound)) return;
-    root.dataset.gtWiredBrowse = String(pageRound);
+  if (root.dataset.gtWiredBrowse === String(pageRound)) return;
+  root.dataset.gtWiredBrowse = String(pageRound);
 
-    renderStepper(pageRound === 1 ? "b1" : "b2");
+  renderStepper(pageRound === 1 ? "b1" : "b2");
 
-    const startTime = Date.now();
+  const startTime = Date.now();
+  let clicks = 0;
+  let opened = 0;
+  let hoverCount = 0;
+  const openedTopics = new Set();
 
-    let clicks = 0;
-    let opened = 0;
-    let hoverCount = 0;
-    const openedTopics = new Set();
+  // ── Privacy state ──────────────────────────────────────
+  const privacy = {
+    vpn: false,
+    blocker: false,
+    cookiesAccepted: null, // 'all' | 'custom' | 'essential'
+    cookieScore: 0,        // penalty added to exposure
+    blockerBlocked: 0,
+    adHoverCount: 0,
+  };
+  window._gtPrivacy = privacy;
 
-    const elClicks = qs("[data-clicks]");
-    const elArticles = qs("[data-articles]");
-    const elTime = qs("[data-time]");
-    const elTip = qs("[data-tip]");
+  // ── Stat refs ──────────────────────────────────────────
+  const elClicks   = qs("[data-clicks]");
+  const elArticles = qs("[data-articles]");
+  const elTime     = qs("[data-time]");
+  const elTip      = qs("[data-tip]");
 
-    function updateTopStats() {
-      if (elClicks) elClicks.textContent = String(clicks);
-      if (elArticles) elArticles.textContent = String(opened);
-
-      if (elTime) {
-        const sec = Math.floor((Date.now() - startTime) / 1000);
-        const mm = String(Math.floor(sec / 60));
-        const ss = String(sec % 60).padStart(2, "0");
-        elTime.textContent = `${mm}:${ss}`;
-      }
+  function updateTopStats() {
+    if (elClicks)   elClicks.textContent   = String(clicks);
+    if (elArticles) elArticles.textContent = String(opened);
+    if (elTime) {
+      const sec = Math.floor((Date.now() - startTime) / 1000);
+      elTime.textContent = `${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`;
     }
+  }
+  const timer = setInterval(updateTopStats, 1000);
 
-    const timer = setInterval(updateTopStats, 1000);
-
-    qsa("[data-card]").forEach((card) => {
+  // ── Card interactions ──────────────────────────────────
+  function wireCards() {
+    qsa("[data-card]").forEach(card => {
       let entered = false;
-
       card.addEventListener("mouseenter", () => {
         if (entered) return;
         entered = true;
-        hoverCount += 1;
+        hoverCount++;
+
+        // Ad hover hint (round 1 only, non-blocker)
+        if (pageRound === 1 && !privacy.blocker && card.classList.contains("sponsored")) {
+          privacy.adHoverCount++;
+          if (privacy.adHoverCount === 2) showBlockerHint();
+        }
+
+        // Tracker dot (round 1 only, no blocker, accept-all cookies)
+        if (pageRound === 1 && !privacy.blocker && privacy.cookiesAccepted === "all") {
+          spawnTrackerDot();
+        }
       });
 
       card.addEventListener("click", () => {
-        clicks += 1;
-        opened += 1;
-
-        const topic =
-          card.dataset.topic ||
-          card.querySelector(".pill")?.textContent?.trim() ||
-          "General";
-
+        clicks++;
+        opened++;
+        const topic = card.dataset.topic ||
+          card.querySelector(".pill")?.textContent?.trim() || "General";
         openedTopics.add(topic);
-
         if (elTip && pageRound === 2) {
           elTip.classList.add("show");
           setTimeout(() => elTip.classList.remove("show"), 2500);
         }
-
         updateTopStats();
       });
     });
+  }
 
-    const btnFinish = qs("[data-finish]");
-    if (btnFinish) {
-      btnFinish.addEventListener("click", () => {
-        clearInterval(timer);
+  // ── Tracker dot visual ─────────────────────────────────
+  function spawnTrackerDot() {
+    const d = document.createElement("div");
+    d.className = "tracker-dot";
+    d.style.left = (Math.random() * window.innerWidth)  + "px";
+    d.style.top  = (Math.random() * window.innerHeight) + "px";
+    document.body.appendChild(d);
+    setTimeout(() => d.remove(), 1800);
+  }
 
-        const sec = Math.floor((Date.now() - startTime) / 1000);
-        const topics = Array.from(openedTopics);
-        const categories = topics.length;
+  // ── Browser chrome ─────────────────────────────────────
+  function buildBrowserChrome() {
+    const existing = qs(".browser-chrome");
+    if (existing) return; // already built by HTML
 
-        const exposureScore = Math.min(
-          100,
-          Math.round(clicks * 12 + opened * 14 + hoverCount * 4 + sec * 0.16 + categories * 10)
-        );
+    const trackingBar = qs(".tracking-bar");
+    const chrome = document.createElement("div");
+    chrome.className = "browser-chrome";
+    chrome.innerHTML = `
+      <div class="browser-chrome-inner">
+        <div class="browser-address-bar">
+          <span class="browser-lock">🔒</span>
+          <span class="browser-url">newsfeed.example.com</span>
+        </div>
+        <div class="browser-chips">
+          <span class="browser-chip" id="chip-vpn" title="VPN / Secure tunnel">🛡 VPN</span>
+          <div class="ext-wrap">
+            <span class="browser-chip" id="chip-ext" title="Extensions">🧩 Extensions</span>
+            <div class="ext-dropdown" id="ext-dropdown">
+              <div class="ext-dropdown-title">Browser extensions</div>
+              <div class="ext-row" id="ext-blocker-row">
+                <div class="ext-row-left">
+                  <div class="ext-icon">🛡</div>
+                  <div>
+                    <div class="ext-name">Shield Blocker</div>
+                    <div class="ext-desc">Block ads &amp; trackers</div>
+                  </div>
+                </div>
+                <button class="ext-toggle" id="ext-blocker-toggle" title="Toggle blocker"></button>
+              </div>
+            </div>
+          </div>
+          <span class="browser-chip" id="chip-cookies" title="Cookie status">🍪 Cookies</span>
+        </div>
+      </div>`;
 
-        const st = loadState();
-        st[key] = {
-          done: true,
-          clicks,
-          articlesOpened: opened,
-          hoverEvents: hoverCount,
-          timeSpentSec: sec,
-          categories,
-          topics,
-          exposureScore,
-        };
-        saveState(st);
+    if (trackingBar) {
+      trackingBar.insertAdjacentElement("afterend", chrome);
+    } else {
+      document.body.prepend(chrome);
+    }
 
-        setDone(pageRound === 1 ? "b1" : "b2", true);
+    // VPN chip click
+    qs("#chip-vpn").addEventListener("click", () => {
+      if (pageRound === 1) {
+        // Round 1 — VPN wasn't enabled at Wi-Fi step, show reminder
+        showToast("Enable a secure connection before browsing — try Round 2.", "info");
+        return;
+      }
+      privacy.vpn = !privacy.vpn;
+      qs("#chip-vpn").classList.toggle("chip-active-vpn", privacy.vpn);
+      qs("#chip-vpn").textContent = privacy.vpn ? "🛡 Secure tunnel active" : "🛡 VPN";
+      showToast(privacy.vpn ? "Secure tunnel active — IP masked." : "VPN disconnected.", privacy.vpn ? "ok" : "info");
+    });
 
-        window.location.href = pageRound === 1 ? "report1.html" : "report2.html";
+    // Extensions dropdown toggle
+    qs("#chip-ext").addEventListener("click", (e) => {
+      e.stopPropagation();
+      qs("#ext-dropdown").classList.toggle("open");
+    });
+    document.addEventListener("click", () => qs("#ext-dropdown")?.classList.remove("open"));
+
+    // Ad blocker toggle
+    const blockerToggle = qs("#ext-blocker-toggle");
+    blockerToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      privacy.blocker = !privacy.blocker;
+      blockerToggle.classList.toggle("on", privacy.blocker);
+      qs("#chip-ext").classList.toggle("chip-active-block", privacy.blocker);
+      applyBlocker();
+      showToast(
+        privacy.blocker
+          ? `Blocker ON — ${countBlockable()} items hidden.`
+          : "Blocker disabled — ads and trackers restored.",
+        privacy.blocker ? "ok" : "info"
+      );
+    });
+  }
+
+  function applyBlocker() {
+    qsa(".ad-slot, .article-card.sponsored").forEach(el => {
+      if (privacy.blocker) {
+        el.classList.add("blocked");
+        privacy.blockerBlocked++;
+      } else {
+        el.classList.remove("blocked");
+      }
+    });
+    // Update cookie chip
+    updateCookieChip();
+  }
+
+  function countBlockable() {
+    return qsa(".ad-slot, .article-card.sponsored").length;
+  }
+
+  function updateCookieChip() {
+    const chip = qs("#chip-cookies");
+    if (!chip) return;
+    if (privacy.cookiesAccepted === "all") {
+      chip.className = "browser-chip chip-active-cookies";
+      chip.textContent = "🍪 All cookies active";
+    } else if (privacy.cookiesAccepted === "essential") {
+      chip.className = "browser-chip chip-active-vpn";
+      chip.textContent = "🍪 Essential only";
+    } else if (privacy.cookiesAccepted === "custom") {
+      chip.className = "browser-chip";
+      chip.textContent = "🍪 Custom cookies";
+    } else {
+      chip.className = "browser-chip";
+      chip.textContent = "🍪 Cookies";
+    }
+  }
+
+  // ── Toast helper ───────────────────────────────────────
+  function showToast(msg, type) {
+    let t = qs(".gt-toast");
+    if (!t) {
+      t = document.createElement("div");
+      t.className = "gt-toast";
+      t.style.cssText = `
+        position:fixed;bottom:90px;left:50%;transform:translateX(-50%);
+        padding:10px 18px;border-radius:10px;font-size:13px;font-weight:700;
+        z-index:9000;pointer-events:none;transition:opacity 0.3s;
+        font-family:ui-monospace,monospace;letter-spacing:0.06em;`;
+      document.body.appendChild(t);
+    }
+    const colors = {
+      ok:   "background:#0d2e1a;border:1px solid #22c55e;color:#22c55e;",
+      info: "background:#0d1117;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.75);",
+      warn: "background:#2e1a0d;border:1px solid #fbbf24;color:#fbbf24;",
+    };
+    t.style.cssText += colors[type] || colors.info;
+    t.textContent = msg;
+    t.style.opacity = "1";
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => { t.style.opacity = "0"; }, 2800);
+  }
+
+  // ── Cookie banner ──────────────────────────────────────
+  function buildCookieBanner() {
+    const banner = document.createElement("div");
+    banner.className = "cookie-banner";
+    banner.id = "cookie-banner";
+    banner.innerHTML = `
+      <div class="cookie-banner-top">
+        <div>
+          <div class="cookie-banner-title">🍪 This site uses cookies</div>
+          <p class="cookie-banner-text">
+            We use cookies and similar technologies to personalise content, analyse traffic,
+            serve targeted ads, and improve your experience. By clicking "Accept All" you
+            consent to our use of all cookies.
+          </p>
+        </div>
+      </div>
+      <div class="cookie-btn-row">
+        <button class="cookie-accept-all" id="cookie-accept-all">Accept All</button>
+        <button class="cookie-manage" id="cookie-manage">Manage Preferences</button>
+        <button class="cookie-reject" id="cookie-reject">Reject non-essential</button>
+      </div>`;
+    document.body.appendChild(banner);
+
+    // Prefs modal
+    const prefsOverlay = document.createElement("div");
+    prefsOverlay.className = "cookie-prefs-overlay";
+    prefsOverlay.id = "cookie-prefs-overlay";
+    prefsOverlay.innerHTML = `
+      <div class="cookie-prefs-modal">
+        <div class="cookie-prefs-title">Cookie Preferences</div>
+        <p class="cookie-prefs-sub">
+          Manage which cookies you allow. Note: turning off analytics and advertising
+          cookies takes a few extra steps — just like real consent flows.
+        </p>
+        <div class="cookie-pref-row">
+          <div>
+            <div class="cookie-pref-label">Strictly Necessary</div>
+            <div class="cookie-pref-desc">Required for the site to function. Cannot be disabled.</div>
+          </div>
+          <button class="cookie-pref-toggle on" disabled></button>
+        </div>
+        <div class="cookie-pref-row">
+          <div>
+            <div class="cookie-pref-label">Analytics Cookies</div>
+            <div class="cookie-pref-desc">Help us understand how visitors interact with the site.</div>
+          </div>
+          <button class="cookie-pref-toggle on" id="pref-analytics"></button>
+        </div>
+        <div class="cookie-pref-row">
+          <div>
+            <div class="cookie-pref-label">Advertising Cookies</div>
+            <div class="cookie-pref-desc">Used to serve personalised advertisements.</div>
+          </div>
+          <button class="cookie-pref-toggle on" id="pref-ads"></button>
+        </div>
+        <div class="cookie-pref-row">
+          <div>
+            <div class="cookie-pref-label">Social Media Cookies</div>
+            <div class="cookie-pref-desc">Enable sharing features and social platform tracking.</div>
+          </div>
+          <button class="cookie-pref-toggle on" id="pref-social"></button>
+        </div>
+        <button class="cookie-prefs-save" id="cookie-prefs-save">Save Preferences</button>
+      </div>`;
+    document.body.appendChild(prefsOverlay);
+
+    // Wire toggles inside prefs
+    ["pref-analytics","pref-ads","pref-social"].forEach(id => {
+      const btn = qs("#" + id);
+      btn.addEventListener("click", () => btn.classList.toggle("on"));
+    });
+
+    setTimeout(() => banner.classList.add("show"), 1200);
+
+    qs("#cookie-accept-all").addEventListener("click", () => {
+      privacy.cookiesAccepted = "all";
+      privacy.cookieScore = 30; // big exposure penalty
+      banner.classList.remove("show");
+      updateCookieChip();
+      showToast("All cookies accepted. Tracking scripts active.", "warn");
+      if (pageRound === 1) {
+        setTimeout(() => showNewsletterPopup(), 6000);
+      }
+    });
+
+    qs("#cookie-manage").addEventListener("click", () => {
+      prefsOverlay.classList.add("show");
+    });
+
+    qs("#cookie-reject").addEventListener("click", () => {
+      privacy.cookiesAccepted = "essential";
+      privacy.cookieScore = 0;
+      banner.classList.remove("show");
+      updateCookieChip();
+      showToast("Non-essential cookies rejected. Good choice.", "ok");
+    });
+
+    qs("#cookie-prefs-save").addEventListener("click", () => {
+      const analytics = qs("#pref-analytics").classList.contains("on");
+      const ads       = qs("#pref-ads").classList.contains("on");
+      const social    = qs("#pref-social").classList.contains("on");
+      const anyOn     = analytics || ads || social;
+      privacy.cookiesAccepted = anyOn ? "custom" : "essential";
+      privacy.cookieScore = (analytics ? 10 : 0) + (ads ? 12 : 0) + (social ? 8 : 0);
+      prefsOverlay.classList.remove("show");
+      banner.classList.remove("show");
+      updateCookieChip();
+      showToast(
+        anyOn
+          ? `Saved — ${[analytics && "analytics", ads && "ads", social && "social"].filter(Boolean).join(", ")} cookies active.`
+          : "All optional cookies disabled.",
+        anyOn ? "info" : "ok"
+      );
+    });
+  }
+
+  // ── Newsletter popup (round 1, after accept all) ───────
+  function showNewsletterPopup() {
+    if (privacy.blocker) return;
+    const popup = document.createElement("div");
+    popup.className = "newsletter-popup show";
+    popup.innerHTML = `
+      <button class="newsletter-close" id="nl-close">✕</button>
+      <div class="newsletter-title">📬 Stay in the loop!</div>
+      <p class="newsletter-text">Get breaking news and personalised recommendations delivered daily.</p>
+      <input class="newsletter-input" type="email" placeholder="your@email.com" />
+      <button class="newsletter-sub">Subscribe Free</button>`;
+    document.body.appendChild(popup);
+    qs("#nl-close").addEventListener("click", () => popup.remove());
+    setTimeout(() => popup.remove(), 12000);
+
+    // Hint for round 1
+    setTimeout(showBlockerHint, 3000);
+  }
+
+  // ── Blocker hint ───────────────────────────────────────
+  let hintShown = false;
+  function showBlockerHint() {
+    if (hintShown || privacy.blocker) return;
+    hintShown = true;
+    const h = document.createElement("div");
+    h.className = "blocker-hint show";
+    h.textContent = "Too many popups? Check browser extensions 🧩";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 5000);
+  }
+
+  // ── Wi-Fi modal ────────────────────────────────────────
+  function showWifiModal(onConnect) {
+    const overlay = document.createElement("div");
+    overlay.className = "wifi-overlay";
+
+    if (pageRound === 1) {
+      overlay.innerHTML = `
+        <div class="wifi-modal">
+          <div class="wifi-modal-icon">📶</div>
+          <div class="wifi-modal-title">Join Network</div>
+          <p class="wifi-modal-sub">A network is available in your area.</p>
+          <div class="wifi-network-row">
+            <div>
+              <div class="wifi-network-name">CoffeeShop_Free_WiFi</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.40);margin-top:2px;">No password required</div>
+            </div>
+            <span class="wifi-network-tag wifi-tag-open">OPEN</span>
+          </div>
+          <div class="wifi-btn-row">
+            <button class="wifi-btn-connect" id="wifi-join">Connect Now</button>
+            <p class="wifi-btn-note">Traffic on this network may be visible to others</p>
+          </div>
+        </div>`;
+      overlay.querySelector("#wifi-join").addEventListener("click", () => {
+        privacy.vpn = false;
+        overlay.remove();
+        onConnect();
+      });
+    } else {
+      overlay.innerHTML = `
+        <div class="wifi-modal">
+          <div class="wifi-modal-icon">📶</div>
+          <div class="wifi-modal-title">Join Network</div>
+          <p class="wifi-modal-sub">The same open network is available. How do you want to connect?</p>
+          <div class="wifi-network-row">
+            <div>
+              <div class="wifi-network-name">CoffeeShop_Free_WiFi</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.40);margin-top:2px;">No password required · Open network</div>
+            </div>
+            <span class="wifi-network-tag wifi-tag-open">OPEN</span>
+          </div>
+          <div class="wifi-btn-row">
+            <button class="wifi-btn-secure" id="wifi-secure">🛡 Secure connection first</button>
+            <button class="wifi-btn-connect" id="wifi-insecure">Connect without VPN</button>
+          </div>
+        </div>`;
+      overlay.querySelector("#wifi-secure").addEventListener("click", () => {
+        privacy.vpn = true;
+        overlay.remove();
+        onConnect();
+        setTimeout(() => {
+          const chip = qs("#chip-vpn");
+          if (chip) {
+            chip.classList.add("chip-active-vpn");
+            chip.textContent = "🛡 Secure tunnel active";
+          }
+          showToast("VPN active — your traffic is encrypted and your IP is masked.", "ok");
+        }, 300);
+      });
+      overlay.querySelector("#wifi-insecure").addEventListener("click", () => {
+        privacy.vpn = false;
+        overlay.remove();
+        onConnect();
       });
     }
 
+    document.body.appendChild(overlay);
+  }
+
+  // ── Round 2 hint bar ───────────────────────────────────
+  function injectR2HintBar() {
+    if (pageRound !== 2) return;
+    const bar = document.createElement("div");
+    bar.className = "r2-hint-bar";
+    bar.textContent = "▲ Round 2 — Try the VPN, blocker, and cookie settings to reduce your exposure";
+    const trackingBar = qs(".tracking-bar");
+    if (trackingBar) trackingBar.insertAdjacentElement("afterend", bar);
+    else document.body.prepend(bar);
+  }
+
+  // ── Inject ad slots into feed ──────────────────────────
+  function injectAdSlots() {
+    const grid = qs(".feed-grid");
+    if (!grid) return;
+
+    const adData = [
+      { content: "✦ Sponsored: VPN deals tailored to your browsing — Save 60% today", badge: "Ad" },
+      { content: "✦ Promoted: Based on your interests — Shop the latest tech", badge: "Sponsored" },
+    ];
+
+    adData.forEach((ad, i) => {
+      const slot = document.createElement("div");
+      slot.className = "ad-slot";
+      slot.setAttribute("data-ad", "1");
+      slot.innerHTML = `
+        <div>
+          <div class="ad-slot-label">Advertisement</div>
+          <div class="ad-slot-content">${ad.content}</div>
+        </div>
+        <span class="ad-slot-badge">${ad.badge}</span>`;
+      // Insert after card 2 and card 5
+      const cards = qsa("[data-card]", grid);
+      const after = cards[i === 0 ? 1 : 4];
+      if (after) after.insertAdjacentElement("afterend", slot);
+      else grid.appendChild(slot);
+    });
+
+    // Mark a card as sponsored
+    const firstCard = qs("[data-card]", grid);
+    if (firstCard) {
+      firstCard.classList.add("sponsored");
+      const tag = document.createElement("span");
+      tag.className = "sponsored-tag";
+      tag.textContent = "Sponsored";
+      firstCard.style.position = "relative";
+      firstCard.appendChild(tag);
+    }
+  }
+
+  // ── Finish ─────────────────────────────────────────────
+  const btnFinish = qs("[data-finish]");
+  if (btnFinish) {
+    btnFinish.addEventListener("click", () => {
+      clearInterval(timer);
+
+      const sec = Math.floor((Date.now() - startTime) / 1000);
+      const topics = Array.from(openedTopics);
+      const categories = topics.length;
+
+      // Base score
+      let exposureScore = Math.round(
+        clicks * 12 + opened * 14 + hoverCount * 4 + sec * 0.16 + categories * 10
+      );
+
+      // Cookie penalty
+      exposureScore += privacy.cookieScore;
+
+      // VPN reduction
+      if (privacy.vpn) exposureScore = Math.round(exposureScore * 0.72);
+
+      // Blocker reduction
+      if (privacy.blocker) exposureScore = Math.round(exposureScore * 0.78);
+
+      // Essential-only cookies reduction
+      if (privacy.cookiesAccepted === "essential") exposureScore = Math.round(exposureScore * 0.85);
+
+      exposureScore = Math.min(100, Math.max(0, exposureScore));
+
+      const st = loadState();
+      st[key] = {
+        done: true,
+        clicks,
+        articlesOpened: opened,
+        hoverEvents: hoverCount,
+        timeSpentSec: sec,
+        categories,
+        topics,
+        exposureScore,
+        privacy: {
+          vpn: privacy.vpn,
+          blocker: privacy.blocker,
+          cookiesAccepted: privacy.cookiesAccepted,
+          blockerBlocked: privacy.blockerBlocked,
+          cookieScore: privacy.cookieScore,
+        },
+      };
+      saveState(st);
+      setDone(pageRound === 1 ? "b1" : "b2", true);
+      window.location.href = pageRound === 1 ? "report1.html" : "report2.html";
+    });
+  }
+
+  // ── Boot sequence ──────────────────────────────────────
+  showWifiModal(() => {
+    buildBrowserChrome();
+    injectR2HintBar();
+    injectAdSlots();
+    wireCards();
+    buildCookieBanner();
     updateTopStats();
-  }
-
-  function initMissionScreen(stepId, nextHref) {
-    applyTopbarPaddingFix();
-    renderStepper(stepId);
-
-    const btn = qs("[data-begin-browse]");
-    if (btn) {
-      btn.addEventListener("click", () => {
-        window.location.href = nextHref;
-      });
-    }
-  }
+  });
+}
 
   // ---------- REPORT ----------
   function clamp(n, a, b) {

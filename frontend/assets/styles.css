@@ -1810,3 +1810,1086 @@ main[data-resources] {
     }
   }
   
+  /* =========================================================
+   BROWSE PAGE ENHANCEMENTS — Cookie, VPN, Ad Blocker
+   ========================================================= */
+
+/* ── Wi-Fi Modal (shown before browse starts) ── */
+.wifi-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wifi-modal {
+  background: #0d1117;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 16px;
+  padding: 28px 28px 24px;
+  width: min(460px, calc(100% - 40px));
+  box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+}
+.wifi-modal-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+.wifi-modal-title {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0 0 6px;
+}
+.wifi-modal-sub {
+  color: rgba(255,255,255,0.55);
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0 0 20px;
+}
+.wifi-network-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  margin-bottom: 10px;
+}
+.wifi-network-name {
+  font-weight: 700;
+  font-size: 14px;
+}
+.wifi-network-tag {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+.wifi-tag-open {
+  background: rgba(239,68,68,0.12);
+  border: 1px solid rgba(239,68,68,0.30);
+  color: #ff6b6b;
+}
+.wifi-tag-secure {
+  background: rgba(34,197,94,0.12);
+  border: 1px solid rgba(34,197,94,0.28);
+  color: #22c55e;
+}
+.wifi-btn-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+.wifi-btn-connect {
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  border: 1px solid rgba(239,68,68,0.30);
+  background: rgba(239,68,68,0.08);
+  color: #ff6b6b;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.wifi-btn-connect:hover { background: rgba(239,68,68,0.14); }
+.wifi-btn-secure {
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  border: 1px solid rgba(34,197,94,0.30);
+  background: rgba(34,197,94,0.08);
+  color: #22c55e;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.wifi-btn-secure:hover { background: rgba(34,197,94,0.14); }
+.wifi-btn-note {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+  margin: 4px 0 0;
+}
+
+/* ── Browser chrome bar ── */
+.browser-chrome {
+  position: sticky;
+  top: var(--topbar-h);
+  z-index: 70;
+  background: #0d1117;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  padding: 8px 0;
+}
+.browser-chrome-inner {
+  width: min(var(--container), calc(100% - 48px));
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.browser-address-bar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+}
+.browser-lock {
+  font-size: 12px;
+  opacity: 0.5;
+}
+.browser-url { opacity: 0.6; }
+
+.browser-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.browser-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.55);
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, color 0.18s;
+  white-space: nowrap;
+}
+.browser-chip:hover {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.80);
+}
+.browser-chip.chip-active-vpn {
+  border-color: rgba(34,197,94,0.35);
+  background: rgba(34,197,94,0.08);
+  color: #22c55e;
+}
+.browser-chip.chip-active-block {
+  border-color: rgba(99,179,237,0.35);
+  background: rgba(99,179,237,0.08);
+  color: #63b3ed;
+}
+.browser-chip.chip-active-cookies {
+  border-color: rgba(251,191,36,0.35);
+  background: rgba(251,191,36,0.08);
+  color: #fbbf24;
+}
+
+/* Extensions dropdown */
+.ext-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 240px;
+  background: #0d1117;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+  z-index: 300;
+  display: none;
+}
+.ext-dropdown.open { display: block; }
+.ext-dropdown-title {
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  padding: 4px 6px 8px;
+}
+.ext-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ext-row:hover { background: rgba(255,255,255,0.04); }
+.ext-row-left { display: flex; align-items: center; gap: 10px; }
+.ext-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  background: rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+.ext-name { font-size: 13px; font-weight: 700; }
+.ext-desc { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 1px; }
+.ext-toggle {
+  width: 34px; height: 20px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.ext-toggle::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  top: 3px; left: 3px;
+  transition: transform 0.2s;
+}
+.ext-toggle.on { background: #22c55e; }
+.ext-toggle.on::after { transform: translateX(14px); }
+
+/* ext wrapper needs relative for dropdown */
+.ext-wrap { position: relative; }
+
+/* ── Cookie Banner ── */
+.cookie-banner {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(680px, calc(100% - 32px));
+  background: #0d1117;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 16px;
+  padding: 20px 22px 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.60);
+  z-index: 400;
+  display: none;
+}
+.cookie-banner.show { display: block; }
+.cookie-banner-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.cookie-banner-title {
+  font-size: 16px;
+  font-weight: 900;
+  margin: 0 0 5px;
+}
+.cookie-banner-text {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.55;
+  margin: 0;
+}
+.cookie-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cookie-accept-all {
+  padding: 11px 22px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(180deg, #1fe27b, #18c86a);
+  color: #06120c;
+  font-weight: 900;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(34,197,94,0.22);
+  transition: filter 0.18s;
+}
+.cookie-accept-all:hover { filter: brightness(1.04); }
+.cookie-manage {
+  padding: 11px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.70);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.cookie-manage:hover { background: rgba(255,255,255,0.08); }
+.cookie-reject {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.18s;
+}
+.cookie-reject:hover { color: rgba(255,255,255,0.65); }
+
+/* Cookie preferences modal */
+.cookie-prefs-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.70);
+  z-index: 450;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.cookie-prefs-overlay.show { display: flex; }
+.cookie-prefs-modal {
+  background: #0d1117;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 16px;
+  padding: 26px 26px 22px;
+  width: min(520px, calc(100% - 40px));
+  box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+}
+.cookie-prefs-title {
+  font-size: 18px;
+  font-weight: 900;
+  margin: 0 0 6px;
+}
+.cookie-prefs-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.50);
+  margin: 0 0 20px;
+  line-height: 1.55;
+}
+.cookie-pref-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.cookie-pref-label { font-weight: 800; font-size: 14px; margin: 0 0 3px; }
+.cookie-pref-desc  { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.45; }
+.cookie-pref-toggle {
+  width: 40px; height: 22px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: background 0.2s;
+  background: rgba(255,255,255,0.12);
+}
+.cookie-pref-toggle::after {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  top: 3px; left: 3px;
+  transition: transform 0.2s;
+}
+.cookie-pref-toggle.on { background: #22c55e; }
+.cookie-pref-toggle.on::after { transform: translateX(18px); }
+.cookie-pref-toggle:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.cookie-prefs-save {
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(180deg, #1fe27b, #18c86a);
+  color: #06120c;
+  font-weight: 900;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ── Ad slots & sponsored cards ── */
+.ad-slot {
+  grid-column: 1 / -1;
+  border-radius: 12px;
+  border: 1px dashed rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.02);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  transition: opacity 0.4s, max-height 0.4s;
+  overflow: hidden;
+  max-height: 120px;
+}
+.ad-slot.blocked {
+  opacity: 0;
+  max-height: 0;
+  padding: 0;
+  border: none;
+  margin: 0;
+  pointer-events: none;
+}
+.ad-slot-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.28);
+  font-family: ui-monospace, monospace;
+}
+.ad-slot-content { font-size: 14px; color: rgba(255,255,255,0.60); }
+.ad-slot-badge {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(255,209,102,0.10);
+  border: 1px solid rgba(255,209,102,0.25);
+  color: #ffd166;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.article-card.sponsored {
+  border-color: rgba(255,209,102,0.20);
+}
+.article-card.sponsored .sponsored-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  background: rgba(255,209,102,0.12);
+  border: 1px solid rgba(255,209,102,0.25);
+  color: #ffd166;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 4;
+}
+.article-card.sponsored.blocked {
+  opacity: 0;
+  max-height: 0;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ── Newsletter popup ── */
+.newsletter-popup {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 300px;
+  background: #0d1117;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.50);
+  z-index: 380;
+  display: none;
+  animation: slide-up 0.35s ease;
+}
+.newsletter-popup.show { display: block; }
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.newsletter-close {
+  position: absolute;
+  top: 10px; right: 12px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.40);
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+}
+.newsletter-title { font-size: 15px; font-weight: 900; margin: 0 0 5px; }
+.newsletter-text  { font-size: 12px; color: rgba(255,255,255,0.50); margin: 0 0 12px; line-height: 1.5; }
+.newsletter-input {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  font-size: 13px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+.newsletter-sub {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(180deg, #1fe27b, #18c86a);
+  color: #06120c;
+  font-weight: 900;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* ── Blocker hint tooltip ── */
+.blocker-hint {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  background: #0d1117;
+  border: 1px solid rgba(99,179,237,0.25);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #63b3ed;
+  z-index: 380;
+  display: none;
+  animation: slide-up 0.3s ease;
+  max-width: 220px;
+  line-height: 1.5;
+}
+.blocker-hint.show { display: block; }
+
+/* ── Tracker overlay dots (visual noise in round 1) ── */
+.tracker-dot {
+  position: fixed;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(239,68,68,0.55);
+  pointer-events: none;
+  z-index: 9999;
+  animation: tracker-fade 1.8s ease forwards;
+}
+@keyframes tracker-fade {
+  0%   { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(2.5); }
+}
+
+/* ── Round 2 hint bar ── */
+.r2-hint-bar {
+  background: rgba(34,197,94,0.08);
+  border-bottom: 1px solid rgba(34,197,94,0.15);
+  padding: 10px 0;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(34,197,94,0.85);
+  font-family: ui-monospace, monospace;
+  letter-spacing: 0.06em;
+}
+
+/* =========================================================
+   BROWSER WINDOW — updated sizing & address bar
+   ========================================================= */
+
+/* 90% page width */
+.browser-window {
+  margin: 24px auto 48px;
+  width: 90%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Address bar with gear button at end */
+.browser-window-addressbar {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 5px 8px 5px 12px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.browser-window-url {
+  flex: 1;
+}
+
+.browser-settings-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 5px;
+  color: rgba(255,255,255,0.55);
+  cursor: pointer;
+  font-size: 14px;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: background 0.18s, color 0.18s;
+  position: relative;
+}
+.browser-settings-btn:hover {
+  background: rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.85);
+}
+
+/* Settings dropdown panel */
+.browser-settings-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 260px;
+  background: #0d1117;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.50);
+  z-index: 300;
+  display: none;
+}
+.browser-settings-dropdown.open {
+  display: block;
+}
+.browser-settings-dropdown-title {
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  padding: 4px 6px 8px;
+  font-family: ui-monospace, monospace;
+}
+
+/* Reuse ext-row styles for settings rows */
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.settings-row:hover {
+  background: rgba(255,255,255,0.04);
+}
+.settings-row-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.settings-row-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  background: rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+.settings-row-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
+}
+.settings-row-desc {
+  font-size: 11px;
+  color: rgba(255,255,255,0.40);
+  margin-top: 1px;
+}
+
+/* wrapper needs relative for dropdown */
+.browser-settings-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Remove the old browser-chrome bar entirely */
+.browser-chrome {
+  display: none !important;
+}
+
+/* Hide pills in round 1 */
+.round-1-browse .pill {
+  display: none;
+}
+
+/* =========================================================
+   BROWSER WINDOW — full fix
+   ========================================================= */
+
+   .browser-window {
+    margin: 24px auto 48px;
+    width: 90%;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  
+  .browser-window-titlebar {
+    background: #1e2025;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  
+  .browser-window-dots {
+    display: flex;
+    gap: 7px;
+    flex-shrink: 0;
+  }
+  
+  .browser-window-dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .browser-window-addressbar {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 6px;
+    padding: 5px 8px 5px 12px;
+    font-family: ui-monospace, monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .browser-window-url {
+    flex: 1;
+    color: rgba(255,255,255,0.45);
+  }
+  
+  .browser-settings-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+  
+  .browser-settings-btn {
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 5px;
+    color: rgba(255,255,255,0.60);
+    cursor: pointer;
+    font-size: 14px;
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    transition: background 0.18s, color 0.18s;
+  }
+  .browser-settings-btn:hover {
+    background: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.90);
+  }
+  
+  .browser-settings-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 260px;
+    background: #0d1117;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.50);
+    z-index: 9999;
+    display: none;
+  }
+  .browser-settings-dropdown.open {
+    display: block;
+  }
+  .browser-settings-dropdown-title {
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    padding: 4px 6px 8px;
+    font-family: ui-monospace, monospace;
+  }
+  
+  .settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .settings-row:hover {
+    background: rgba(255,255,255,0.05);
+  }
+  .settings-row-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .settings-row-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    background: rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+  .settings-row-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+  }
+  .settings-row-desc {
+    font-size: 11px;
+    color: rgba(255,255,255,0.40);
+    margin-top: 1px;
+  }
+  
+  /* ── White content area ── */
+  .browser-window-content {
+    background: #ffffff;
+    color: #111111;
+    padding: 32px 40px 48px;
+    min-height: 480px;
+  }
+  
+  .browser-window-content .feed-header {
+    margin-bottom: 24px;
+  }
+  
+  .browser-window-content .feed-title {
+    color: #111111 !important;
+    font-size: 26px;
+  }
+  
+  .browser-window-content .feed-sub {
+    color: #666666 !important;
+  }
+  
+  .browser-window-content .feed-grid {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  
+  @media (max-width: 980px) {
+    .browser-window-content .feed-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .browser-window-content .article-card {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    color: #111111 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important;
+    border-radius: 12px;
+    text-align: left;
+    width: 100%;
+  }
+  
+  .browser-window-content .article-card:hover {
+    border-color: #d1d5db !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10) !important;
+  }
+  
+  .browser-window-content .card-title {
+    color: #111111 !important;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    line-height: 1.4;
+  }
+  
+  .browser-window-content .card-desc {
+    color: #555555 !important;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0 0 10px;
+  }
+  
+  .browser-window-content .card-meta .meta {
+    color: #888888 !important;
+    font-size: 12px;
+  }
+  
+  .browser-window-content .card-content {
+    padding: 14px 16px 16px;
+  }
+  
+  .browser-window-content .card-media {
+    height: 140px;
+    background: #f3f4f6;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  /* Pill hidden in round 1 */
+  .round-1-browse .pill {
+    display: none !important;
+  }
+  
+  /* Pills visible in round 2 */
+  .browser-window-content .pill {
+    display: inline-flex;
+    align-items: center;
+    height: 20px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+    margin-bottom: 8px;
+  }
+  
+  /* Ad slots in white context */
+  .browser-window-content .ad-slot {
+    background: #fffbeb !important;
+    border: 1px dashed #f59e0b !important;
+    color: #92400e;
+    grid-column: 1 / -1;
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  
+  .browser-window-content .ad-slot-label {
+    color: #b45309 !important;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: ui-monospace, monospace;
+  }
+  
+  .browser-window-content .ad-slot-content {
+    color: #78350f !important;
+    font-size: 13px;
+  }
+  
+  .browser-window-content .ad-slot-badge {
+    background: rgba(245,158,11,0.15);
+    border: 1px solid rgba(245,158,11,0.40);
+    color: #b45309;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  
+  .browser-window-content .sponsored-tag {
+    background: rgba(245,158,11,0.12) !important;
+    border-color: rgba(245,158,11,0.35) !important;
+    color: #b45309 !important;
+  }
+  
+  /* blocked state still works */
+  .ad-slot.blocked {
+    opacity: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    margin: 0 !important;
+    pointer-events: none;
+  }
+  
+  .article-card.sponsored.blocked {
+    opacity: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  /* Kill the injected browser-chrome bar — all controls live in titlebar now */
+  .browser-chrome {
+    display: none !important;
+  }
+  /* Card media top padding */
+.browser-window-content .card-media {
+  height: 140px;
+  background: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 10px 10px 0 0;
+  margin: 10px 10px 0 10px;
+  border-bottom: none;
+}
+
+/* Feed grid — always 3 columns, cards flow naturally */
+.browser-window-content .feed-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+/* Sponsored tag sits inside card, doesn't affect layout */
+.sponsored-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  background: rgba(245,158,11,0.12);
+  border: 1px solid rgba(245,158,11,0.35);
+  color: #b45309;
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 4;
+}
+
+/* When blocker is on, sponsored tag just hides — card stays */
+.article-card.sponsored-hidden .sponsored-tag {
+  display: none;
+}
+
+/* Ad slots blocked — collapse cleanly */
+.ad-slot.blocked {
+  display: none !important;
+}
+
+/* Override old sponsored.blocked that hid the whole card */
+.article-card.sponsored.blocked {
+  opacity: 1 !important;
+  max-height: none !important;
+  padding: 0 !important;
+  border: revert !important;
+  overflow: visible !important;
+  pointer-events: auto !important;
+}
+/* Sponsored card — smooth slide when blocked */
+.article-card[data-sponsored="true"] {
+  transition: opacity 0.3s ease;
+}
+.article-card[data-sponsored="true"].sponsor-blocked {
+  display: none;
+}
