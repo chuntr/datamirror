@@ -5,96 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Browse 1</title>
   <link rel="stylesheet" href="./assets/styles.css" />
-  <style>
-    .top-progress {
-      position: relative;
-      z-index: 100;
-    }
-    .tracking-bar {
-      position: relative;
-      top: auto;
-      z-index: auto;
-    }
-    .tracking-mid {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.metric {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: ui-monospace, monospace;
-  font-size: 13px;
-  color: rgba(255,255,255,0.55);
-  white-space: nowrap;
-}
-
-/* Fixed-width number slots so text never shifts */
-[data-ui-clicks],
-[data-ui-articles] {
-  display: inline-block;
-  min-width: 3ch;
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-[data-ui-time] {
-  display: inline-block;
-  min-width: 5ch;
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-    .tracking-warning {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      font-size: 11px;
-      line-height: 1.4;
-      font-family: ui-monospace, monospace;
-      letter-spacing: 0.04em;
-    }
-    .tracking-warning-line1 { color: rgba(239,68,68,0.85); }
-    .tracking-warning-line2 { color: rgba(255,255,255,0.40); }
-    .browser-settings-btn {
-      background: transparent;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      padding: 2px 4px;
-      border-radius: 4px;
-      line-height: 1;
-      transition: background 0.18s;
-    }
-    .browser-settings-btn:hover { background: rgba(255,255,255,0.10); }
-    body.has-fixed-topbar { padding-top: 0 !important; }
-    .browse-page { padding-top: 0; }
-    .tracking-text-red {
-  color: rgba(239, 68, 68, 0.95);
-  font-family: ui-monospace, monospace;
-  font-size: 13px;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-}
-
-.tracking-dot-pulse {
-  color: #ff2222;
-  animation: tracking-pulse 1.8s ease-in-out infinite;
-  font-size: 10px;
-}
-
-@keyframes tracking-pulse {
-  0%, 100% {
-    opacity: 1;
-    text-shadow: 0 0 0px rgba(255,34,34,0.8), 0 0 8px rgba(255,34,34,0.6);
-  }
-  50% {
-    opacity: 0.4;
-    text-shadow: 0 0 0px rgba(255,34,34,0), 0 0 0px rgba(255,34,34,0);
-  }
-}
-  </style>
 </head>
 
 <body>
@@ -131,9 +41,10 @@
         <span class="tracking-warning-line2">Click "Finish Browsing" when you're done.</span>
       </div>
       <div class="tracking-right">
-        <button class="btn-primary" type="button" data-finish>
-          Finish Browsing <span aria-hidden="true">→</span>
-        </button>
+        <a class="did-cta" href="#" data-finish>
+          <span class="did-cta-chevron">&gt;&gt;</span>
+          Finish Browsing
+        </a>
       </div>
     </div>
   </section>
@@ -188,7 +99,8 @@
         </div>
       </div>
 
-      <div class="browser-window-content round-1-browse">
+      <div class="browser-window-content round-1-browse" id="browser-content-area">
+
         <div class="container">
           <header class="feed-header">
             <div class="feed-title-row">
@@ -204,55 +116,66 @@
             <button class="article-card" type="button" data-card data-card-id="a1"
               data-topic="Technology" data-category="Technology" data-readtime="4 min read"
               data-sponsored="true"
-              data-title="New Smart Home Devices Are Listening More Than You Think"
-              data-body="A recent study reveals that smart speakers activate up to 19 times per day without a wake word. Researchers found background triggers, acoustic misfires, and always-on pipelines can create continuous behavioral signals. Even when audio isn't stored, metadata and interaction patterns can be used to infer routines, presence, and preferences."
+              data-title="Smart speakers are everywhere – and they're listening to more than you think"
+              data-desc="Machines that listen – such as Google Home – are now more common, but the technology can 'hear' so much more than just our voice commands."
+              data-image="./assets/images/smart-speaker.jpg"
+              data-source-url="https://theconversation.com/smart-speakers-are-everywhere-and-theyre-listening-to-more-than-you-think-114018"
+              data-source-label="The Conversation"
               data-tags="smart-home,tracking,audio">
-              <div class="card-media"></div>
+              <div class="card-media card-media--smart-speaker"></div>
               <div class="card-content">
                 <span class="pill">Technology</span>
-                <h3 class="card-title">New Smart Home Devices Are Listening More Than You Think</h3>
-                <p class="card-desc">Smart speakers activate up to 19 times per day without a wake word — here's what that data reveals.</p>
+                <h3 class="card-title">Smart speakers are everywhere – and they're listening to more than you think</h3>
+                <p class="card-desc">Machines that listen – such as Google Home – are now more common, but the technology can 'hear' so much more than just our voice commands.</p>
                 <div class="card-meta"><span class="meta">⏱ 4 min read</span></div>
               </div>
             </button>
-          
+
             <!-- Card 2 -->
             <button class="article-card" type="button" data-card data-card-id="a2"
               data-topic="Health" data-category="Health" data-readtime="3 min read"
-              data-title="Your Fitness App Knows More About You Than Your Doctor"
-              data-body="Health tracking apps often share intimate behavioral data with multiple third parties. Even without explicit identifiers, patterns like active hours, location cadence, and repeated interests can be linked back to a person through device identifiers and fingerprinting."
+              data-title="Mobile health and fitness apps pose privacy risks"
+              data-desc="Most mobile health apps can help you manage your health but often collect, share, or mishandle personal data without clear or consistent privacy protections."
+              data-image="./assets/images/Mobile-Health.jpg"
+              data-source-url="https://www.health.harvard.edu/healthy-aging-and-longevity/mobile-health-and-fitness-apps-pose-privacy-risks"
+              data-source-label="Harvard Health Publishing"
               data-tags="health,wearables,inference">
-              <div class="card-media"></div>
+              <div class="card-media card-media--health"></div>
               <div class="card-content">
                 <span class="pill">Health</span>
-                <h3 class="card-title">Your Fitness App Knows More About You Than Your Doctor</h3>
-                <p class="card-desc">Health tracking apps share intimate data with third parties — more than most users expect.</p>
+                <h3 class="card-title">Mobile health and fitness apps pose privacy risks</h3>
+                <p class="card-desc">Most mobile health apps can help you manage your health but often collect, share, or mishandle personal data without clear protections.</p>
                 <div class="card-meta"><span class="meta">⏱ 3 min read</span></div>
               </div>
             </button>
-          
+
             <!-- Card 3 -->
             <button class="article-card" type="button" data-card data-card-id="a3"
               data-topic="Shopping" data-category="Shopping" data-readtime="5 min read"
-              data-title="Online Stores Change Prices Based on Your Browsing History"
-              data-body="Dynamic pricing can adjust costs based on inferred intent. Signals like return visits, scroll depth, dwell time, and cart behavior may suggest urgency or price sensitivity — leading to different experiences across users."
+              data-title="How companies use personal data to charge different people different prices for the same product"
+              data-desc="Looking for bargains online? Who you are can affect what you pay."
+              data-image="./assets/images/Dynamic-Pricing.jpg"
+              data-source-url="https://www.cbc.ca/news/business/marketplace-online-prices-profiles-1.4414240"
+              data-source-label="CBC Marketplace"
               data-tags="shopping,pricing,behavior">
-              <div class="card-media"></div>
+              <div class="card-media card-media--pricing"></div>
               <div class="card-content">
                 <span class="pill">Shopping</span>
-                <h3 class="card-title">Online Stores Change Prices Based on Your Browsing History</h3>
-                <p class="card-desc">Dynamic pricing algorithms adjust costs based on location, device, and browsing signals.</p>
+                <h3 class="card-title">How companies use personal data to charge different people different prices for the same product</h3>
+                <p class="card-desc">Looking for bargains online? Who you are can affect what you pay.</p>
                 <div class="card-meta"><span class="meta">⏱ 5 min read</span></div>
               </div>
             </button>
-          
+
             <!-- Card 4 -->
             <button class="article-card" type="button" data-card data-card-id="a4"
               data-topic="Social Media" data-category="Social Media" data-readtime="4 min read"
               data-title="How Social Platforms Map Your Entire Social Network"
-              data-body="You might be careful about what you share online, but your friends might not be. When someone uploads contacts to a social platform, your phone number, email, and relationship to that person can become part of the platform's social graph. This shadow profile data can exist even if you've never created an account."
+              data-desc="Even if you're careful, your friends' contact uploads can expose your network relationships."
+              data-image="./assets/images/Social-Network.jpg"
+              data-ai-generated="true"
               data-tags="social media,contacts,network">
-              <div class="card-media"></div>
+              <div class="card-media card-media--social"></div>
               <div class="card-content">
                 <span class="pill">Social Media</span>
                 <h3 class="card-title">How Social Platforms Map Your Entire Social Network</h3>
@@ -260,14 +183,16 @@
                 <div class="card-meta"><span class="meta">⏱ 4 min read</span></div>
               </div>
             </button>
-          
+
             <!-- Card 5 -->
             <button class="article-card" type="button" data-card data-card-id="a5"
               data-topic="Finance" data-category="Finance" data-readtime="3 min read"
               data-title="Banks Are Using Social Media to Assess Your Creditworthiness"
-              data-body="Financial profiling can incorporate non-traditional signals. Engagement patterns, consistency of identity signals, and inferred stability may influence risk scoring — often without explicit user awareness."
+              data-desc="Online behavior can influence financial decisions through profiling and risk scoring."
+              data-image="./assets/images/banks-social-network.jpg"
+              data-ai-generated="true"
               data-tags="finance,profiling,risk">
-              <div class="card-media"></div>
+              <div class="card-media card-media--finance"></div>
               <div class="card-content">
                 <span class="pill">Finance</span>
                 <h3 class="card-title">Banks Are Using Social Media to Assess Your Creditworthiness</h3>
@@ -275,14 +200,16 @@
                 <div class="card-meta"><span class="meta">⏱ 3 min read</span></div>
               </div>
             </button>
-          
+
             <!-- Card 6 -->
             <button class="article-card" type="button" data-card data-card-id="a6"
               data-topic="Education" data-category="Education" data-readtime="4 min read"
               data-title="Student Monitoring Software Tracks More Than Cheating"
-              data-body="Proctoring tools can record eye movements, keystrokes, and device signals. Even when used for integrity, these tools can create detailed behavioral profiles of attention, stress patterns, and environment context."
+              data-desc="Proctoring tools record eye movements, keystrokes, and room signals — creating behavior profiles."
+              data-image="./assets/images/Student-Monitoring.jpg"
+              data-ai-generated="true"
               data-tags="education,proctoring,signals">
-              <div class="card-media"></div>
+              <div class="card-media card-media--education"></div>
               <div class="card-content">
                 <span class="pill">Education</span>
                 <h3 class="card-title">Student Monitoring Software Tracks More Than Cheating</h3>
@@ -290,41 +217,86 @@
                 <div class="card-meta"><span class="meta">⏱ 4 min read</span></div>
               </div>
             </button>
-          
+
           </section>
         </div>
+
+        <!-- ── Cookie banner ── -->
+        <div class="in-browser-cookie-banner" id="cookie-banner">
+          <div class="in-browser-cookie-inner">
+            <p class="in-browser-cookie-text">
+              We use cookies and similar technologies to personalise content, analyse traffic, serve targeted ads, and improve your experience. By clicking "Accept All" you consent to our use of all cookies.
+              <button class="in-browser-cookie-manage-link" id="cookie-manage-link-btn">Manage Preferences</button>
+            </p>
+            <div class="in-browser-cookie-btns">
+              <button class="in-browser-cookie-accept" id="cookie-accept-all-btn">Accept All</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Cookie preferences panel ── -->
+        <div class="in-browser-cookie-prefs" id="cookie-prefs-panel" hidden>
+          <div class="in-browser-cookie-prefs-inner">
+            <h3 class="in-browser-prefs-title">Cookie Preferences</h3>
+            <p class="in-browser-prefs-sub">Choose which cookies you allow. Essential cookies are always active.</p>
+            <div class="in-browser-pref-row">
+              <div><div class="in-browser-pref-label">Essential</div><div class="in-browser-pref-desc">Required for the site to function. Cannot be disabled.</div></div>
+              <button class="cookie-pref-toggle on" disabled></button>
+            </div>
+            <div class="in-browser-pref-row">
+              <div><div class="in-browser-pref-label">Analytics</div><div class="in-browser-pref-desc">Helps us understand how visitors interact with the site.</div></div>
+              <button class="cookie-pref-toggle" id="pref-analytics"></button>
+            </div>
+            <div class="in-browser-pref-row">
+              <div><div class="in-browser-pref-label">Advertising</div><div class="in-browser-pref-desc">Used to serve personalised ads based on your interests.</div></div>
+              <button class="cookie-pref-toggle" id="pref-advertising"></button>
+            </div>
+            <div class="in-browser-pref-row">
+              <div><div class="in-browser-pref-label">Personalisation</div><div class="in-browser-pref-desc">Remembers your preferences to tailor your experience.</div></div>
+              <button class="cookie-pref-toggle" id="pref-personalisation"></button>
+            </div>
+            <button class="in-browser-prefs-save" id="cookie-prefs-save-btn">Save Preferences</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </main>
 
-  <!-- MODAL -->
-  <div class="modal" data-modal hidden>
-    <div class="modal-backdrop" data-modal-close></div>
-    <div class="modal-card" role="dialog" aria-modal="true" aria-label="Article detail">
-      <button class="modal-close" type="button" aria-label="Close" data-modal-close>×</button>
-      <div class="modal-top">
-        <span class="pill" data-modal-category>Category</span>
+  <!-- ── Article Reader Modal ── -->
+  <div class="article-reader" id="article-reader" hidden>
+    <div class="article-reader-card" role="dialog" aria-modal="true" aria-label="Article">
+      <button class="article-reader-close" id="article-reader-close" aria-label="Close article">×</button>
+      <div id="ar-hero-wrap"></div>
+      <div class="article-reader-body">
+        <div class="article-reader-meta">
+          <span class="article-reader-pill" id="ar-pill">Category</span>
+          <span class="article-reader-readtime" id="ar-readtime">⏱ 4 min read</span>
+        </div>
+        <h2 class="article-reader-title" id="ar-title"></h2>
+        <p class="article-reader-desc" id="ar-desc"></p>
+        <div class="article-reader-content" id="ar-content"></div>
+        <div class="article-reader-source" id="ar-source"></div>
       </div>
-      <div class="modal-hero" aria-hidden="true"></div>
-      <h2 class="modal-title" data-modal-title>Title</h2>
-      <div class="modal-meta">
-        <span class="meta" data-modal-readtime>⏱ 4 min read</span>
-        <span class="meta" data-modal-cattext>• Category</span>
-      </div>
-      <div class="modal-body" data-modal-body>Body text…</div>
-      <div class="modal-tags" data-modal-tags></div>
     </div>
   </div>
 
   <script src="./assets/app.js"></script>
   <script>
+    const ARTICLES = {
+      a1: { paragraphs: ["Smart speakers equipped with digital voice assistants such as Siri and Alexa are now the fastest-growing consumer technology since the smartphone. Nearly 100 million were sold in 2018 alone, a threefold increase on the year before. And nowhere is this growth faster than in Australia.","But we should be concerned about what these smart speakers are actually listening to. It's more than just our voice commands to play a piece of music or turn down the lights. We need to think carefully about where this sort of technology is heading. Very soon it won't just be our smart speakers listening, but all manner of other devices too.","Security systems that listen for the sound of gunshots or broken glass, CCTV cameras outfitted with microphones, auditory surveillance at work, and a growing range of other devices are all cause for concern.","<h2>Rapid take up</h2>","By the end of 2018 the percentage of Australian adults with a smart speaker had risen from zero to 29% in only 18 months. The report estimates that some 5.7 million Australians now own smart speakers out of a total adult population of around 19.3 million. The Australian user base relative to population now exceeds that of the US (26%), despite the devices being available here for less than half the time.","They're already in our homes and workplaces, hotels, hospitals and universities. Over 43% of Australian smart speaker owners say that since acquiring the devices they are using voice assistants more frequently on smartphones.","<h2>What about privacy?</h2>","Nearly two-thirds of people surveyed say they had some level of concern over the privacy risks posed by smart speaker technology — 17.7% said they were \"very concerned.\" Smart speakers aren't just listening to what we say. Increasingly, they are also listening to how and where we say it.","They're listening to our vocal biometrics, to how we stutter and pause, to our tone of voice, accent and mood, to our state of wellness, to the size and shape of the room we're sitting in, and to the ambient noises, music and TV shows on in the background.","<h2>Who's listening?</h2>","The rapid rise of smart speakers heralds the coming era of machine listening, where we can expect all manner of networked devices to be listening to, processing and responding autonomously to our auditory environments — listening for both sound and speech, with and without our consent, virtually all the time.","Audio Analytic states: \"We are on a mission to give all machines a sense of hearing.\" Already, this includes headphones that know when someone is talking to you; cars that autonomously adjust to the sound of horns blaring; security systems able to identify arguments brewing, windows shattering, and other acoustic anomalies.","Walmart recently patented a new employee performance metric based on algorithmic analysis of audio data gathered from microphones installed throughout its stores. Machine listening isn't just coming — it's already here and it demands our attention."] },
+      a2: { paragraphs: ["Mobile health apps for your smartphone can help you recognize and manage health problems, provide nutrition advice, and count the number of steps you walk. But most aren't doing enough to protect your private information, according to a study published online June 16, 2021, by The BMJ.","<h2>What the research found</h2>","Among millions of available apps, researchers estimated that about 99,000 focus on health and fitness. Researchers downloaded almost 16,000 free mobile health apps and picked through their programming to see how the apps managed personal data — such as names, contact information, type of phone, and geographic location.","Most of the apps (88%) had the potential ability to share personal data — with Google and Facebook, for example. In brief tests, at least 4% of the apps collected and transmitted personal data, though researchers suspect this percentage could be much higher in real-world use.","About a third of the apps didn't provide access to their privacy policies, and a quarter violated their own policies.","<h2>What that means for you</h2>","Take the time to find out how an app might handle — or mishandle — your personal information before you start using it. Look for those details in an app's description, listed under \"about this app\" or \"app permissions.\"","Be especially cautious with apps that ask for access to your location, contacts, camera, or microphone. Even apps that seem purely focused on counting steps or tracking sleep may be sharing far more information than you realize with advertisers and third-party data brokers."] },
+      a3: { paragraphs: ["Ever notice how after online shopping or browsing, the advertisements you see on every website seem to have been personalized to include whatever you were looking for? A Marketplace investigation reveals it's not just ads that your browsing history can affect — it's also the price you're charged.","Companies have the technology to personalize your price using data from your computer, and a Marketplace test shows they're using it. Shoppers accessing the same website at the same time can be shown different prices for the same product.","\"The more information they have on an individual, the more they can prey upon your needs or your desires,\" says Jesse Hirsh, a technology expert. \"[They can] charge you more for something you really want, and maybe charge you less for something you're on the fence about as a way to persuade you to make that purchase.\"","<h2>Hotels put to the test</h2>","Marketplace put hotels to the test for price discrimination. Three different types of shoppers searched the same destinations and dates at the same time and saw that some hotels were priced differently from browser to private browser or their phone. Price differences were seen on several popular websites including Hotels.com, Travelocity, and Priceline.","In a search on Hotels.com of New York City on New Year's Eve, the Belvedere was listed at $734 on a regular browser. But on an incognito browser — one that doesn't show your computer's cookies — the price was cheaper at $712.","<h2>How it works</h2>","Websites can gain information from your type of device, your IP address, and your computer's cookies. Because the browser knew they'd been to a U.S. site, the shoppers didn't get the Canadian \"deal\" that the website would have offered. The incognito browser wouldn't have known they'd been on a U.S. site, so it assumed they were Canadian and gave them different deals.","\"In some cases, you benefit from giving up a little bit of privacy, and in other cases you pay more for giving up that bit of privacy,\" Hirsh says.","<h2>What consumers can do</h2>","Seven in 10 Canadians are concerned about their behaviour/habits being tracked without their knowledge, and an equal proportion is also concerned about being offered different prices based on their browsing history. Eighty-four per cent of Canadians polled said that government should do more to regulate what companies do with our data.","\"It's better to see the marketplace as a competition in which, from the consumer's perspective, you need to put in a bit of effort to get that cheaper price — or just don't spend.\""] },
+      a4: { paragraphs: ["When you open a social app for the first time, it often feels strangely psychic. Within a few minutes, it seems to know who your friends are, which coworkers you quietly keep tabs on, and even that person you met once at a conference and never spoke to again.","This is not intuition; it is the result of years of work turning messy human relationships into a highly structured \"social graph\" that describes how you're connected to everyone else.","<h2>The visible network</h2>","At the core of that graph are the obvious things you see on screen: friend requests you accept, people you follow, group chats you participate in, and posts you like or comment on. Each of those actions becomes an edge — essentially a line — between two dots in a giant map, where each dot is a person or an account.","But platforms do not stop at the connections you consciously create. Many apps ask you to \"find friends\" by uploading your phone's address book, which quietly hands over everyone's name, phone number, and email address — including people who never agreed to be on the platform at all.","<h2>Shadow profiles</h2>","Even if you delete your account, or never create one in the first place, a social platform may still maintain an invisible file on you built from other people's contact uploads, message metadata, and group memberships. If dozens of users have you in their contacts, the platform can make educated guesses about your location, interests, and social circles.","Once the system has a rough sketch of your network, it starts filling in the details using patterns from graph theory and machine learning. One simple rule is \"friends of friends\": if A is connected to B and C, then there is a good chance B and C know each other, so the app suggests them as potential connections.","<h2>Beyond the app</h2>","Embedded \"like\" buttons, login widgets, and tracking pixels distributed across the web send data about which sites you visit back to the social platform. Those off-platform signals are tied back to your account or your shadow profile, enriching the map with information about what you read, shop for, and research when you're not actively scrolling.","There is no simple way to opt out of being mapped, especially when much of the data comes from other people. Instead of seeing social apps as neutral mirrors of your social life, it helps to picture them as constantly evolving maps, where every tap and connection redraws the terrain."] },
+      a5: { paragraphs: ["Major banks and online lenders are increasingly experimenting with social media data as a way to judge whether consumers are likely to repay their debts, raising fresh concerns about privacy and discrimination.","The practice is part of a broader shift toward \"alternative credit data,\" in which lenders look beyond traditional credit reports to digital traces such as phone-bill payments, app usage, and online behavior to build more detailed risk profiles of would-be borrowers.","<h2>How it works</h2>","Several vendors now market tools that analyze public social media activity and network connections to help financial institutions refine their credit scores. Some analytics firms say they can use social network information to estimate a person's income stability, likelihood of default, and even \"financial responsibility\" — drawing on signals such as employment updates on LinkedIn and the composition of a user's online friend network.","Rather than scraping individual posts for specific words, many systems cluster users into risk categories based on patterns — how often they change jobs, how dense their network is with known high-risk borrowers, or whether their contacts tend to pay back loans on time.","<h2>The risks</h2>","Consumer advocates warn that using social media in credit decisions threatens to hard-wire existing inequalities into financial systems. Because social networks often mirror real-world segregation by race, class, and geography, models that reward or punish people based on who they are connected to risk penalizing entire communities regardless of their individual repayment behavior.","Privacy is another flash point. Some tools rely on public posts and profiles, but others draw on data obtained through opaque partnerships with platforms and data brokers, meaning users may have little idea their likes, follows, or network structure are feeding into credit decisions.","<h2>What you can do</h2>","Consumer groups are urging regulators to set clearer boundaries — such as prohibiting the use of protected characteristics inferred from social profiles, requiring explicit opt-in consent for social data, and guaranteeing that people can contest decisions influenced by opaque algorithms.","Until then, experts say borrowers should assume that anything they post publicly online could eventually be used not just to target ads, but to influence how trustworthy they look when they ask for a loan."] },
+      a6: { paragraphs: ["Universities rushed to adopt remote proctoring software to police cheating during online exams, but many students are now discovering that the tools are quietly cataloging far more than suspicious glances at a textbook.","Modern proctoring systems turn a laptop into a full-scale surveillance device: webcams track eye and head movements, microphones record audio in the room, and software logs every keystroke and mouse scroll for later review.","<h2>What gets recorded</h2>","Before an exam even starts, some products require \"room scans,\" forcing students to pan their cameras across bedrooms, living rooms, and dorms so the software can verify that no one else is present and that no notes are visible. During the test, algorithms analyze gaze direction, typing rhythm, and even ambient noises like footsteps or whispers, flagging anything that deviates from a pre-defined \"normal\" pattern as potentially suspicious.","Privacy advocates and student groups warn that in practice, the tools are building detailed behavior profiles — records of how long students take to answer questions, how often they fidget, how quickly they type, and what their home environments look and sound like. Those profiles can persist long after the exam, stored on third-party servers that may be subject to breaches, subpoenas, or secondary uses that students never agreed to.","<h2>Who gets flagged</h2>","The impact is especially harsh for students who do not fit the algorithms' assumptions. Eye-tracking systems can misread natural movements or disability-related behaviors as cheating, generating false positives for students with ADHD, anxiety, tics, or visual impairments. Facial recognition and gaze-detection features often struggle with poor lighting and darker skin tones, meaning some test-takers are repeatedly flagged simply because the system cannot reliably detect their faces.","<h2>Legal pressure</h2>","In one closely watched U.S. case, a federal judge ruled that mandatory room scans at a public university violated constitutional protections against unreasonable searches, describing the practice as giving schools an intrusive window into students' homes.","Some institutions are responding by scaling back or abandoning these systems, turning instead to open-book assessments or oral exams. For now, experts advise students to assume that proctoring tools are collecting more than just evidence of cheating — every eye movement, keystroke, and glimpse of a bedroom wall can become part of an invisible behavior profile."] }
+    };
+
     if (window.GT && typeof GT.initBrowse === "function") GT.initBrowse(1);
 
-    // ── Sponsored tag injection ─────────────────────────
-    // Adds the tag as an overlay inside the card — card never collapses
+    // ── Sponsored tag injection ──────────────────────────
     (function () {
       document.querySelectorAll("[data-sponsored='true']").forEach(card => {
-        card.style.position = "relative";
         const tag = document.createElement("span");
         tag.className = "sponsored-tag";
         tag.textContent = "Sponsored";
@@ -332,151 +304,179 @@
       });
     })();
 
-    // ── Blocker toggle ──────────────────────────────────
-(function () {
-  const blockerToggle = document.getElementById("settings-blocker-toggle");
-  if (!blockerToggle) return;
+    // ── Article Reader ───────────────────────────────────
+    (function () {
+      const reader   = document.getElementById("article-reader");
+      const closeBtn = document.getElementById("article-reader-close");
+      const heroWrap = document.getElementById("ar-hero-wrap");
+      const pill     = document.getElementById("ar-pill");
+      const readtime = document.getElementById("ar-readtime");
+      const title    = document.getElementById("ar-title");
+      const desc     = document.getElementById("ar-desc");
+      const content  = document.getElementById("ar-content");
+      const source   = document.getElementById("ar-source");
 
-  function applyBlocker(on) {
-    // Ad slots — hide entirely
-    document.querySelectorAll(".ad-slot").forEach(el => {
-      el.style.display = on ? "none" : "";
-    });
+      function openArticle(card) {
+        const id          = card.getAttribute("data-card-id");
+        const cat         = card.getAttribute("data-category") || "";
+        const rt          = card.getAttribute("data-readtime") || "";
+        const t           = card.getAttribute("data-title") || "";
+        const d           = card.getAttribute("data-desc") || "";
+        const img         = card.getAttribute("data-image") || "";
+        const srcUrl      = card.getAttribute("data-source-url") || "";
+        const srcLabel    = card.getAttribute("data-source-label") || "";
+        const isSponsored = card.getAttribute("data-sponsored") === "true";
+        const isAI        = card.getAttribute("data-ai-generated") === "true";
+        const articleData = ARTICLES[id];
 
-    // Sponsored card — add/remove class which sets display:none
-    // Grid naturally reflows remaining 5 cards into 2 rows of 3+2
-    document.querySelectorAll("[data-sponsored='true']").forEach(card => {
-      if (on) {
-        card.classList.add("sponsor-blocked");
-      } else {
-        card.classList.remove("sponsor-blocked");
+        heroWrap.innerHTML = "";
+        if (img) {
+          const imgEl = document.createElement("img");
+          imgEl.src = img; imgEl.alt = t; imgEl.className = "article-reader-hero";
+          heroWrap.appendChild(imgEl);
+        } else {
+          const ph = document.createElement("div");
+          ph.className = "article-reader-hero-placeholder"; ph.textContent = "📰";
+          heroWrap.appendChild(ph);
+        }
+
+        pill.textContent = cat;
+        pill.className = "article-reader-pill" + (isSponsored ? " sponsored" : "");
+        readtime.textContent = `⏱ ${rt}`;
+        title.textContent = t;
+        desc.textContent = d;
+
+        content.innerHTML = "";
+        if (articleData) {
+          articleData.paragraphs.forEach(p => {
+            if (p.startsWith("<h")) { content.insertAdjacentHTML("beforeend", p); }
+            else { const el = document.createElement("p"); el.textContent = p; content.appendChild(el); }
+          });
+        }
+
+        source.innerHTML = "";
+        if (srcUrl) source.innerHTML = `Read the original article: <a href="${srcUrl}" target="_blank" rel="noopener noreferrer">${srcLabel || srcUrl}</a>`;
+        if (isAI) {
+          const note = document.createElement("div");
+          note.className = "article-reader-ai-note";
+          note.textContent = "ℹ️ This article was generated by AI for educational purposes as part of this privacy awareness experience. It is based on real research and reporting but is not a published article.";
+          source.appendChild(note);
+        }
+
+        reader.removeAttribute("hidden");
+        document.body.style.overflow = "hidden";
       }
-    });
 
-    if (window._gtPrivacy) window._gtPrivacy.blocker = on;
-  }
+      function closeReader() {
+        reader.setAttribute("hidden", "");
+        document.body.style.overflow = "";
+      }
 
-  blockerToggle.addEventListener("click", (e) => {
-    e.stopPropagation();
-    blockerToggle.classList.toggle("on");
-    applyBlocker(blockerToggle.classList.contains("on"));
-  });
-})();
+      closeBtn.addEventListener("click", closeReader);
+      reader.addEventListener("click", (e) => { if (e.target === reader) closeReader(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !reader.hasAttribute("hidden")) closeReader(); });
+      document.addEventListener("click", (e) => {
+        const card = e.target.closest("[data-card-id]");
+        if (!card || reader.contains(e.target)) return;
+        openArticle(card);
+      });
+    })();
 
-    // ── Settings gear dropdown ──────────────────────────
+    // ── Blocker toggle ───────────────────────────────────
+    (function () {
+      const blockerToggle = document.getElementById("settings-blocker-toggle");
+      if (!blockerToggle) return;
+      function applyBlocker(on) {
+        document.querySelectorAll(".ad-slot").forEach(el => { el.style.display = on ? "none" : ""; });
+        document.querySelectorAll("[data-sponsored='true']").forEach(card => { card.classList.toggle("sponsor-blocked", on); });
+        if (window._gtPrivacy) window._gtPrivacy.blocker = on;
+      }
+      blockerToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        blockerToggle.classList.toggle("on");
+        applyBlocker(blockerToggle.classList.contains("on"));
+      });
+    })();
+
+    // ── Settings gear dropdown ───────────────────────────
     (function () {
       const btn      = document.getElementById("browser-settings-btn");
       const dropdown = document.getElementById("browser-settings-dropdown");
       if (!btn || !dropdown) return;
-
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle("open");
-      });
+      btn.addEventListener("click", (e) => { e.stopPropagation(); dropdown.classList.toggle("open"); });
       document.addEventListener("click", () => dropdown.classList.remove("open"));
-
-      const vpnToggle = document.getElementById("settings-vpn-toggle");
-      vpnToggle.addEventListener("click", (e) => {
+      document.getElementById("settings-vpn-toggle").addEventListener("click", (e) => {
         e.stopPropagation();
-        vpnToggle.classList.toggle("on");
-        if (window._gtPrivacy) window._gtPrivacy.vpn = vpnToggle.classList.contains("on");
+        e.currentTarget.classList.toggle("on");
+        if (window._gtPrivacy) window._gtPrivacy.vpn = e.currentTarget.classList.contains("on");
       });
-
       document.getElementById("settings-cookie-row").addEventListener("click", (e) => {
         e.stopPropagation();
         const banner = document.getElementById("cookie-banner");
-        if (banner) {
-          banner.classList.add("show");
-          dropdown.classList.remove("open");
-        }
+        const prefs  = document.getElementById("cookie-prefs-panel");
+        if (banner) banner.removeAttribute("hidden");
+        if (prefs)  prefs.setAttribute("hidden", "");
+        dropdown.classList.remove("open");
       });
-
       const cookieDesc = document.getElementById("settings-cookie-desc");
       setInterval(() => {
         if (!window._gtPrivacy) return;
-        const state = window._gtPrivacy.cookiesAccepted;
-        if (!state)                     cookieDesc.textContent = "No preference set";
-        else if (state === "all")       cookieDesc.textContent = "All cookies active";
-        else if (state === "essential") cookieDesc.textContent = "Essential only";
-        else                            cookieDesc.textContent = "Custom preferences";
+        const s = window._gtPrivacy.cookiesAccepted;
+        cookieDesc.textContent = !s ? "No preference set" : s === "all" ? "All cookies active" : s === "essential" ? "Essential only" : "Custom preferences";
       }, 800);
     })();
 
-    // ── UI Counters ─────────────────────────────────────
-(function () {
-  const clicksEl   = document.querySelector("[data-ui-clicks]");
-  const articlesEl = document.querySelector("[data-ui-articles]");
-  const timeEl     = document.querySelector("[data-ui-time]");
-
-  let totalClicks = 0;
-  const uniqueArticles = new Set();
-  const start = performance.now();
-
-  function fmt(ms) {
-    const total = Math.floor(ms / 1000);
-    return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
-  }
-
-  const timer = setInterval(() => {
-    if (timeEl) timeEl.textContent = fmt(performance.now() - start);
-  }, 250);
-
-  // Count every click inside the simulated browser window
-  const browserWindow = document.querySelector(".browser-window");
-  if (browserWindow) {
-    browserWindow.addEventListener("click", () => {
-      totalClicks++;
-      if (clicksEl) clicksEl.textContent = String(totalClicks);
-    }, true);
-  }
-
-  // Articles counter still only goes up on card clicks
-  document.addEventListener("click", (e) => {
-    const card = e.target.closest("[data-card-id]");
-    if (!card) return;
-    uniqueArticles.add(card.getAttribute("data-card-id"));
-    if (articlesEl) articlesEl.textContent = String(uniqueArticles.size);
-  }, true);
-
-  window.addEventListener("beforeunload", () => clearInterval(timer));
-})();
-
-    // ── Modal ───────────────────────────────────────────
+    // ── Cookie banner ────────────────────────────────────
     (function () {
-      const modal = document.querySelector("[data-modal]");
-      if (!modal) return;
-      const catEl     = modal.querySelector("[data-modal-category]");
-      const titleEl   = modal.querySelector("[data-modal-title]");
-      const bodyEl    = modal.querySelector("[data-modal-body]");
-      const readEl    = modal.querySelector("[data-modal-readtime]");
-      const catTextEl = modal.querySelector("[data-modal-cattext]");
-      const tagsEl    = modal.querySelector("[data-modal-tags]");
-
-      function openFromCard(card) {
-        if (catEl)     catEl.textContent     = card.getAttribute("data-category") || "";
-        if (titleEl)   titleEl.textContent   = card.getAttribute("data-title")    || "";
-        if (readEl)    readEl.textContent    = `⏱ ${card.getAttribute("data-readtime") || ""}`;
-        if (catTextEl) catTextEl.textContent = `• ${card.getAttribute("data-category") || ""}`;
-        if (bodyEl)    bodyEl.textContent    = card.getAttribute("data-body")     || "";
-        if (tagsEl)    tagsEl.innerHTML      = (card.getAttribute("data-tags") || "")
-          .split(",").map(t => t.trim()).filter(Boolean)
-          .map(t => `<span class="tag">#${t}</span>`).join("");
-        modal.hidden = false;
-        document.body.classList.add("modal-open");
-      }
-
-      function close() {
-        modal.hidden = true;
-        document.body.classList.remove("modal-open");
-      }
-
-      document.addEventListener("click", (e) => {
-        if (e.target.closest("[data-modal-close]")) { close(); return; }
-        const card = e.target.closest("[data-card-id]");
-        if (card) openFromCard(card);
+      const banner    = document.getElementById("cookie-banner");
+      const prefs     = document.getElementById("cookie-prefs-panel");
+      const acceptBtn = document.getElementById("cookie-accept-all-btn");
+      const manageBtn = document.getElementById("cookie-manage-link-btn");
+      const saveBtn   = document.getElementById("cookie-prefs-save-btn");
+      const hideBanner = () => banner?.setAttribute("hidden", "");
+      const hidePrefs  = () => prefs?.setAttribute("hidden", "");
+      acceptBtn?.addEventListener("click", () => {
+        if (window._gtPrivacy) { window._gtPrivacy.cookiesAccepted = "all"; window._gtPrivacy.cookieScore = 30; }
+        hideBanner();
       });
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && !modal.hidden) close();
+      manageBtn?.addEventListener("click", () => { hideBanner(); prefs?.removeAttribute("hidden"); });
+      saveBtn?.addEventListener("click", () => {
+        const a = document.getElementById("pref-analytics");
+        const b = document.getElementById("pref-advertising");
+        const c = document.getElementById("pref-personalisation");
+        const score = (a?.classList.contains("on") ? 10 : 0) + (b?.classList.contains("on") ? 12 : 0) + (c?.classList.contains("on") ? 8 : 0);
+        if (window._gtPrivacy) { window._gtPrivacy.cookiesAccepted = score > 0 ? "custom" : "essential"; window._gtPrivacy.cookieScore = score; }
+        hidePrefs();
+      });
+      ["pref-analytics","pref-advertising","pref-personalisation"].forEach(id => {
+        document.getElementById(id)?.addEventListener("click", (e) => e.currentTarget.classList.toggle("on"));
+      });
+    })();
+
+    // ── UI Counters ──────────────────────────────────────
+    (function () {
+      const clicksEl   = document.querySelector("[data-ui-clicks]");
+      const articlesEl = document.querySelector("[data-ui-articles]");
+      const timeEl     = document.querySelector("[data-ui-time]");
+      let totalClicks = 0;
+      const uniqueArticles = new Set();
+      const start = performance.now();
+      const fmt = ms => { const t = Math.floor(ms/1000); return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`; };
+      const timer = setInterval(() => { if (timeEl) timeEl.textContent = fmt(performance.now() - start); }, 250);
+      document.querySelector(".browser-window")?.addEventListener("click", () => { totalClicks++; if (clicksEl) clicksEl.textContent = String(totalClicks); }, true);
+      document.addEventListener("click", (e) => {
+        const card = e.target.closest("[data-card-id]");
+        if (!card) return;
+        uniqueArticles.add(card.getAttribute("data-card-id"));
+        if (articlesEl) articlesEl.textContent = String(uniqueArticles.size);
+      }, true);
+      window.addEventListener("beforeunload", () => clearInterval(timer));
+    })();
+
+    // ── Finish browsing ──────────────────────────────────
+    (function () {
+      document.querySelectorAll("[data-finish]").forEach(el => {
+        el.addEventListener("click", (e) => { e.preventDefault(); window.GT?.finishBrowse?.(); });
       });
     })();
   </script>
