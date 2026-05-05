@@ -472,11 +472,19 @@
     const timer = setInterval(updateTopStats, 1000);
 
     function wireCards() {
+      const hoverStart     = {};  // card id → mouseenter timestamp
+      const hoverByArticle = {};  // card id → total ms hovered
+      const articleClicks  = {};  // card id → click count
+     
+      // Expose so finish handler can save them
+      privacy._hoverByArticle = hoverByArticle;
+      privacy._articleClicks  = articleClicks;
+     
       qsa("[data-card]").forEach(card => {
-        let entered = false;
+        const cardId = card.dataset.cardId;
+     
         card.addEventListener("mouseenter", () => {
-          if (entered) return;
-          entered = true;
+          hoverStart[cardId] = Date.now();
           hoverCount++;
           if (pageRound === 1 && !privacy.blocker && card.classList.contains("sponsored")) {
             privacy.adHoverCount++;
@@ -486,21 +494,36 @@
             spawnTrackerDot();
           }
         });
+     
+        card.addEventListener("mouseleave", () => {
+          if (hoverStart[cardId]) {
+            hoverByArticle[cardId] = (hoverByArticle[cardId] || 0) + (Date.now() - hoverStart[cardId]);
+            delete hoverStart[cardId];
+          }
+        });
+     
         card.addEventListener("click", () => {
+          // Close any open hover timer on click
+          if (hoverStart[cardId]) {
+            hoverByArticle[cardId] = (hoverByArticle[cardId] || 0) + (Date.now() - hoverStart[cardId]);
+            delete hoverStart[cardId];
+          }
+     
           clicks++;
           opened++;
+          articleClicks[cardId] = (articleClicks[cardId] || 0) + 1;
+     
           const topic = card.dataset.topic ||
             card.querySelector(".pill")?.textContent?.trim() || "General";
           openedTopics.add(topic);
-
-          // Track ad/sponsored card clicks separately
+     
           const isSponsored =
             card.dataset.sponsored === "true" ||
             card.classList.contains("sponsored");
           if (isSponsored) {
             privacy.adClicks = (privacy.adClicks || 0) + 1;
           }
-
+     
           if (elTip && pageRound === 2) {
             elTip.classList.add("show");
             setTimeout(() => elTip.classList.remove("show"), 2500);
@@ -508,7 +531,7 @@
           updateTopStats();
         });
       });
-
+     
       // Ad slot click tracking
       qsa(".ad-slot").forEach(slot => {
         slot.addEventListener("click", () => {
@@ -517,15 +540,6 @@
           updateTopStats();
         });
       });
-    }
-
-    function spawnTrackerDot() {
-      const d = document.createElement("div");
-      d.className = "tracker-dot";
-      d.style.left = (Math.random() * window.innerWidth)  + "px";
-      d.style.top  = (Math.random() * window.innerHeight) + "px";
-      document.body.appendChild(d);
-      setTimeout(() => d.remove(), 1800);
     }
 
     function buildBrowserChrome() {
@@ -666,7 +680,7 @@
     // If the page has its own in-browser banner (.in-browser-cookie-banner),
     // skip building the old dark floating one entirely.
     function buildCookieBanner() {
-      if (qs(".in-browser-cookie-banner")) {
+      if (qs(".in-browser-cookie-banner") || qs(".cookie-bar-fixed")) {
         // Page has its own in-browser cookie UI — wire privacy state updates only
         // and let the HTML-side script handle the UI.
         // Delay slightly so window._gtPrivacy is set before the page script runs.
@@ -959,6 +973,8 @@
           categories,
           topics,
           exposureScore,
+          hoverByArticle: privacy._hoverByArticle || {},
+          articleClicks:  privacy._articleClicks  || {},
           privacy: {
             vpn: privacy.vpn,
             blocker: privacy.blocker,
