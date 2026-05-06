@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body data-quiz-kind="pre">
-  <!-- TOP PROGRESS -->
+
   <header class="top-progress">
     <div class="container">
       <nav class="stepper" data-stepper aria-label="Experience progress"></nav>
@@ -16,13 +16,20 @@
 
   <main class="quiz-page">
     <div class="container quiz-wrap" data-quiz>
-      <div class="pill">🧠 PRE-EXPERIENCE QUIZ</div>
-      <h1 class="quiz-title">Before We Begin</h1>
+
+      <div class="pill">PRE-EXPERIENCE QUIZ</div>
+      <h1 class="quiz-title">Think You Know Privacy?</h1>
       <p class="quiz-sub">
-        Let's see what you already know about online tracking. Don't worry — this is just to measure your starting point.
+        8 questions. No hints. Can you get a perfect score before the experience changes how you see the web?
       </p>
 
-      <!-- progress row -->
+      <!-- How-to notice -->
+      <div class="quiz-how-to">
+        <span class="quiz-how-to-icon">👆</span>
+        <span><strong>Click once</strong> to pick your answer and see if you're right. <strong>Click again</strong> to move on to the next question.</span>
+      </div>
+
+      <!-- progress -->
       <div class="quiz-progress">
         <div class="quiz-progress-left" data-qcount>Question 1 of 8</div>
         <div class="quiz-progress-right" data-qpercent>0% complete</div>
@@ -31,19 +38,20 @@
         <div class="quiz-progress-fill" data-qfill style="width:0%"></div>
       </div>
 
-      <!-- card -->
-      <section class="quiz-card" data-card>
-        <div class="quiz-kicker" data-qkicker>Question 1</div>
+      <!-- Question card -->
+      <section class="quiz-card quiz-card--light" data-card>
+        <div class="quiz-kicker" data-qkicker>Question 1 of 8</div>
         <h2 class="quiz-question" data-qtitle></h2>
-
         <div class="quiz-options" data-options></div>
+        <p class="quiz-click-hint" data-click-hint>Click your answer to see if you got it right</p>
       </section>
 
-      <!-- feedback -->
-      <section class="quiz-feedback" data-feedback hidden>
+      <!-- Feedback -->
+      <section class="quiz-feedback quiz-feedback--light" data-feedback hidden>
         <div class="quiz-feedback-title" data-feedback-title></div>
         <div class="quiz-feedback-text" data-feedback-text></div>
       </section>
+
     </div>
   </main>
 

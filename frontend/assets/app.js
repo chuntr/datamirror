@@ -151,101 +151,101 @@
     {
       q: "Which of the following actions can a website track even if you don't click anything?",
       options: [
-        "Only button clicks",
-        "Mouse movements, scroll positions, and time spent on page",
-        "Nothing unless you submit a form",
-        "Only your location",
+        "Mouse movements, scroll depth, and time on page",
+        "Only button clicks and form submissions are tracked",
+        "Nothing. Tracking requires an action, so if I do nothing then I won't be tracked",
+        "Only your IP address and nothing else",
       ],
-      correct: 1,
+      correct: 0,
       explain:
-        "Sites can log passive signals like scroll depth, pointer movement, and dwell time — even without clicks.",
+        "Sites log passive signals like scroll depth, pointer movement, and dwell time — even without a single click.",
     },
     {
       q: "What is a tracking pixel?",
       options: [
-        "A visible banner that asks for consent",
-        "A tiny invisible image or script that reports when a page/email is viewed",
-        "A password stored in cookies",
-        "A VPN feature",
+        "The cookie pop-up banner that asks you to accept cookies",
+        "A security feature that blocks ads from loading",
+        "A tiny invisible image that reports when a page is opened",
+        "A type of password that is stored locally on your device",
       ],
-      correct: 1,
+      correct: 2,
       explain:
-        "Tracking pixels are tiny (often 1×1) assets used to notify a server that content was viewed.",
+        "Tracking pixels are tiny (often 1×1) invisible assets that notify a server the moment content is viewed.",
     },
     {
-      q: "Why do companies care about time spent on a page?",
+      q: "Why do companies care about how long you spend on a page?",
       options: [
-        "It reveals interest/engagement and helps predict what you might want",
-        "It only helps speed up your internet",
-        "It has no value unless you buy something",
-        "It is illegal to track",
+        "Longer visits trigger legal data-sharing obligations",
+        "It helps their servers load pages faster for you",
+        "It has no value unless you make a purchase, click an ad, or leave the page quickly",
+        "Time on page reveals interest level and helps predict what you want",
       ],
-      correct: 0,
+      correct: 3,
       explain:
-        "Longer dwell time can be interpreted as stronger interest — useful for inference and targeting.",
+        "Longer dwell time signals stronger interest — advertisers use it to infer preferences and target you more precisely.",
     },
     {
-      q: "What is browser fingerprinting?",
+      q: "Which action has the biggest impact on reducing your data exposure?",
       options: [
-        "Saving your password in the browser",
-        "A method that combines device/browser traits to identify you",
-        "Blocking all ads",
-        "A feature only on phones",
+        "Switching to a different news category",
+        "Turning on the VPN before you start browsing",
+        "Adjusting cookie preferences when the banner appears",
+        "Reading fewer articles and just skimming the headlines",
       ],
-      correct: 1,
+      correct: 2,
       explain:
-        "Fingerprinting uses many small signals (fonts, screen size, APIs, etc.) to create a unique profile.",
+        "Rejecting non-essential cookies blocks many tracking and advertising scripts, which cuts off a major data collection path at the source.",
     },
     {
       q: "Which best describes a data broker?",
       options: [
-        "A company that sells laptops",
-        "A company that collects and sells personal/behavioral data",
-        "A social media influencer",
-        "A cybersecurity tool",
+        "A company that builds antivirus and privacy software for free",
+        "A company that collects and sells personal and behavioral data",
+        "A government agency that regulates online advertising",
+        "A social media platform that runs targeted ad campaigns",
       ],
       correct: 1,
       explain:
-        "Data brokers aggregate data from many sources and sell it to advertisers, insurers, etc.",
+        "Data brokers aggregate data from many sources — websites, apps, public records — and sell it to advertisers and insurers.",
     },
     {
       q: "Cookies are mainly used to…",
       options: [
-        "Make your keyboard faster",
-        "Remember sessions/preferences and track behavior across visits",
-        "Encrypt messages end-to-end",
-        "Disable websites",
+        "Speed up your internet connection on slow networks",
+        "Encrypt your messages on the site you are visiting so others cannot read them",
+        "Remember sessions, preferences, and track behavior across visits",
+        "Verify that your device is free of malware, adware, or spyware",
       ],
-      correct: 1,
+      correct: 2,
       explain:
-        "Cookies store small identifiers and preferences; third-party cookies can track you across sites.",
+        "Cookies store small identifiers and preferences. Third-party cookies in particular can follow you across many different sites.",
     },
     {
-      q: "Which action most reduces tracking during browsing?",
+      q: "Which action most reduces how much data is collected while browsing?",
       options: [
-        "Opening more tabs",
-        "Using a tracker blocker / privacy-focused browser",
-        "Increasing screen brightness",
-        "Logging out of Wi-Fi",
+        "Using a tracker blocker",
+        "Using a privacy-focused browser",
+        "Adjusting cookie preferences",
+        "All of the above",
       ],
-      correct: 1,
+      correct: 3,
       explain:
-        "Tracker blockers and privacy browsers limit third-party scripts and storage methods.",
+        "Tracker blockers reduce third-party tracking, privacy-focused browsers limit many forms of tracking by default, and adjusting cookie preferences can block or reduce cookie-based tracking. Together, they all help reduce how much data is collected while browsing.",
     },
     {
-      q: "Even if you never type personal info, companies can still infer…",
+      q: "Even if you never type in any personal information, companies can still infer…",
       options: [
-        "Nothing at all",
-        "Interests, habits, and likely demographics from behavior signals",
-        "Your bank PIN",
-        "Your exact thoughts",
+        "Your exact bank account details from your clicks",
+        "Nothing useful. Typed data is the only reliable signal",
+        "Your full legal identity from your device's serial number",
+        "Your interests, habits, and likely demographics",
       ],
-      correct: 1,
+      correct: 3,
       explain:
-        "Behavior signals (clicks, dwell time, categories) are enough to infer many traits probabilistically.",
+        "Clicks, hover time, scroll patterns, and category choices are enough to build a detailed behavioral profile without you typing a single word.",
     },
   ];
-
+ 
   function initQuiz(kindOrOpts) {
     applyTopbarPaddingFix();
     const opts =
@@ -253,25 +253,24 @@
         ? { kind: kindOrOpts }
         : (kindOrOpts || {});
     const kind = opts.kind || "pre";
-
+ 
     const root =
       qs("[data-quiz]") ||
       qs("[data-quiz-root]") ||
       qs(".quiz-wrap") ||
       document.body;
-
+ 
     if (root.dataset.gtWiredQuiz === kind) return;
     root.dataset.gtWiredQuiz = kind;
-
+ 
     renderStepper(kind === "pre" ? "pre" : "post");
-
+ 
     const s = loadState();
     const stateKey = kind === "pre" ? "preQuiz" : "postQuiz";
     const total = QUIZ.length;
-
     s[stateKey].total = total;
     saveState(s);
-
+ 
     const elQTitle   = qs("[data-qtitle]");
     const elOptions  = qs("[data-options]");
     const elKicker   = qs("[data-qkicker]");
@@ -281,109 +280,109 @@
     const elFeedback = qs("[data-feedback]");
     const elFbTitle  = qs("[data-feedback-title]");
     const elFbText   = qs("[data-feedback-text]");
-
-    const bTitle    = qs("[data-q-title]");
-    const bOptions  = qs("[data-q-options]");
-    const bIndex    = qs("[data-q-index]");
-    const bProg     = qs("[data-q-progress]");
-    const bBar      = qs("[data-qbar] > div") || qs("[data-qbar] div");
-    const bFeedback = qs("[data-feedback]");
-    const bPrev     = qs("[data-prev]");
-    const bSubmit   = qs("[data-submit]");
-
+    const elHint     = qs("[data-click-hint]");
+ 
     const useA = !!(elQTitle && elOptions);
-    const useB = !!(bTitle && bOptions);
-
+ 
     let idx = 0;
     const answers = Array(total).fill(null);
-
+ 
+    // phase: "pick" → waiting for first click
+    //        "confirm" → result shown, waiting for any second click to advance
+    let phase = "pick";
+ 
     function setProgress() {
       const shown = idx + 1;
-      if (useA) {
-        if (elCount)   elCount.textContent   = `Question ${shown} of ${total}`;
-        if (elPercent) elPercent.textContent = `${Math.round((idx / total) * 100)}% complete`;
-        if (elFill)    elFill.style.width    = `${(idx / total) * 100}%`;
-      }
-      if (useB) {
-        if (bIndex) bIndex.textContent = `Question ${shown} of ${total}`;
-        if (bProg)  bProg.textContent  = `${Math.round((idx / total) * 100)}% complete`;
-        if (bBar)   bBar.style.width   = `${(idx / total) * 100}%`;
-      }
+      if (elCount)   elCount.textContent   = `Question ${shown} of ${total}`;
+      if (elPercent) elPercent.textContent = `${Math.round((idx / total) * 100)}% complete`;
+      if (elFill)    elFill.style.width    = `${(idx / total) * 100}%`;
     }
-
+ 
     function renderQuestion() {
+      phase = "pick";
       const item = QUIZ[idx];
       setProgress();
-
-      if (useA) {
-        if (elKicker) elKicker.textContent = `Question ${idx + 1}`;
-        if (elQTitle) elQTitle.textContent = item.q;
-        elOptions.innerHTML = "";
-        item.options.forEach((opt, oi) => {
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "quiz-option";
-          btn.innerHTML = `<span class="opt-letter">${String.fromCharCode(65 + oi)}</span><span class="opt-text">${opt}</span>`;
-          btn.addEventListener("click", () => selectOption(oi));
-          elOptions.appendChild(btn);
-        });
-        if (elFeedback) elFeedback.hidden = true;
+ 
+      if (!useA) return;
+ 
+      if (elKicker) elKicker.textContent = `Question ${idx + 1} of ${total}`;
+      if (elQTitle) elQTitle.textContent = item.q;
+      if (elFeedback) elFeedback.hidden  = true;
+      if (elHint) {
+        elHint.textContent = "Click your answer to see if you got it right";
+        elHint.classList.remove("quiz-hint--confirm");
       }
-
-      if (useB) {
-        bTitle.textContent = item.q;
-        bOptions.innerHTML = "";
-        item.options.forEach((opt, oi) => {
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "optBtn";
-          btn.innerHTML = `<span class="optKey">${String.fromCharCode(65 + oi)}</span><span>${opt}</span>`;
-          btn.addEventListener("click", () => selectOption(oi));
-          bOptions.appendChild(btn);
-        });
-        if (bFeedback) bFeedback.innerHTML = "";
-        if (bSubmit) {
-          bSubmit.style.display = idx === total - 1 ? "" : "none";
-          bSubmit.disabled = true;
-        }
-      }
-    }
-
-    function showFeedback(isCorrect, explainText) {
-      if (useA && elFeedback) {
-        elFeedback.hidden = false;
-        if (elFbTitle) elFbTitle.textContent = isCorrect ? "Correct" : "Not quite";
-        if (elFbText)  elFbText.textContent  = explainText;
-      }
-      if (useB && bFeedback) {
-        bFeedback.innerHTML = `
-          <div class="fb ${isCorrect ? "good" : "bad"}">
-            <div class="fbTitle">${isCorrect ? "Correct" : "Not quite"}</div>
-            <div class="fbText">${explainText}</div>
-          </div>`;
-      }
-    }
-
-    function selectOption(choice) {
-      answers[idx] = choice;
-      const item = QUIZ[idx];
-      const isCorrect = choice === item.correct;
-      showFeedback(isCorrect, item.explain);
-      if (useA) {
-        setTimeout(() => {
-          if (idx < total - 1) {
-            idx += 1;
-            renderQuestion();
-          } else {
-            finishQuiz();
+ 
+      elOptions.innerHTML = "";
+      item.options.forEach((opt, oi) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "quiz-option";
+        btn.dataset.oi = String(oi);
+        btn.innerHTML = `<span class="opt-letter">${String.fromCharCode(65 + oi)}</span><span class="opt-text">${opt}</span>`;
+ 
+        btn.addEventListener("click", () => {
+          if (phase === "pick") {
+            // ── First click: reveal result ──
+            revealResult(oi);
+          } else if (phase === "confirm") {
+            // ── Second click on any button: advance ──
+            advance();
           }
-        }, 550);
+        });
+ 
+        elOptions.appendChild(btn);
+      });
+    }
+ 
+    function revealResult(choice) {
+      phase = "confirm";
+      answers[idx] = choice;
+      const item   = QUIZ[idx];
+      const isCorrect = choice === item.correct;
+ 
+      // Apply visual states — do NOT disable so buttons remain clickable for 2nd click
+      qsa(".quiz-option", elOptions).forEach((btn, i) => {
+        btn.classList.remove("correct", "incorrect", "quiz-option--muted");
+        if (i === item.correct) {
+          btn.classList.add("correct");
+        } else if (i === choice && !isCorrect) {
+          btn.classList.add("incorrect");
+        } else {
+          // Dim other options so focus is on correct/wrong
+          btn.classList.add("quiz-option--muted");
+        }
+      });
+ 
+      // Show feedback
+      if (elFeedback) {
+        elFeedback.hidden = false;
+        if (elFbTitle) {
+          elFbTitle.textContent = isCorrect ? "✓ Correct!" : "✗ Not quite";
+          elFbTitle.className   = "quiz-feedback-title " + (isCorrect ? "ok" : "bad");
+        }
+        if (elFbText) elFbText.textContent = item.explain;
       }
-      if (useB && bSubmit && idx === total - 1) {
-        bSubmit.disabled = false;
+ 
+      // Update hint
+      if (elHint) {
+        elHint.textContent = idx < total - 1
+          ? "Click again to go to the next question →"
+          : "Click again to see your results →";
+        elHint.classList.add("quiz-hint--confirm");
       }
     }
-
+ 
+    function advance() {
+      phase = "pick";
+      if (idx < total - 1) {
+        idx += 1;
+        renderQuestion();
+      } else {
+        finishQuiz();
+      }
+    }
+ 
     function computeScore() {
       let score = 0;
       for (let i = 0; i < total; i++) {
@@ -391,37 +390,19 @@
       }
       return score;
     }
-
+ 
     function finishQuiz() {
       const score = computeScore();
       const st = loadState();
       st[stateKey] = { done: true, score, total, answers: answers.slice() };
       setDone(kind === "pre" ? "pre" : "post", true);
       saveState(st);
-      if (kind === "pre") {
-        window.location.href = "browse1_intro.html";
-      } else {
-        window.location.href = "quiz_comparison.html";
-      }
+      window.location.href = kind === "pre" ? "browse1_intro.html" : "quiz_comparison.html";
     }
-
-    if (useB) {
-      if (bPrev) {
-        bPrev.addEventListener("click", () => {
-          if (idx > 0) { idx -= 1; renderQuestion(); }
-        });
-      }
-      if (bSubmit) {
-        bSubmit.addEventListener("click", (e) => {
-          e.preventDefault();
-          finishQuiz();
-        });
-      }
-    }
-
+ 
     renderQuestion();
   }
-
+ 
   function initQuizV2(opts) {
     const kind = typeof opts === "string" ? opts : (opts?.kind || "pre");
     return initQuiz(kind);
@@ -961,7 +942,7 @@
         if (privacy.vpn)    exposureScore = Math.round(exposureScore * 0.72);
         if (privacy.blocker) exposureScore = Math.round(exposureScore * 0.78);
         if (privacy.cookiesAccepted === "essential") exposureScore = Math.round(exposureScore * 0.85);
-        exposureScore = Math.min(100, Math.max(0, exposureScore));
+        exposureScore = Math.max(0, exposureScore);
 
         const st = loadState();
         st[key] = {
@@ -1250,8 +1231,8 @@
       else if (p === "browse2_intro.html")        initMissionScreen("b2", "browse2.html");
       else if (p === "browse1.html")              initBrowse(1);
       else if (p === "browse2.html")              initBrowse(2);
-      else if (p === "report1.html")              initReport(1);
-      else if (p === "report2.html")              initReport(2);
+      else if (p === "report1.html")              { renderStepper("r1"); applyTopbarPaddingFix(); }
+      else if (p === "report2.html")              { renderStepper("r2"); applyTopbarPaddingFix(); }
       else if (p === "report1_explain.html") {
         renderStepper("r1");
         const btn = qs("[data-next]");

@@ -8,7 +8,8 @@
 </head>
 
 <body>
-  <header class="top-progress">
+  <!-- Top progress bar hidden during browsing -->
+  <header class="top-progress" style="display:none;" aria-hidden="true">
     <div class="container">
       <nav class="stepper" data-stepper aria-label="Experience progress"></nav>
     </div>
@@ -85,7 +86,7 @@
                 </div>
                 <button class="ext-toggle" id="settings-blocker-toggle"></button>
               </div>
-              <div class="settings-row" id="settings-cookie-row">
+              <div class="settings-row" id="settings-cookie-row" style="cursor:pointer;">
                 <div class="settings-row-left">
                   <div class="settings-row-icon">🍪</div>
                   <div>
@@ -93,6 +94,7 @@
                     <div class="settings-row-desc" id="settings-cookie-desc">No preference set</div>
                   </div>
                 </div>
+                <span style="color:rgba(255,255,255,0.35);font-size:12px;">›</span>
               </div>
             </div>
           </div>
@@ -221,46 +223,46 @@
           </section>
         </div>
 
-        <!-- ── Cookie banner ── -->
-        <div class="in-browser-cookie-banner" id="cookie-banner">
-          <div class="in-browser-cookie-inner">
-            <p class="in-browser-cookie-text">
+        <!-- ── Cookie bar — sticky inside simulated browser ── -->
+        <div class="cookie-bar-fixed" id="cookie-bar">
+          <div class="cookie-bar-inner">
+            <p class="cookie-bar-text">
               We use cookies and similar technologies to personalise content, analyse traffic, serve targeted ads, and improve your experience. By clicking "Accept All" you consent to our use of all cookies.
-              <button class="in-browser-cookie-manage-link" id="cookie-manage-link-btn">Manage Preferences</button>
+              <button class="cookie-bar-manage-btn" id="cookie-manage-btn">Manage Preferences</button>
             </p>
-            <div class="in-browser-cookie-btns">
-              <button class="in-browser-cookie-accept" id="cookie-accept-all-btn">Accept All</button>
+            <div class="cookie-bar-btns">
+              <button class="cookie-bar-accept" id="cookie-accept-btn">Accept All</button>
             </div>
           </div>
         </div>
 
-        <!-- ── Cookie preferences panel ── -->
-        <div class="in-browser-cookie-prefs" id="cookie-prefs-panel" hidden>
-          <div class="in-browser-cookie-prefs-inner">
-            <h3 class="in-browser-prefs-title">Cookie Preferences</h3>
-            <p class="in-browser-prefs-sub">Choose which cookies you allow. Essential cookies are always active.</p>
-            <div class="in-browser-pref-row">
-              <div><div class="in-browser-pref-label">Essential</div><div class="in-browser-pref-desc">Required for the site to function. Cannot be disabled.</div></div>
-              <button class="cookie-pref-toggle on" disabled></button>
+        <!-- ── Cookie prefs modal — overlays inside simulated browser ── -->
+        <div class="cookie-prefs-modal-overlay" id="cookie-prefs-overlay" hidden>
+          <div class="cookie-prefs-box">
+            <div class="cookie-prefs-box-title">Cookie Preferences</div>
+            <p class="cookie-prefs-box-sub">Choose which cookies you allow. Essential cookies are always active.</p>
+            <div class="cookie-pref-item">
+              <div><div class="cookie-pref-item-label">Essential</div><div class="cookie-pref-item-desc">Required for the site to function. Cannot be disabled.</div></div>
+              <label class="cp-toggle"><input type="checkbox" checked disabled /><span class="cp-toggle-track"></span></label>
             </div>
-            <div class="in-browser-pref-row">
-              <div><div class="in-browser-pref-label">Analytics</div><div class="in-browser-pref-desc">Helps us understand how visitors interact with the site.</div></div>
-              <button class="cookie-pref-toggle" id="pref-analytics"></button>
+            <div class="cookie-pref-item">
+              <div><div class="cookie-pref-item-label">Analytics</div><div class="cookie-pref-item-desc">Helps us understand how visitors interact with the site.</div></div>
+              <label class="cp-toggle"><input type="checkbox" id="pref-analytics" checked /><span class="cp-toggle-track"></span></label>
             </div>
-            <div class="in-browser-pref-row">
-              <div><div class="in-browser-pref-label">Advertising</div><div class="in-browser-pref-desc">Used to serve personalised ads based on your interests.</div></div>
-              <button class="cookie-pref-toggle" id="pref-advertising"></button>
+            <div class="cookie-pref-item">
+              <div><div class="cookie-pref-item-label">Advertising</div><div class="cookie-pref-item-desc">Used to serve personalised ads based on your interests.</div></div>
+              <label class="cp-toggle"><input type="checkbox" id="pref-advertising" checked /><span class="cp-toggle-track"></span></label>
             </div>
-            <div class="in-browser-pref-row">
-              <div><div class="in-browser-pref-label">Personalisation</div><div class="in-browser-pref-desc">Remembers your preferences to tailor your experience.</div></div>
-              <button class="cookie-pref-toggle" id="pref-personalisation"></button>
+            <div class="cookie-pref-item">
+              <div><div class="cookie-pref-item-label">Personalisation</div><div class="cookie-pref-item-desc">Remembers your preferences to tailor your experience.</div></div>
+              <label class="cp-toggle"><input type="checkbox" id="pref-personalisation" checked /><span class="cp-toggle-track"></span></label>
             </div>
-            <button class="in-browser-prefs-save" id="cookie-prefs-save-btn">Save Preferences</button>
+            <button class="cookie-prefs-save-btn" id="cookie-prefs-save">Save Preferences</button>
           </div>
         </div>
 
-      </div>
-    </div>
+      </div><!-- end browser-window-content -->
+    </div><!-- end browser-window -->
   </main>
 
   <!-- ── Article Reader Modal ── -->
@@ -304,6 +306,118 @@
       });
     })();
 
+    // ── Cookie state ─────────────────────────────────────
+    const cookieBar     = document.getElementById("cookie-bar");
+    const prefsOverlay  = document.getElementById("cookie-prefs-overlay");
+    const cookieDesc    = document.getElementById("settings-cookie-desc");
+    const analyticsChk  = document.getElementById("pref-analytics");
+    const advertisingChk= document.getElementById("pref-advertising");
+    const personChk     = document.getElementById("pref-personalisation");
+
+    function getCookieScore() {
+      return (analyticsChk.checked  ? 10 : 0)
+           + (advertisingChk.checked ? 12 : 0)
+           + (personChk.checked      ?  8 : 0);
+    }
+
+    function applyPrivacy(cookiesAccepted, cookieScore) {
+      if (window._gtPrivacy) {
+        window._gtPrivacy.cookiesAccepted = cookiesAccepted;
+        window._gtPrivacy.cookieScore     = cookieScore;
+      }
+      if (!cookiesAccepted)                     cookieDesc.textContent = "No preference set";
+      else if (cookiesAccepted === "all")       cookieDesc.textContent = "All cookies active";
+      else if (cookiesAccepted === "essential") cookieDesc.textContent = "Essential only";
+      else                                      cookieDesc.textContent = "Custom preferences";
+    }
+
+    // Persistent cookie state so settings row reflects what was saved
+    let savedCookieState = null;
+
+    function openPrefs(preCheck) {
+      if (preCheck === "all") {
+        analyticsChk.checked   = true;
+        advertisingChk.checked = true;
+        personChk.checked      = true;
+      }
+      if (savedCookieState && preCheck !== "all") {
+        analyticsChk.checked   = savedCookieState.analytics;
+        advertisingChk.checked = savedCookieState.advertising;
+        personChk.checked      = savedCookieState.person;
+      }
+      prefsOverlay.removeAttribute("hidden");
+    }
+
+    function closePrefs() {
+      prefsOverlay.setAttribute("hidden", "");
+    }
+
+    document.getElementById("cookie-accept-btn").addEventListener("click", () => {
+      analyticsChk.checked   = true;
+      advertisingChk.checked = true;
+      personChk.checked      = true;
+      applyPrivacy("all", 30);
+      cookieBar.setAttribute("hidden", "");
+    });
+
+    document.getElementById("cookie-manage-btn").addEventListener("click", () => {
+      openPrefs(savedCookieState ? null : "all");
+    });
+
+    document.getElementById("cookie-prefs-save").addEventListener("click", () => {
+      const score = getCookieScore();
+      const anyOn = analyticsChk.checked || advertisingChk.checked || personChk.checked;
+      savedCookieState = {
+        analytics:   analyticsChk.checked,
+        advertising: advertisingChk.checked,
+        person:      personChk.checked,
+      };
+      applyPrivacy(anyOn ? "custom" : "essential", score);
+      cookieBar.setAttribute("hidden", "");
+      closePrefs();
+    });
+
+    prefsOverlay.addEventListener("click", (e) => { if (e.target === prefsOverlay) closePrefs(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !prefsOverlay.hasAttribute("hidden")) closePrefs();
+    });
+
+    // ── Settings gear dropdown ───────────────────────────
+    (function () {
+      const btn      = document.getElementById("browser-settings-btn");
+      const dropdown = document.getElementById("browser-settings-dropdown");
+      if (!btn || !dropdown) return;
+      btn.addEventListener("click", (e) => { e.stopPropagation(); dropdown.classList.toggle("open"); });
+      document.addEventListener("click", () => dropdown.classList.remove("open"));
+      document.getElementById("settings-vpn-toggle").addEventListener("click", (e) => {
+        e.stopPropagation();
+        e.currentTarget.classList.toggle("on");
+        if (window._gtPrivacy) window._gtPrivacy.vpn = e.currentTarget.classList.contains("on");
+      });
+      document.getElementById("settings-cookie-row").addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.classList.remove("open");
+        openPrefs(savedCookieState ? null : "all");
+        cookieBar.setAttribute("hidden", "");
+      });
+    })();
+
+    // ── Blocker toggle ───────────────────────────────────
+    (function () {
+      const blockerToggle = document.getElementById("settings-blocker-toggle");
+      if (!blockerToggle) return;
+      function applyBlocker(on) {
+        document.querySelectorAll(".ad-slot").forEach(el => { el.style.display = on ? "none" : ""; });
+        document.querySelectorAll("[data-sponsored='true']").forEach(card => { card.classList.toggle("sponsor-blocked", on); });
+        if (window._gtPrivacy) window._gtPrivacy.blocker = on;
+      }
+      blockerToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        blockerToggle.classList.toggle("on");
+        applyBlocker(blockerToggle.classList.contains("on"));
+      });
+    })();
+
     // ── Article Reader ───────────────────────────────────
     (function () {
       const reader   = document.getElementById("article-reader");
@@ -328,7 +442,6 @@
         const isSponsored = card.getAttribute("data-sponsored") === "true";
         const isAI        = card.getAttribute("data-ai-generated") === "true";
         const articleData = ARTICLES[id];
-
         heroWrap.innerHTML = "";
         if (img) {
           const imgEl = document.createElement("img");
@@ -339,13 +452,11 @@
           ph.className = "article-reader-hero-placeholder"; ph.textContent = "📰";
           heroWrap.appendChild(ph);
         }
-
         pill.textContent = cat;
         pill.className = "article-reader-pill" + (isSponsored ? " sponsored" : "");
         readtime.textContent = `⏱ ${rt}`;
         title.textContent = t;
         desc.textContent = d;
-
         content.innerHTML = "";
         if (articleData) {
           articleData.paragraphs.forEach(p => {
@@ -353,16 +464,19 @@
             else { const el = document.createElement("p"); el.textContent = p; content.appendChild(el); }
           });
         }
-
         source.innerHTML = "";
-        if (srcUrl) source.innerHTML = `Read the original article: <a href="${srcUrl}" target="_blank" rel="noopener noreferrer">${srcLabel || srcUrl}</a>`;
+        if (srcUrl && srcLabel) {
+          const srcNote = document.createElement("p");
+          srcNote.style.margin = "0";
+          srcNote.textContent = `Source: ${srcLabel}`;
+          source.appendChild(srcNote);
+        }
         if (isAI) {
           const note = document.createElement("div");
           note.className = "article-reader-ai-note";
           note.textContent = "ℹ️ This article was generated by AI for educational purposes as part of this privacy awareness experience. It is based on real research and reporting but is not a published article.";
           source.appendChild(note);
         }
-
         reader.removeAttribute("hidden");
         document.body.style.overflow = "hidden";
       }
@@ -377,79 +491,8 @@
       document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !reader.hasAttribute("hidden")) closeReader(); });
       document.addEventListener("click", (e) => {
         const card = e.target.closest("[data-card-id]");
-        if (!card || reader.contains(e.target)) return;
+        if (!card || reader.contains(e.target) || prefsOverlay.contains(e.target)) return;
         openArticle(card);
-      });
-    })();
-
-    // ── Blocker toggle ───────────────────────────────────
-    (function () {
-      const blockerToggle = document.getElementById("settings-blocker-toggle");
-      if (!blockerToggle) return;
-      function applyBlocker(on) {
-        document.querySelectorAll(".ad-slot").forEach(el => { el.style.display = on ? "none" : ""; });
-        document.querySelectorAll("[data-sponsored='true']").forEach(card => { card.classList.toggle("sponsor-blocked", on); });
-        if (window._gtPrivacy) window._gtPrivacy.blocker = on;
-      }
-      blockerToggle.addEventListener("click", (e) => {
-        e.stopPropagation();
-        blockerToggle.classList.toggle("on");
-        applyBlocker(blockerToggle.classList.contains("on"));
-      });
-    })();
-
-    // ── Settings gear dropdown ───────────────────────────
-    (function () {
-      const btn      = document.getElementById("browser-settings-btn");
-      const dropdown = document.getElementById("browser-settings-dropdown");
-      if (!btn || !dropdown) return;
-      btn.addEventListener("click", (e) => { e.stopPropagation(); dropdown.classList.toggle("open"); });
-      document.addEventListener("click", () => dropdown.classList.remove("open"));
-      document.getElementById("settings-vpn-toggle").addEventListener("click", (e) => {
-        e.stopPropagation();
-        e.currentTarget.classList.toggle("on");
-        if (window._gtPrivacy) window._gtPrivacy.vpn = e.currentTarget.classList.contains("on");
-      });
-      document.getElementById("settings-cookie-row").addEventListener("click", (e) => {
-        e.stopPropagation();
-        const banner = document.getElementById("cookie-banner");
-        const prefs  = document.getElementById("cookie-prefs-panel");
-        if (banner) banner.removeAttribute("hidden");
-        if (prefs)  prefs.setAttribute("hidden", "");
-        dropdown.classList.remove("open");
-      });
-      const cookieDesc = document.getElementById("settings-cookie-desc");
-      setInterval(() => {
-        if (!window._gtPrivacy) return;
-        const s = window._gtPrivacy.cookiesAccepted;
-        cookieDesc.textContent = !s ? "No preference set" : s === "all" ? "All cookies active" : s === "essential" ? "Essential only" : "Custom preferences";
-      }, 800);
-    })();
-
-    // ── Cookie banner ────────────────────────────────────
-    (function () {
-      const banner    = document.getElementById("cookie-banner");
-      const prefs     = document.getElementById("cookie-prefs-panel");
-      const acceptBtn = document.getElementById("cookie-accept-all-btn");
-      const manageBtn = document.getElementById("cookie-manage-link-btn");
-      const saveBtn   = document.getElementById("cookie-prefs-save-btn");
-      const hideBanner = () => banner?.setAttribute("hidden", "");
-      const hidePrefs  = () => prefs?.setAttribute("hidden", "");
-      acceptBtn?.addEventListener("click", () => {
-        if (window._gtPrivacy) { window._gtPrivacy.cookiesAccepted = "all"; window._gtPrivacy.cookieScore = 30; }
-        hideBanner();
-      });
-      manageBtn?.addEventListener("click", () => { hideBanner(); prefs?.removeAttribute("hidden"); });
-      saveBtn?.addEventListener("click", () => {
-        const a = document.getElementById("pref-analytics");
-        const b = document.getElementById("pref-advertising");
-        const c = document.getElementById("pref-personalisation");
-        const score = (a?.classList.contains("on") ? 10 : 0) + (b?.classList.contains("on") ? 12 : 0) + (c?.classList.contains("on") ? 8 : 0);
-        if (window._gtPrivacy) { window._gtPrivacy.cookiesAccepted = score > 0 ? "custom" : "essential"; window._gtPrivacy.cookieScore = score; }
-        hidePrefs();
-      });
-      ["pref-analytics","pref-advertising","pref-personalisation"].forEach(id => {
-        document.getElementById(id)?.addEventListener("click", (e) => e.currentTarget.classList.toggle("on"));
       });
     })();
 
@@ -463,7 +506,8 @@
       const start = performance.now();
       const fmt = ms => { const t = Math.floor(ms/1000); return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`; };
       const timer = setInterval(() => { if (timeEl) timeEl.textContent = fmt(performance.now() - start); }, 250);
-      document.querySelector(".browser-window")?.addEventListener("click", () => { totalClicks++; if (clicksEl) clicksEl.textContent = String(totalClicks); }, true);
+      document.querySelector(".browser-window-content")?.addEventListener("click", () => { totalClicks++; if (clicksEl) clicksEl.textContent = String(totalClicks); }, true);
+      document.querySelector(".browser-window-titlebar")?.addEventListener("click", () => { totalClicks++; if (clicksEl) clicksEl.textContent = String(totalClicks); }, true);
       document.addEventListener("click", (e) => {
         const card = e.target.closest("[data-card-id]");
         if (!card) return;

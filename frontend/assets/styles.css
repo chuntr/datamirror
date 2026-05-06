@@ -48,6 +48,9 @@ button{ font-family: inherit; }
 body.has-fixed-topbar{
   padding-top: var(--topbar-h);
 }
+body.has-fixed-topbar:has(.browse-page) {
+  padding-top: 0;
+}
 
 /* container */
 .container{
@@ -259,14 +262,14 @@ body.has-fixed-topbar{
 /* =========================================================
    Browse feed
    ========================================================= */
-.tracking-bar{
+  .tracking-bar{
   position: sticky;
-  top: var(--topbar-h);
+  top: 0;
   z-index: 60;
   border-bottom: 1px solid rgba(255,255,255,.06);
   background: linear-gradient(180deg, rgba(8,10,12,.70), rgba(8,10,12,.50));
   backdrop-filter: blur(12px);
-}
+  }
 .tracking-inner{
   width: min(var(--container), calc(100% - 48px));
   margin: 0 auto;
@@ -3466,10 +3469,21 @@ main[data-resources] {
   color: rgba(34,197,94,.90);
   line-height: 1.55;
 }
+.r1-shield-tip[hidden] {
+  display: none !important;
+}
 
 .r1-shield-tip strong {
   color: rgba(34,197,94,1);
   font-weight: 800;
+}
+.r1-shield-tip--success {
+  border-color: rgba(34,197,94,.28);
+  background: rgba(34,197,94,.09);
+  color: rgba(34,197,94,.95);
+}
+.r1-shield-tip--success strong {
+  color: rgba(34,197,94,1);
 }
 
 /* ── Stats row ── */
@@ -3582,4 +3596,259 @@ main[data-resources] {
   display: flex;
   justify-content: center;
   padding-top: 8px;
+}
+
+/* ── Quiz how-to notice ── */
+.quiz-how-to {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(34,197,94,.22);
+  background: rgba(34,197,94,.07);
+  font-size: 13.5px;
+  color: rgba(255,255,255,.68);
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+.quiz-how-to-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.quiz-how-to strong { color: rgba(255,255,255,.92); font-weight: 700; }
+
+/* ── Lighter quiz card ── */
+.quiz-card--light {
+  background: rgba(255,255,255,.07) !important;
+  border-color: rgba(255,255,255,.14) !important;
+}
+
+/* ── Lighter feedback panel ── */
+.quiz-feedback--light {
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.12) !important;
+}
+
+/* ── Click hint inside card ── */
+.quiz-click-hint {
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: rgba(255,255,255,.32);
+  font-family: ui-monospace, monospace;
+  letter-spacing: .05em;
+  text-align: center;
+  transition: color .2s;
+}
+.quiz-hint--confirm {
+  color: rgba(34,197,94,.75);
+  letter-spacing: .04em;
+}
+
+/* ── Muted (unchosen) options after pick ── */
+.quiz-option--muted {
+  opacity: 0.38 !important;
+}
+
+/* ── Correct answer ── */
+.quiz-option.correct {
+  border-color: rgba(0,255,153,.45) !important;
+  background: linear-gradient(180deg, rgba(0,255,153,.12), rgba(0,255,153,.07)) !important;
+  opacity: 1 !important;
+}
+.quiz-option.correct .opt-letter {
+  color: rgba(0,255,153,.96) !important;
+  border-color: rgba(0,255,153,.30) !important;
+  background: rgba(0,255,153,.10) !important;
+}
+.quiz-option.correct::after {
+  content: "✓";
+  margin-left: auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(0,255,153,.95);
+  color: #07140d;
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 0 0 0 4px rgba(0,255,153,.12);
+}
+
+/* ── Incorrect answer ── */
+.quiz-option.incorrect {
+  border-color: rgba(239,68,68,.45) !important;
+  background: rgba(239,68,68,.08) !important;
+  opacity: 1 !important;
+}
+.quiz-option.incorrect .opt-letter {
+  color: #ef4444 !important;
+  border-color: rgba(239,68,68,.35) !important;
+  background: rgba(239,68,68,.10) !important;
+}
+.quiz-option.incorrect::after {
+  content: "✗";
+  margin-left: auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #ef4444;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 0 0 0 4px rgba(239,68,68,.14);
+}
+/* ==========================================================
+   ADDITIONS — paste at the bottom of styles.css
+   ========================================================== */
+
+/* Fix: cookie prefs overlay covers full screen, not just browser window */
+.cookie-prefs-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 900;
+}
+
+/* Fix: hidden attribute overridden by display:flex on shield tips */
+.r1-shield-tip[hidden],
+.r1-shield-tip--success[hidden] {
+  display: none !important;
+}
+
+/* ── Score formula panel ── */
+.r1-formula-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.r1-formula-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.09);
+  background: rgba(255,255,255,.04);
+}
+
+.r1-formula-ic {
+  font-size: 18px;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+
+.r1-formula-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,.80);
+  flex: 1;
+  min-width: 0;
+}
+
+.r1-formula-val {
+  font-size: 11px;
+  font-family: ui-monospace, monospace;
+  color: rgba(34,197,94,.85);
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.r1-formula-reducers {
+  border-radius: 12px;
+  border: 1px solid rgba(34,197,94,.18);
+  background: rgba(34,197,94,.06);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.r1-formula-reducer-title {
+  font-size: 11px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  font-family: ui-monospace, monospace;
+  color: rgba(34,197,94,.60);
+  margin-bottom: 4px;
+}
+
+.r1-formula-reducer-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(255,255,255,.65);
+}
+
+.r1-formula-reducer-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(34,197,94,.28);
+  background: rgba(34,197,94,.10);
+  color: rgba(34,197,94,.90);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+/* ── Formula equation row ── */
+.r1-formula-equation {
+  margin: 16px 0;
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: rgba(0,0,0,.25);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.r1-formula-eq-label {
+  font-size: 11px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  font-family: ui-monospace, monospace;
+  color: rgba(255,255,255,.35);
+  margin-bottom: 10px;
+}
+
+.r1-formula-eq-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.r1-formula-eq-term {
+  color: rgba(255,255,255,.75);
+}
+
+.r1-formula-eq-op {
+  color: rgba(255,255,255,.30);
+  font-weight: 700;
+}
+
+.r1-formula-eq-base {
+  color: rgba(255,255,255,.55);
+  font-weight: 700;
+}
+
+.r1-formula-eq-result {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.r1-formula-eq-mult {
+  color: #22c55e;
+  font-weight: 900;
+  background: rgba(34,197,94,.10);
+  border: 1px solid rgba(34,197,94,.28);
+  border-radius: 6px;
+  padding: 1px 7px;
 }

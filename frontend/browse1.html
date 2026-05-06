@@ -8,7 +8,8 @@
 </head>
 
 <body>
-  <header class="top-progress">
+  <!-- Top progress bar hidden during browsing -->
+  <header class="top-progress" style="display:none;" aria-hidden="true">
     <div class="container">
       <nav class="stepper" data-stepper aria-label="Experience progress"></nav>
     </div>
@@ -256,7 +257,6 @@
               <div><div class="cookie-pref-item-label">Personalisation</div><div class="cookie-pref-item-desc">Remembers your preferences to tailor your experience.</div></div>
               <label class="cp-toggle"><input type="checkbox" id="pref-personalisation" checked /><span class="cp-toggle-track"></span></label>
             </div>
-
             <button class="cookie-prefs-save-btn" id="cookie-prefs-save">Save Preferences</button>
           </div>
         </div>
@@ -307,7 +307,6 @@
     })();
 
     // ── Cookie state ─────────────────────────────────────────
-    // Centralised state so both bar and settings stay in sync
     const cookieBar     = document.getElementById("cookie-bar");
     const prefsOverlay  = document.getElementById("cookie-prefs-overlay");
     const cookieDesc    = document.getElementById("settings-cookie-desc");
@@ -326,34 +325,35 @@
         window._gtPrivacy.cookiesAccepted = cookiesAccepted;
         window._gtPrivacy.cookieScore     = cookieScore;
       }
-      if (!cookiesAccepted) {
-        cookieDesc.textContent = "No preference set";
-      } else if (cookiesAccepted === "all") {
-        cookieDesc.textContent = "All cookies active";
-      } else if (cookiesAccepted === "essential") {
-        cookieDesc.textContent = "Essential only";
-      } else {
-        cookieDesc.textContent = "Custom preferences";
-      }
+      if (!cookiesAccepted)                    cookieDesc.textContent = "No preference set";
+      else if (cookiesAccepted === "all")      cookieDesc.textContent = "All cookies active";
+      else if (cookiesAccepted === "essential") cookieDesc.textContent = "Essential only";
+      else                                     cookieDesc.textContent = "Custom preferences";
     }
 
+    // Persistent cookie state so settings row reflects what was saved
+    let savedCookieState = null; // null = not set yet
+
     function openPrefs(preCheck) {
-      // If pre-checking all, set toggles to on
       if (preCheck === "all") {
+        // Only force all-on when explicitly called with "all" (first open from bar)
         analyticsChk.checked   = true;
         advertisingChk.checked = true;
         personChk.checked      = true;
       }
+      // If savedCookieState exists (user already saved once), restore those values
+      if (savedCookieState && preCheck !== "all") {
+        analyticsChk.checked   = savedCookieState.analytics;
+        advertisingChk.checked = savedCookieState.advertising;
+        personChk.checked      = savedCookieState.person;
+      }
       prefsOverlay.removeAttribute("hidden");
-      document.body.style.overflow = "hidden"; // prevent body scroll while modal open
     }
 
     function closePrefs() {
       prefsOverlay.setAttribute("hidden", "");
-      document.body.style.overflow = "";
     }
 
-    // Accept All button on bar
     document.getElementById("cookie-accept-btn").addEventListener("click", () => {
       analyticsChk.checked   = true;
       advertisingChk.checked = true;
@@ -362,27 +362,26 @@
       cookieBar.setAttribute("hidden", "");
     });
 
-    // Manage Preferences on bar
     document.getElementById("cookie-manage-btn").addEventListener("click", () => {
-      openPrefs();
+      // Open prefs with all pre-checked if no saved state yet
+      openPrefs(savedCookieState ? null : "all");
     });
 
-    // Save Preferences in modal
     document.getElementById("cookie-prefs-save").addEventListener("click", () => {
-      const score   = getCookieScore();
-      const anyOn   = analyticsChk.checked || advertisingChk.checked || personChk.checked;
-      const state   = anyOn ? "custom" : "essential";
-      applyPrivacy(state, score);
+      const score = getCookieScore();
+      const anyOn = analyticsChk.checked || advertisingChk.checked || personChk.checked;
+      // Save the exact toggle state so settings row can restore it
+      savedCookieState = {
+        analytics:   analyticsChk.checked,
+        advertising: advertisingChk.checked,
+        person:      personChk.checked,
+      };
+      applyPrivacy(anyOn ? "custom" : "essential", score);
       cookieBar.setAttribute("hidden", "");
       closePrefs();
     });
 
-    // Close overlay on backdrop click
-    prefsOverlay.addEventListener("click", (e) => {
-      if (e.target === prefsOverlay) closePrefs();
-    });
-
-    // Close on Escape
+    prefsOverlay.addEventListener("click", (e) => { if (e.target === prefsOverlay) closePrefs(); });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && !prefsOverlay.hasAttribute("hidden")) closePrefs();
     });
@@ -392,27 +391,18 @@
       const btn      = document.getElementById("browser-settings-btn");
       const dropdown = document.getElementById("browser-settings-dropdown");
       if (!btn || !dropdown) return;
-
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle("open");
-      });
+      btn.addEventListener("click", (e) => { e.stopPropagation(); dropdown.classList.toggle("open"); });
       document.addEventListener("click", () => dropdown.classList.remove("open"));
-
-      // VPN toggle
       document.getElementById("settings-vpn-toggle").addEventListener("click", (e) => {
         e.stopPropagation();
         e.currentTarget.classList.toggle("on");
         if (window._gtPrivacy) window._gtPrivacy.vpn = e.currentTarget.classList.contains("on");
       });
-
-      // Cookie manager row — open prefs with all pre-checked, hide bar
       document.getElementById("settings-cookie-row").addEventListener("click", (e) => {
         e.stopPropagation();
         dropdown.classList.remove("open");
-        // Pre-check all toggles to reflect "default all-on" state
-        openPrefs("all");
-        // Hide the bottom bar since user is managing directly
+        // If user already saved preferences, show those; otherwise default to all-on
+        openPrefs(savedCookieState ? null : "all");
         cookieBar.setAttribute("hidden", "");
       });
     })();
@@ -457,7 +447,6 @@
         const isSponsored = card.getAttribute("data-sponsored") === "true";
         const isAI        = card.getAttribute("data-ai-generated") === "true";
         const articleData = ARTICLES[id];
-
         heroWrap.innerHTML = "";
         if (img) {
           const imgEl = document.createElement("img");
@@ -468,13 +457,11 @@
           ph.className = "article-reader-hero-placeholder"; ph.textContent = "📰";
           heroWrap.appendChild(ph);
         }
-
         pill.textContent = cat;
         pill.className = "article-reader-pill" + (isSponsored ? " sponsored" : "");
         readtime.textContent = `⏱ ${rt}`;
         title.textContent = t;
         desc.textContent = d;
-
         content.innerHTML = "";
         if (articleData) {
           articleData.paragraphs.forEach(p => {
@@ -482,16 +469,20 @@
             else { const el = document.createElement("p"); el.textContent = p; content.appendChild(el); }
           });
         }
-
         source.innerHTML = "";
-        if (srcUrl) source.innerHTML = `Read the original article: <a href="${srcUrl}" target="_blank" rel="noopener noreferrer">${srcLabel || srcUrl}</a>`;
+        // Show source attribution as plain text only — no link that would navigate away
+        if (srcUrl && srcLabel) {
+          const srcNote = document.createElement("p");
+          srcNote.style.margin = "0";
+          srcNote.textContent = `Source: ${srcLabel}`;
+          source.appendChild(srcNote);
+        }
         if (isAI) {
           const note = document.createElement("div");
           note.className = "article-reader-ai-note";
           note.textContent = "ℹ️ This article was generated by AI for educational purposes as part of this privacy awareness experience. It is based on real research and reporting but is not a published article.";
           source.appendChild(note);
         }
-
         reader.removeAttribute("hidden");
         document.body.style.overflow = "hidden";
       }
@@ -518,12 +509,20 @@
       const clicksEl   = document.querySelector("[data-ui-clicks]");
       const articlesEl = document.querySelector("[data-ui-articles]");
       const timeEl     = document.querySelector("[data-ui-time]");
+      // totalClicks counts every click inside the simulated browser window
+      // uniqueArticles counts distinct article cards opened
       let totalClicks = 0;
       const uniqueArticles = new Set();
       const start = performance.now();
       const fmt = ms => { const t = Math.floor(ms/1000); return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`; };
       const timer = setInterval(() => { if (timeEl) timeEl.textContent = fmt(performance.now() - start); }, 250);
-      document.querySelector(".browser-window")?.addEventListener("click", () => {
+      // Count ALL clicks inside the browser window (ads, cards, settings, etc.)
+      document.querySelector(".browser-window-content")?.addEventListener("click", () => {
+        totalClicks++;
+        if (clicksEl) clicksEl.textContent = String(totalClicks);
+      }, true);
+      // Also count clicks on the titlebar area (settings gear etc.)
+      document.querySelector(".browser-window-titlebar")?.addEventListener("click", () => {
         totalClicks++;
         if (clicksEl) clicksEl.textContent = String(totalClicks);
       }, true);

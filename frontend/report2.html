@@ -3,148 +3,165 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Report 2</title>
+  <title>Report 2 · GhostTrace</title>
   <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/report1.css" />
 </head>
+
 <body>
-  <!-- TOP PROGRESS -->
   <header class="topbar">
-    <nav class="stepper" data-stepper aria-label="Experience progress"></nav>
+    <div class="topbarInner container">
+      <nav class="stepper" data-stepper></nav>
+    </div>
   </header>
 
-  <main class="page report-page report2-page" data-report data-round="2">
-    <div class="container">
+  <main class="r1-page">
+    <div class="r1-wrap">
 
-      <section class="report-head">
-        <div class="pill">ROUND 2 REPORT</div>
-        <h1 class="report-title">Your Data Report</h1>
-        <p class="report-sub muted">
-          Here's what we learned about you from your browsing session.
+      <!-- ── PAGE HEADER ── -->
+      <div class="r1-header">
+        <div class="r1-badge">
+          <span class="r1-badge-dot"></span>
+          ROUND 2 · DATA REPORT
+        </div>
+        <h1 class="r1-title">Your Data Report</h1>
+        <p class="r1-subtitle">
+          Here's what we collected from your second browsing session.<br>
+          <strong class="r1-subtitle-warn">↓ Lower score = better. Did your privacy tools make a difference?</strong>
         </p>
+      </div>
+
+      <!-- ── EXPOSURE SCORE ── -->
+      <section class="r1-card r1-score-card">
+        <div class="r1-score-ring-wrap">
+          <svg class="r1-ring-svg" viewBox="0 0 200 200">
+            <circle class="r1-ring-track" cx="100" cy="100" r="78"/>
+            <circle class="r1-ring-fill" cx="100" cy="100" r="78"
+              data-ring
+              stroke-dasharray="490"
+              stroke-dashoffset="490"/>
+          </svg>
+          <div class="r1-score-inner">
+            <div class="r1-score-num"><span data-score>—</span><span class="r1-score-denom">/100</span></div>
+            <div class="r1-score-lev" data-level>—</div>
+            <div class="r1-score-caption">Exposure Score</div>
+          </div>
+        </div>
+        <div class="r1-score-legend">
+          <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#22c55e;"></span><span>Low &nbsp;(0–39) — minimal data exposed</span></div>
+          <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#f59e0b;"></span><span>Moderate (40–69) — notable tracking</span></div>
+          <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#ef4444;"></span><span>High &nbsp;(70–100) — heavy exposure</span></div>
+          <div class="r1-legend-note">
+            Round 1 score: <strong data-r1-score>—</strong> &nbsp;·&nbsp;
+            Round 2 score: <strong data-r2-score>—</strong> &nbsp;·&nbsp;
+            <span data-score-delta></span>
+          </div>
+        </div>
       </section>
 
-      <!-- Gauge -->
-      <section class="gauge-wrap">
-        <div class="card gaugeCard">
-          <div class="gauge">
-            <svg class="gaugeSvg" viewBox="0 0 100 50" aria-hidden="true">
-              <path d="M10 45 A40 40 0 0 1 90 45" stroke="rgba(255,255,255,.12)" stroke-width="10" fill="none" stroke-linecap="round"></path>
-              <path data-gauge-fill d="M10 45 A40 40 0 0 1 90 45" stroke="rgba(0,255,153,.9)" stroke-width="10" fill="none" stroke-linecap="round"
-                    stroke-dasharray="100" stroke-dashoffset="100"></path>
-            </svg>
+      <!-- ── INFERENCES ── -->
+      <section class="r1-card">
+        <div class="r1-section-head">
+          <h2 class="r1-section-title">What We Can Infer About You</h2>
+          <p class="r1-section-sub">Based on your Round 2 browsing behavior, here's what a tracker could deduce.</p>
+        </div>
+        <div class="r1-infer-grid" data-inferences></div>
+        <div class="r1-topics-block">
+          <div class="r1-topics-label">Topics of interest detected from your clicks:</div>
+          <div class="r1-topics-row" data-topics></div>
+        </div>
+      </section>
 
-            <div class="gaugeMeta">
-              <div class="gaugeScore"><span data-score>0</span><span class="muted">/100</span></div>
-              <div class="gaugeLevel" data-level>Moderate</div>
-              <div class="gaugeLabel muted">Data Exposure</div>
+      <!-- ── PRIVACY SHIELD ── -->
+      <section class="r1-card">
+        <div class="r1-section-head">
+          <h2 class="r1-section-title">Privacy Shield Score</h2>
+          <p class="r1-section-sub">Did you use the available privacy tools during Round 2?</p>
+        </div>
+
+        <div class="r1-shield-row">
+          <div class="r1-shield-score" data-shield-score>0<span class="r1-shield-denom">/3</span></div>
+          <div class="r1-shield-checks">
+            <div class="r1-check" data-check="blocker">
+              <div class="r1-check-box" data-check-box="blocker">✗</div>
+              <div class="r1-check-text">
+                <div class="r1-check-name">Ad Blocker</div>
+                <div class="r1-check-desc">Blocks tracking scripts and sponsored content</div>
+              </div>
+            </div>
+            <div class="r1-check" data-check="vpn">
+              <div class="r1-check-box" data-check-box="vpn">✗</div>
+              <div class="r1-check-text">
+                <div class="r1-check-name">VPN</div>
+                <div class="r1-check-desc">Masks your IP address and encrypts traffic</div>
+              </div>
+            </div>
+            <div class="r1-check" data-check="cookies">
+              <div class="r1-check-box" data-check-box="cookies">✗</div>
+              <div class="r1-check-text">
+                <div class="r1-check-name">Rejected Non-Essential Cookies</div>
+                <div class="r1-check-desc">Limits cookie tracking to essential only</div>
+              </div>
             </div>
           </div>
         </div>
-      </section>
 
-      <!-- Inferences -->
-      <section class="report-section">
-        <h2>What We Can Infer About You</h2>
-        <div class="grid-2" data-inferences></div>
-      </section>
-
-      <!-- Signals -->
-      <section class="report-section">
-        <h2>Behavior Signals Captured</h2>
-
-        <div class="grid-4">
-          <div class="card stat-card">
-            <div class="stat-num" data-clicks>0</div>
-            <div class="stat-label">Clicks</div>
-          </div>
-
-          <div class="card stat-card">
-            <div class="stat-num" data-articles>0</div>
-            <div class="stat-label">Articles Opened</div>
-          </div>
-
-          <div class="card stat-card">
-            <div class="stat-num" data-time>0:00</div>
-            <div class="stat-label">Time Spent</div>
-          </div>
-
-          <div class="card stat-card">
-            <div class="stat-num" data-cats>0</div>
-            <div class="stat-label">Categories</div>
-          </div>
-        </div>
-
-        <div class="card topics-card" style="margin-top:14px;">
-          <div class="topicsTitle">Topics that interest you:</div>
-          <div class="topicsChips" data-topics></div>
+        <div class="r1-shield-tip" data-shield-tip hidden>
+          💡 You didn't use all three tools. Compare your score against Round 1 — even one tool can make a measurable difference.
         </div>
       </section>
 
-      <!-- Browse comparison goes inside Report 2
-      <section class="report-section">
-        <h2>Browse 1 vs Browse 2 Comparison</h2>
-
-        <div class="compareCards">
-          <div class="card compareCard">
-            <div class="compareTitle">Round 1 Score</div>
-            <div class="compareScore"><span data-round1-score>0</span> <span class="muted">/ 100</span></div>
+      <!-- ── BEHAVIOR SIGNALS ── -->
+      <section class="r1-card">
+        <div class="r1-section-head">
+          <h2 class="r1-section-title">Behavior Signals Captured</h2>
+          <p class="r1-section-sub">Every action leaves a trace. Here's exactly what was recorded.</p>
+        </div>
+        <div class="r1-stats-row">
+          <div class="r1-stat">
+            <div class="r1-stat-val" data-stat-clicks>0</div>
+            <div class="r1-stat-lbl">Clicks</div>
           </div>
-
-          <div class="card compareCard">
-            <div class="compareTitle">Round 2 Score</div>
-            <div class="compareScore"><span data-round2-score>0</span> <span class="muted">/ 100</span></div>
+          <div class="r1-stat">
+            <div class="r1-stat-val" data-stat-articles>0</div>
+            <div class="r1-stat-lbl">Articles Read</div>
+          </div>
+          <div class="r1-stat">
+            <div class="r1-stat-val" data-stat-ads>0</div>
+            <div class="r1-stat-lbl">Ads Clicked</div>
+          </div>
+          <div class="r1-stat">
+            <div class="r1-stat-val" data-stat-time>0:00</div>
+            <div class="r1-stat-lbl">Time Spent</div>
           </div>
         </div>
+      </section>
 
-        <div class="pointsPanel">
-          <div class="pointsNum" data-points>0 points</div>
-          <div class="pointsMsg" data-points-msg>Same exposure both rounds.</div>
+      <!-- ── CHARTS ── -->
+      <section class="r1-charts-row">
+
+        <div class="r1-chart-card">
+          <div class="r1-chart-label">CLICK DISTRIBUTION</div>
+          <div class="r1-chart-body r1-chart-body--pie">
+            <canvas id="clickPie" width="200" height="200"></canvas>
+            <div class="r1-pie-legend" id="pieLegend"></div>
+          </div>
+          <p class="r1-chart-empty" id="pieEmpty">No articles clicked yet.</p>
         </div>
 
-        <div class="tableWrap">
-          <table class="compareTable">
-            <thead>
-              <tr>
-                <th>Metric</th>
-                <th>Round 1</th>
-                <th>Round 2</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Clicks</td>
-                <td data-metric="clicks" data-round="1">0</td>
-                <td data-metric="clicks" data-round="2">0</td>
-              </tr>
-              <tr>
-                <td>Articles Opened</td>
-                <td data-metric="articles" data-round="1">0</td>
-                <td data-metric="articles" data-round="2">0</td>
-              </tr>
-              <tr>
-                <td>Time Spent (s)</td>
-                <td data-metric="time_s" data-round="1">0</td>
-                <td data-metric="time_s" data-round="2">0</td>
-              </tr>
-              <tr>
-                <td>Hover Targets</td>
-                <td data-metric="hovers" data-round="1">0</td>
-                <td data-metric="hovers" data-round="2">0</td>
-              </tr>
-              <tr>
-                <td>Categories</td>
-                <td data-metric="categories" data-round="1">0</td>
-                <td data-metric="categories" data-round="2">0</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="r1-chart-card r1-chart-card--wide">
+          <div class="r1-chart-label">HOVER TIME PER ARTICLE</div>
+          <div class="r1-chart-body r1-chart-body--bar">
+            <canvas id="hoverBar" width="460" height="220"></canvas>
+          </div>
+          <p class="r1-chart-empty" id="barEmpty">No hover data recorded yet.</p>
         </div>
-      </section> -->
 
-      <div class="ctaRow">
-        <a class="btn btn-primary" data-next href="post-quiz.html">
-          Take Post-Quiz <span aria-hidden="true">→</span>
-        </a>
+      </section>
+
+      <!-- ── CTA ── -->
+      <div class="r1-cta">
+        <button class="btn-primary" type="button" data-next>Continue →</button>
       </div>
 
     </div>
@@ -152,121 +169,322 @@
 
   <script src="assets/app.js"></script>
   <script>
-    // Stepper
-    window.GT?.renderStepper?.("r2");
+  (function () {
+    if (!window.GT) { console.warn("app.js missing"); return; }
 
-    (function () {
-      const GT = window.GT;
-      if (!GT) return;
+    window.GT.renderStepper("r2");
 
-      const state = GT.loadState();
+    const st      = window.GT.loadState();
+    const session = st.browse2 || {};
+    const priv    = session.privacy || {};
+    const score   = Number(session.exposureScore || 0);
+    const score1  = Number((st.browse1 || {}).exposureScore || 0);
 
-      function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
-      function formatTime(ms) {
-        const s = Math.max(0, Math.round(ms / 1000));
-        const m = Math.floor(s / 60);
-        const r = s % 60;
-        return `${m}:${String(r).padStart(2, "0")}`;
-      }
+    const qs = sel => document.querySelector(sel);
 
-      function scoreToLevel(score) {
-        if (score <= 30) return "Low";
-        if (score <= 60) return "Moderate";
-        return "High";
-      }
+    function fmt(sec) {
+      const s = Number(sec || 0);
+      return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+    }
+    function scoreLabel(n) {
+      if (n >= 70) return "High Exposure";
+      if (n >= 40) return "Moderate Exposure";
+      return "Low Exposure";
+    }
+    function scoreColor(n) {
+      if (n >= 70) return "#ef4444";
+      if (n >= 40) return "#f59e0b";
+      return "#22c55e";
+    }
 
-      const m2 = state.round2?.metrics || { clicks:0, articles:0, timeMs:0, hoverTargets:0, categories:[] };
-      const score2 = Number(state.round2?.exposure?.score ?? 0);
-      const level2 = state.round2?.exposure?.level || scoreToLevel(score2);
+    // ── Score ring ──────────────────────────────────────────
+    qs("[data-score]").textContent = score;
+    const levEl = qs("[data-level]");
+    levEl.textContent = scoreLabel(score);
+    levEl.style.color = scoreColor(score);
 
-      const scoreEl = document.querySelector("[data-score]");
-      const levelEl = document.querySelector("[data-level]");
-      const fill = document.querySelector("[data-gauge-fill]");
-      const pct = clamp(score2, 0, 100);
+    const ring = qs("[data-ring]");
+    const C = 2 * Math.PI * 78;
+    ring.style.stroke = scoreColor(score);
+    requestAnimationFrame(() => {
+      ring.style.transition = "stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)";
+      ring.style.strokeDashoffset = String(C * (1 - score / 100));
+    });
 
-      if (scoreEl) scoreEl.textContent = String(pct);
-      if (levelEl) levelEl.textContent = level2;
-      if (fill) fill.style.strokeDashoffset = String(100 - pct);
+    // ── Round comparison in legend ──────────────────────────
+    qs("[data-r1-score]").textContent = score1 + "/100";
+    qs("[data-r2-score]").textContent = score + "/100";
+    const deltaEl = qs("[data-score-delta]");
+    const delta = score1 - score;
+    if (delta > 0) {
+      deltaEl.textContent = `↓ ${delta} pts improvement`;
+      deltaEl.style.color = "#22c55e";
+    } else if (delta < 0) {
+      deltaEl.textContent = `↑ ${Math.abs(delta)} pts worse`;
+      deltaEl.style.color = "#ef4444";
+    } else {
+      deltaEl.textContent = "Same score as Round 1";
+      deltaEl.style.color = "rgba(255,255,255,.45)";
+    }
 
-      document.querySelector("[data-clicks]") && (document.querySelector("[data-clicks]").textContent = String(m2.clicks ?? 0));
-      document.querySelector("[data-articles]") && (document.querySelector("[data-articles]").textContent = String(m2.articles ?? 0));
-      document.querySelector("[data-time]") && (document.querySelector("[data-time]").textContent = formatTime(m2.timeMs ?? 0));
+    // ── Stats ───────────────────────────────────────────────
+    qs("[data-stat-clicks]").textContent   = session.clicks ?? 0;
+    qs("[data-stat-articles]").textContent = session.articlesOpened ?? 0;
+    qs("[data-stat-ads]").textContent      = priv.adClicks ?? 0;
+    qs("[data-stat-time]").textContent     = fmt(session.timeSpentSec ?? 0);
 
-      const catCount = Array.isArray(m2.categories) ? m2.categories.length : 0;
-      document.querySelector("[data-cats]") && (document.querySelector("[data-cats]").textContent = String(catCount));
+    // ── Shield checks ───────────────────────────────────────
+    const usedBlocker = !!priv.blocker;
+    const usedVpn     = !!priv.vpn;
+    const rejCookies  = priv.cookiesAccepted === "essential";
+    const shieldTotal = [usedBlocker, usedVpn, rejCookies].filter(Boolean).length;
 
-      const topicsWrap = document.querySelector("[data-topics]");
-      if (topicsWrap) {
-        const topics = Array.isArray(m2.categories) ? m2.categories : [];
-        if (topics.length === 0) {
-          topicsWrap.innerHTML = '<span class="topic-chip muted">No clear topic signal yet</span>';
-        } else {
-          topicsWrap.innerHTML = topics.map((t) => `<span class="topic-chip">${t}</span>`).join("");
+    const shieldEl = qs("[data-shield-score]");
+    shieldEl.childNodes[0].textContent = shieldTotal;
+    shieldEl.style.color = shieldTotal === 3 ? "#22c55e" : shieldTotal >= 1 ? "#f59e0b" : "#ef4444";
+
+    function applyCheck(key, passed) {
+      const box = qs(`[data-check-box="${key}"]`);
+      const row = qs(`[data-check="${key}"]`);
+      if (!box || !row) return;
+      box.textContent = passed ? "✓" : "✗";
+      box.classList.add(passed ? "r1-check-pass" : "r1-check-fail");
+      row.classList.add(passed ? "r1-check--pass" : "r1-check--fail");
+    }
+    applyCheck("blocker", usedBlocker);
+    applyCheck("vpn", usedVpn);
+    applyCheck("cookies", rejCookies);
+
+    if (shieldTotal < 3) qs("[data-shield-tip]").removeAttribute("hidden");
+
+    // ── Topics ──────────────────────────────────────────────
+    const topics = session.topics || [];
+    const topicsWrap = qs("[data-topics]");
+    if (topics.length) {
+      topics.forEach(t => {
+        const chip = document.createElement("span");
+        chip.className = "r1-topic-chip";
+        chip.textContent = t;
+        topicsWrap.appendChild(chip);
+      });
+    } else {
+      const chip = document.createElement("span");
+      chip.className = "r1-topic-chip r1-topic-chip--muted";
+      chip.textContent = "No topics detected";
+      topicsWrap.appendChild(chip);
+    }
+
+    // ── Inferences ──────────────────────────────────────────
+    const infWrap   = qs("[data-inferences]");
+    const timeSpent = session.timeSpentSec || 0;
+    const adClicks  = priv.adClicks || 0;
+    const inferences = [];
+
+    if (timeSpent >= 180) {
+      inferences.push({ icon:"📖", title:"Engaged Reader", reason:`You spent ${fmt(timeSpent)} on the feed — a long session signals strong interest even in Round 2.` });
+    } else if (timeSpent >= 60) {
+      inferences.push({ icon:"👀", title:"Moderate Browser", reason:`${fmt(timeSpent)} on page is enough for a basic behavioral profile to be built.` });
+    } else {
+      inferences.push({ icon:"⚡", title:"Quick Scanner", reason:"Short session limits deep profiling, but your click patterns still reveal topic preferences." });
+    }
+
+    if (topics.length >= 3) {
+      inferences.push({ icon:"🗂", title:"Broad Interest Profile", reason:`You browsed ${topics.length} categories: ${topics.join(", ")}. Cross-category data is especially valuable for targeted advertising.` });
+    } else if (topics.length >= 1) {
+      inferences.push({ icon:"🎯", title:"Niche Interest Signal", reason:`Your clicks focused on: ${topics.join(", ")}. Focused profiles are easier to monetize with category-specific ads.` });
+    } else {
+      inferences.push({ icon:"🔍", title:"Low Interest Signal", reason:"Very little topic data was captured. Advertisers would need more browsing to build a useful profile." });
+    }
+
+    if (adClicks > 0) {
+      inferences.push({ icon:"💰", title:"Ad-Responsive User", reason:`You clicked ${adClicks} sponsored item${adClicks > 1 ? "s" : ""} — this flags you as a high-value advertising target.` });
+    }
+
+    if (!usedBlocker && !usedVpn && !rejCookies) {
+      inferences.push({ icon:"🔓", title:"Fully Unprotected Session", reason:"No privacy tools were active in Round 2 — the same complete data profile was available as in Round 1." });
+    } else if (shieldTotal === 3) {
+      inferences.push({ icon:"🛡", title:"Privacy-Conscious User", reason:"All three protective measures were active — your Round 2 footprint was significantly reduced." });
+    } else {
+      inferences.push({ icon:"⚠️", title:"Partial Protection", reason:`You used ${shieldTotal} of 3 available tools — some tracking data was still exposed this round.` });
+    }
+
+    // Round comparison inference
+    if (delta > 0) {
+      inferences.push({ icon:"📉", title:`Score Down ${delta} Points`, reason:`Your exposure dropped from ${score1} to ${score} — privacy tools made a measurable difference.` });
+    } else if (delta < 0) {
+      inferences.push({ icon:"📈", title:`Score Up ${Math.abs(delta)} Points`, reason:`Your exposure rose from ${score1} to ${score} this round. More browsing without protection increases your profile.` });
+    } else {
+      inferences.push({ icon:"➡️", title:"Same Score Both Rounds", reason:"Similar behavior and protection levels produced the same exposure score. Try different tools in a third run." });
+    }
+
+    inferences.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "r1-infer-card";
+      card.innerHTML = `<div class="r1-infer-icon">${item.icon}</div><div><div class="r1-infer-title">${item.title}</div><div class="r1-infer-reason">${item.reason}</div></div>`;
+      infWrap.appendChild(card);
+    });
+
+    // ── Charts ───────────────────────────────────────────────
+    const LABELS = {
+      a1: "Smart Speakers",
+      a2: "Fitness Apps",
+      a3: "Dynamic Pricing",
+      a4: "Social Networks",
+      a5: "Credit Scoring",
+      a6: "Student Monitoring"
+    };
+
+    const PIE_COLORS = ["#00e5a0","#00b3ff","#ff6b9d","#ffd166","#a78bfa","#f97316"];
+
+    const articleClicks = session.articleClicks || {};
+    const pieEntries = Object.entries(LABELS)
+      .map(([id, label]) => ({ label, count: articleClicks[id] || 0 }))
+      .filter(e => e.count > 0);
+
+    const pieCanvas = document.getElementById("clickPie");
+    const pieEmpty  = document.getElementById("pieEmpty");
+    const pieLegend = document.getElementById("pieLegend");
+
+    if (pieEntries.length > 0) {
+      pieEmpty.style.display = "none";
+      drawDonut(pieCanvas, pieEntries, PIE_COLORS);
+      pieEntries.forEach((e, i) => {
+        const item = document.createElement("div");
+        item.className = "r1-leg-item";
+        item.innerHTML = `<span class="r1-leg-dot" style="background:${PIE_COLORS[i % PIE_COLORS.length]}"></span><span>${e.label}</span>`;
+        pieLegend.appendChild(item);
+      });
+    } else {
+      pieCanvas.style.display = "none";
+    }
+
+    const hoverByArticle = session.hoverByArticle || {};
+    const barEntries = Object.entries(LABELS)
+      .map(([id, label]) => ({ label, ms: hoverByArticle[id] || 0 }))
+      .filter(e => e.ms > 0)
+      .sort((a, b) => b.ms - a.ms);
+
+    const barCanvas = document.getElementById("hoverBar");
+    const barEmpty  = document.getElementById("barEmpty");
+
+    if (barEntries.length > 0) {
+      barEmpty.style.display = "none";
+      drawBar(barCanvas, barEntries);
+    } else {
+      barCanvas.style.display = "none";
+    }
+
+    // ── Save & CTA ───────────────────────────────────────────
+    st.r2 = st.r2 || {};
+    st.r2.done = true;
+    window.GT.saveState(st);
+    window.GT.setDone("r2", true);
+
+    qs("[data-next]").addEventListener("click", () => {
+      window.location.href = "post-quiz.html";
+    });
+
+    // ── Drawing functions ────────────────────────────────────
+    function drawDonut(canvas, entries, colors) {
+      const ctx = canvas.getContext("2d");
+      const cx = canvas.width / 2, cy = canvas.height / 2;
+      const r  = Math.min(cx, cy) - 8;
+      const total = entries.reduce((s, e) => s + e.count, 0);
+      let angle = -Math.PI / 2;
+
+      entries.forEach((e, i) => {
+        const slice = (e.count / total) * 2 * Math.PI;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, angle, angle + slice);
+        ctx.closePath();
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.fill();
+        ctx.strokeStyle = "#0d1117";
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+        angle += slice;
+      });
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * 0.50, 0, 2 * Math.PI);
+      ctx.fillStyle = "#0d1117";
+      ctx.fill();
+    }
+
+    function drawBar(canvas, entries) {
+      const ctx  = canvas.getContext("2d");
+      const W = canvas.width, H = canvas.height;
+      const pad  = { top: 16, right: 14, bottom: 54, left: 44 };
+      const cW   = W - pad.left - pad.right;
+      const cH   = H - pad.top  - pad.bottom;
+      const maxMs = Math.max(...entries.map(e => e.ms));
+      const n     = entries.length;
+      const barW  = Math.max(16, Math.floor(cW / n) - 10);
+      const step  = cW / n;
+
+      ctx.clearRect(0, 0, W, H);
+
+      const ticks = 4;
+      for (let i = 0; i <= ticks; i++) {
+        const frac = i / ticks;
+        const y = pad.top + cH - frac * cH;
+        const val = ((maxMs * frac) / 1000).toFixed(1) + "s";
+
+        ctx.fillStyle = "rgba(255,255,255,0.30)";
+        ctx.font = "10px ui-monospace,monospace";
+        ctx.textAlign = "right";
+        ctx.fillText(val, pad.left - 6, y + 4);
+
+        ctx.beginPath();
+        ctx.strokeStyle = "rgba(255,255,255,0.07)";
+        ctx.lineWidth = 1;
+        if (i > 0) {
+          ctx.setLineDash([3, 3]);
+          ctx.moveTo(pad.left, y);
+          ctx.lineTo(pad.left + cW, y);
+          ctx.stroke();
+          ctx.setLineDash([]);
         }
       }
 
-      const inferWrap = document.querySelector("[data-inferences]");
-      if (inferWrap) {
-        const inferences = [];
-        if ((m2.timeMs ?? 0) > 4 * 60 * 1000) {
-          inferences.push({ title: "Deep reader / engaged user", badge: "High confidence", badgeClass: "", sub: "Longer time suggests stronger interest signals for personalization." });
+      ctx.beginPath();
+      ctx.strokeStyle = "rgba(255,255,255,0.15)";
+      ctx.lineWidth = 1;
+      ctx.moveTo(pad.left, pad.top + cH);
+      ctx.lineTo(pad.left + cW, pad.top + cH);
+      ctx.stroke();
+
+      entries.forEach((e, i) => {
+        const barH = (e.ms / maxMs) * cH;
+        const x = pad.left + i * step + (step - barW) / 2;
+        const y = pad.top + cH - barH;
+
+        const grad = ctx.createLinearGradient(0, y, 0, y + barH);
+        grad.addColorStop(0, "#00e5a0");
+        grad.addColorStop(1, "rgba(0,229,160,0.35)");
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        if (ctx.roundRect) {
+          ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
         } else {
-          inferences.push({ title: "Quick scanner", badge: "Medium confidence", badgeClass: "mid", sub: "Short sessions still create a profile, just with less certainty." });
+          ctx.rect(x, y, barW, barH);
         }
+        ctx.fill();
 
-        if (catCount >= 2) inferences.push({ title: "Multi-topic curiosity", badge: "Medium confidence", badgeClass: "mid", sub: "You explored multiple categories, widening your interest graph." });
-        else if (catCount === 1) inferences.push({ title: "Focused interest", badge: "Medium confidence", badgeClass: "mid", sub: "A single category can still be a strong signal for targeting." });
-        else inferences.push({ title: "Unclear topic signal", badge: "Low confidence", badgeClass: "mid", sub: "Without category clicks, platforms rely more on subtle signals." });
+        const shortLabel = e.label.length > 13 ? e.label.slice(0, 12) + "…" : e.label;
+        ctx.save();
+        ctx.translate(x + barW / 2, pad.top + cH + 10);
+        ctx.rotate(-Math.PI / 5);
+        ctx.fillStyle = "rgba(255,255,255,0.40)";
+        ctx.font = "10px ui-monospace,monospace";
+        ctx.textAlign = "right";
+        ctx.fillText(shortLabel, 0, 0);
+        ctx.restore();
+      });
+    }
 
-        inferWrap.innerHTML = inferences.slice(0, 2).map((x) => `
-          <div class="card infer-card">
-            <div class="infer-ic" aria-hidden="true">◎</div>
-            <div>
-              <div class="infer-title">${x.title}</div>
-              <p class="infer-sub">${x.sub}</p>
-              <span class="infer-badge ${x.badgeClass}">${x.badge}</span>
-            </div>
-          </div>
-        `).join("");
-      }
-
-      const m1 = state.round1?.metrics || { clicks:0, articles:0, timeMs:0, hoverTargets:0, categories:[] };
-      const score1 = Number(state.round1?.exposure?.score ?? 0);
-
-      const r1ScoreEl = document.querySelector("[data-round1-score]");
-      const r2ScoreEl = document.querySelector("[data-round2-score]");
-      if (r1ScoreEl) r1ScoreEl.textContent = String(score1);
-      if (r2ScoreEl) r2ScoreEl.textContent = String(score2);
-
-      const points = score1 - score2;
-      const pointsEl = document.querySelector("[data-points]");
-      const msgEl = document.querySelector("[data-points-msg]");
-
-      if (pointsEl) pointsEl.textContent = `${points} point${Math.abs(points) === 1 ? "" : "s"}`;
-      if (msgEl) {
-        if (points > 0) msgEl.textContent = "Nice — less exposure in Round 2. Awareness helps.";
-        else if (points < 0) msgEl.textContent = "More exposure in Round 2. Small changes make a difference.";
-        else msgEl.textContent = "Same exposure both rounds. Awareness is the first step.";
-      }
-
-      function setMetric(metric, round, val) {
-        const cell = document.querySelector(`[data-metric="${metric}"][data-round="${round}"]`);
-        if (cell) cell.textContent = String(val);
-      }
-
-      setMetric("clicks", 1, m1.clicks ?? 0);
-      setMetric("clicks", 2, m2.clicks ?? 0);
-      setMetric("articles", 1, m1.articles ?? 0);
-      setMetric("articles", 2, m2.articles ?? 0);
-      setMetric("time_s", 1, Math.round((m1.timeMs ?? 0) / 1000));
-      setMetric("time_s", 2, Math.round((m2.timeMs ?? 0) / 1000));
-      setMetric("hovers", 1, m1.hoverTargets ?? 0);
-      setMetric("hovers", 2, m2.hoverTargets ?? 0);
-      setMetric("categories", 1, Array.isArray(m1.categories) ? m1.categories.length : 0);
-      setMetric("categories", 2, Array.isArray(m2.categories) ? m2.categories.length : 0);
-
-      GT.setDone("r2", true);
-    })();
+  })();
   </script>
 </body>
 </html>

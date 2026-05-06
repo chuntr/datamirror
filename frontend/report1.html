@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Report 1 · GhostTrace</title>
   <link rel="stylesheet" href="assets/styles.css" />
-  <link rel="stylesheet" href="assets/report1.css" />
 </head>
 
 <body>
@@ -42,7 +41,7 @@
               stroke-dashoffset="490"/>
           </svg>
           <div class="r1-score-inner">
-            <div class="r1-score-num"><span data-score>—</span><span class="r1-score-denom">/100</span></div>
+            <div class="r1-score-num"><span data-score>—</span><span class="r1-score-denom" data-score-denom>/100</span></div>
             <div class="r1-score-lev" data-level>—</div>
             <div class="r1-score-caption">Exposure Score</div>
           </div>
@@ -50,8 +49,64 @@
         <div class="r1-score-legend">
           <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#22c55e;"></span><span>Low &nbsp;(0–39) — minimal data exposed</span></div>
           <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#f59e0b;"></span><span>Moderate (40–69) — notable tracking</span></div>
-          <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#ef4444;"></span><span>High &nbsp;(70–100) — heavy exposure</span></div>
-          <div class="r1-legend-note">A <strong>higher score means more of your data was captured.</strong> Aim low.</div>
+          <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#ef4444;"></span><span>High &nbsp;(70–100+) — heavy exposure</span></div>
+          <div class="r1-legend-note" data-legend-note>A <strong>higher score means more of your data was captured.</strong> Aim for a lower score.</div>
+        </div>
+      </section>
+
+      <!-- ── SCORE FORMULA ── -->
+      <!-- ── SCORE FORMULA ── -->
+      <section class="r1-card">
+        <div class="r1-section-head">
+          <h2 class="r1-section-title">How Your Score Is Calculated</h2>
+          <p class="r1-section-sub">Every action in the simulated browser contributes to your exposure score. Here's the exact formula — with your numbers filled in.</p>
+        </div>
+        <div class="r1-formula-grid">
+          <div class="r1-formula-row">
+            <span class="r1-formula-ic">↗</span>
+            <div class="r1-formula-label">Clicks</div>
+            <div class="r1-formula-val">× 12 pts each</div>
+          </div>
+          <div class="r1-formula-row">
+            <span class="r1-formula-ic">◉</span>
+            <div class="r1-formula-label">Articles Opened</div>
+            <div class="r1-formula-val">× 14 pts each</div>
+          </div>
+          <div class="r1-formula-row">
+            <span class="r1-formula-ic">⏱</span>
+            <div class="r1-formula-label">Time on Page</div>
+            <div class="r1-formula-val">× 0.16 pts/sec</div>
+          </div>
+          <div class="r1-formula-row">
+            <span class="r1-formula-ic">🖱</span>
+            <div class="r1-formula-label">Hover Events</div>
+            <div class="r1-formula-val">× 4 pts each</div>
+          </div>
+          <div class="r1-formula-row">
+            <span class="r1-formula-ic">🏷</span>
+            <div class="r1-formula-label">Categories Browsed</div>
+            <div class="r1-formula-val">× 10 pts each</div>
+          </div>
+          <div class="r1-formula-row">
+            <span class="r1-formula-ic">🍪</span>
+            <div class="r1-formula-label">Cookies Accepted</div>
+            <div class="r1-formula-val">up to +30 pts</div>
+          </div>
+          <div class="r1-formula-row">
+            <span class="r1-formula-ic">💰</span>
+            <div class="r1-formula-label">Ad Clicks</div>
+            <div class="r1-formula-val">× 8 pts each</div>
+          </div>
+        </div>
+
+        <!-- Your numbers -->
+        <div class="r1-formula-equation" id="formula-equation"></div>
+
+        <div class="r1-formula-reducers">
+          <div class="r1-formula-reducer-title">Privacy tools reduce your score:</div>
+          <div class="r1-formula-reducer-row"><span class="r1-formula-reducer-tag">VPN on</span> × 0.72 (saves 28%)</div>
+          <div class="r1-formula-reducer-row"><span class="r1-formula-reducer-tag">Ad Blocker on</span> × 0.78 (saves 22%)</div>
+          <div class="r1-formula-reducer-row"><span class="r1-formula-reducer-tag">Essential cookies only</span> × 0.85 (saves 15%)</div>
         </div>
       </section>
 
@@ -135,8 +190,6 @@
 
       <!-- ── CHARTS ── -->
       <section class="r1-charts-row">
-
-        <!-- Donut pie -->
         <div class="r1-chart-card">
           <div class="r1-chart-label">CLICK DISTRIBUTION</div>
           <div class="r1-chart-body r1-chart-body--pie">
@@ -145,8 +198,6 @@
           </div>
           <p class="r1-chart-empty" id="pieEmpty">No articles clicked yet.</p>
         </div>
-
-        <!-- Bar chart -->
         <div class="r1-chart-card r1-chart-card--wide">
           <div class="r1-chart-label">HOVER TIME PER ARTICLE</div>
           <div class="r1-chart-body r1-chart-body--bar">
@@ -154,7 +205,6 @@
           </div>
           <p class="r1-chart-empty" id="barEmpty">No hover data recorded yet.</p>
         </div>
-
       </section>
 
       <!-- ── CTA ── -->
@@ -172,14 +222,31 @@
 
     window.GT.renderStepper("r1");
 
-    const st      = window.GT.loadState();
-    const session = st.browse1 || {};
-    const priv    = session.privacy || {};
-    const score   = Number(session.exposureScore || 0);
+    // ── All data loaded once at the top ──────────────────────
+    const st             = window.GT.loadState();
+    const session        = st.browse1 || {};
+    const priv           = session.privacy || {};
+    const score          = Number(session.exposureScore || 0);
+    const hoverByArticle = session.hoverByArticle || {};
+    const articleClicksMap = session.articleClicks || {};
 
     const qs = sel => document.querySelector(sel);
 
-    // ── Helpers ─────────────────────────────────────────────
+    // ── Article lookup tables ────────────────────────────────
+    const ARTICLE_NAMES = {
+      a1: "Smart Speakers", a2: "Fitness Apps",    a3: "Dynamic Pricing",
+      a4: "Social Networks", a5: "Credit Scoring",  a6: "Student Monitoring"
+    };
+    const ARTICLE_TOPICS = {
+      a1: "Technology", a2: "Health",       a3: "Shopping",
+      a4: "Social Media", a5: "Finance",    a6: "Education"
+    };
+    const LABELS = {
+      a1: "Smart Speakers", a2: "Fitness Apps",    a3: "Dynamic Pricing",
+      a4: "Social Networks", a5: "Credit Scoring",  a6: "Student Monitoring"
+    };
+
+    // ── Helpers ──────────────────────────────────────────────
     function fmt(sec) {
       const s = Number(sec || 0);
       return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
@@ -196,18 +263,74 @@
     }
 
     // ── Score ring ───────────────────────────────────────────
-    qs("[data-score]").textContent = score;
+    qs("[data-score]").textContent = score > 100 ? "100+" : score;
+    if (score > 100) qs("[data-score-denom]").textContent = "";
     const levEl = qs("[data-level]");
     levEl.textContent = scoreLabel(score);
     levEl.style.color = scoreColor(score);
 
     const ring = qs("[data-ring]");
-    const C = 2 * Math.PI * 78; // r=78
+    const C = 2 * Math.PI * 78;
     ring.style.stroke = scoreColor(score);
     requestAnimationFrame(() => {
       ring.style.transition = "stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)";
-      ring.style.strokeDashoffset = String(C * (1 - score / 100));
+      const pct = Math.min(score, 100) / 100;
+      ring.style.strokeDashoffset = String(C * (1 - pct));
     });
+
+    // ── Legend note ──────────────────────────────────────────
+    const legendNote = qs("[data-legend-note]");
+    if (legendNote) {
+      if (score < 40) {
+        legendNote.innerHTML = `🎉 <strong>Great job!</strong> Your score is in the low range — you left a minimal data trail. See if you can maintain that in Round 2.`;
+        legendNote.style.borderColor = "rgba(34,197,94,.28)";
+        legendNote.style.background  = "rgba(34,197,94,.08)";
+        legendNote.style.color       = "rgba(34,197,94,.92)";
+      } else {
+        legendNote.innerHTML = `A <strong>higher score means more of your data was captured.</strong> Aim for a lower score in Round 2.`;
+      }
+    }
+    // ── Score formula with user's numbers ───────────────────
+    const formulaEl = document.getElementById("formula-equation");
+    if (formulaEl) {
+      const fc = session.clicks        || 0;
+      const fa = session.articlesOpened || 0;
+      const ft = session.timeSpentSec  || 0;
+      const fh = session.hoverEvents   || 0;
+      const fcat = session.categories  || 0;
+      const fcook = priv.cookieScore   || 0;
+      const fad  = priv.adClicks       || 0;
+
+      const base = Math.round(fc*12 + fa*14 + fh*4 + ft*0.16 + fcat*10 + fcook + fad*8);
+
+      const vpnMult    = priv.vpn                              ? "× 0.72" : "";
+      const blkMult    = priv.blocker                          ? "× 0.78" : "";
+      const ckMult     = priv.cookiesAccepted === "essential"  ? "× 0.85" : "";
+      const multipliers = [vpnMult, blkMult, ckMult].filter(Boolean);
+      const multStr    = multipliers.length ? " " + multipliers.map(m => `<span class="r1-formula-eq-mult">${m}</span>`).join(" ") : "";
+
+      formulaEl.innerHTML = `
+        <div class="r1-formula-eq-label">Your calculation:</div>
+        <div class="r1-formula-eq-line">
+          <span class="r1-formula-eq-term">(${fc} × 12)</span>
+          <span class="r1-formula-eq-op">+</span>
+          <span class="r1-formula-eq-term">(${fa} × 14)</span>
+          <span class="r1-formula-eq-op">+</span>
+          <span class="r1-formula-eq-term">(${Math.round(ft)} × 0.16)</span>
+          <span class="r1-formula-eq-op">+</span>
+          <span class="r1-formula-eq-term">(${fh} × 4)</span>
+          <span class="r1-formula-eq-op">+</span>
+          <span class="r1-formula-eq-term">(${fcat} × 10)</span>
+          <span class="r1-formula-eq-op">+</span>
+          <span class="r1-formula-eq-term">${fcook} cookies</span>
+          <span class="r1-formula-eq-op">+</span>
+          <span class="r1-formula-eq-term">(${fad} × 8) ads</span>
+          <span class="r1-formula-eq-op">=</span>
+          <span class="r1-formula-eq-base">${base}</span>${multStr}
+          <span class="r1-formula-eq-op">=</span>
+          <span class="r1-formula-eq-result" style="color:${scoreColor(score)}">${score > 100 ? "100+" : score}</span>
+        </div>`;
+    }
 
     // ── Stats ────────────────────────────────────────────────
     qs("[data-stat-clicks]").textContent   = session.clicks ?? 0;
@@ -237,7 +360,16 @@
     applyCheck("vpn", usedVpn);
     applyCheck("cookies", rejCookies);
 
-    if (shieldTotal < 3) qs("[data-shield-tip]").removeAttribute("hidden");
+    const shieldTip = qs("[data-shield-tip]");
+    if (shieldTip) {
+      if (shieldTotal === 3) {
+        shieldTip.innerHTML = `🛡️ Perfect score — you used all three tools. Your data was significantly harder to collect this session. See if that shows up in your exposure score.`;
+        shieldTip.style.borderColor = "rgba(34,197,94,.28)";
+        shieldTip.style.background  = "rgba(34,197,94,.09)";
+        shieldTip.style.color       = "rgba(34,197,94,.95)";
+      }
+      shieldTip.removeAttribute("hidden");
+    }
 
     // ── Topics ───────────────────────────────────────────────
     const topics = session.topics || [];
@@ -257,10 +389,9 @@
     }
 
     // ── Inferences ───────────────────────────────────────────
-    const infWrap   = qs("[data-inferences]");
-    const timeSpent = session.timeSpentSec || 0;
-    const clicks    = session.clicks || 0;
-    const adClicks  = priv.adClicks || 0;
+    const infWrap    = qs("[data-inferences]");
+    const timeSpent  = session.timeSpentSec || 0;
+    const adClicks   = priv.adClicks || 0;
     const inferences = [];
 
     if (timeSpent >= 180) {
@@ -291,6 +422,34 @@
       inferences.push({ icon:"⚠️", title:"Partial Protection", reason:`You used ${shieldTotal} of 3 available tools — some tracking data was still exposed.` });
     }
 
+    // Most hovered article
+    const hoverEntries = Object.entries(hoverByArticle)
+      .filter(([, ms]) => ms > 0)
+      .sort(([, a], [, b]) => b - a);
+    if (hoverEntries.length > 0) {
+      const [topId, topMs] = hoverEntries[0];
+      const topName = ARTICLE_NAMES[topId] || topId;
+      const topSec  = (topMs / 1000).toFixed(1);
+      inferences.push({
+        icon: "🔎",
+        title: `Most Time On: ${topName}`,
+        reason: `You hovered over the "${topName}" article for ${topSec}s — the longest of any article. This signals strong interest in ${ARTICLE_TOPICS[topId] || "that topic"} to advertisers.`
+      });
+    }
+
+    // Article → topic mapping
+    const clickedArticles = Object.entries(articleClicksMap).filter(([, c]) => c > 0);
+    if (clickedArticles.length > 0) {
+      const articleTopicLines = clickedArticles
+        .map(([id]) => `${ARTICLE_NAMES[id] || id} → ${ARTICLE_TOPICS[id] || "General"}`)
+        .join(", ");
+      inferences.push({
+        icon: "🗺",
+        title: "Interest Map from Your Clicks",
+        reason: `Each article you opened was logged and mapped to a topic: ${articleTopicLines}. This is how platforms build interest profiles without you filling out a form.`
+      });
+    }
+
     inferences.forEach(item => {
       const card = document.createElement("div");
       card.className = "r1-infer-card";
@@ -299,15 +458,6 @@
     });
 
     // ── Charts ───────────────────────────────────────────────
-    const LABELS = {
-      a1: "Smart Speakers",
-      a2: "Fitness Apps",
-      a3: "Dynamic Pricing",
-      a4: "Social Networks",
-      a5: "Credit Scoring",
-      a6: "Student Monitoring"
-    };
-
     const PIE_COLORS = ["#00e5a0","#00b3ff","#ff6b9d","#ffd166","#a78bfa","#f97316"];
 
     // Click Distribution pie
@@ -334,7 +484,6 @@
     }
 
     // Hover Time bar
-    const hoverByArticle = session.hoverByArticle || {};
     const barEntries = Object.entries(LABELS)
       .map(([id, label]) => ({ label, ms: hoverByArticle[id] || 0 }))
       .filter(e => e.ms > 0)
@@ -360,14 +509,13 @@
       window.location.href = "report1_explain.html";
     });
 
-    // ── Drawing functions ─────────────────────────────────────
+    // ── Drawing functions ────────────────────────────────────
     function drawDonut(canvas, entries, colors) {
       const ctx = canvas.getContext("2d");
       const cx = canvas.width / 2, cy = canvas.height / 2;
       const r  = Math.min(cx, cy) - 8;
       const total = entries.reduce((s, e) => s + e.count, 0);
       let angle = -Math.PI / 2;
-
       entries.forEach((e, i) => {
         const slice = (e.count / total) * 2 * Math.PI;
         ctx.beginPath();
@@ -381,8 +529,6 @@
         ctx.stroke();
         angle += slice;
       });
-
-      // Donut hole
       ctx.beginPath();
       ctx.arc(cx, cy, r * 0.50, 0, 2 * Math.PI);
       ctx.fillStyle = "#0d1117";
@@ -390,79 +536,89 @@
     }
 
     function drawBar(canvas, entries) {
-      const ctx  = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d");
       const W = canvas.width, H = canvas.height;
-      const pad  = { top: 16, right: 14, bottom: 54, left: 44 };
-      const cW   = W - pad.left - pad.right;
-      const cH   = H - pad.top  - pad.bottom;
+      const pad = { top: 16, right: 14, bottom: 70, left: 52 };
+      const cW  = W - pad.left - pad.right;
+      const cH  = H - pad.top  - pad.bottom;
       const maxMs = Math.max(...entries.map(e => e.ms));
       const n     = entries.length;
-      const barW  = Math.max(16, Math.floor(cW / n) - 10);
+      const barW  = Math.max(20, Math.floor(cW / n) - 8);
       const step  = cW / n;
 
-      ctx.clearRect(0, 0, W, H);
+      function redraw(hoveredIdx) {
+        ctx.clearRect(0, 0, W, H);
 
-      // Gridlines + Y labels
-      const ticks = 4;
-      for (let i = 0; i <= ticks; i++) {
-        const frac = i / ticks;
-        const y = pad.top + cH - frac * cH;
-        const val = ((maxMs * frac) / 1000).toFixed(1) + "s";
-
-        ctx.fillStyle = "rgba(255,255,255,0.30)";
-        ctx.font = "10px ui-monospace,monospace";
-        ctx.textAlign = "right";
-        ctx.fillText(val, pad.left - 6, y + 4);
+        const ticks = 4;
+        for (let i = 0; i <= ticks; i++) {
+          const frac = i / ticks;
+          const y = pad.top + cH - frac * cH;
+          const val = ((maxMs * frac) / 1000).toFixed(1) + "s";
+          ctx.fillStyle = "rgba(255,255,255,0.30)";
+          ctx.font = "10px ui-monospace,monospace";
+          ctx.textAlign = "right";
+          ctx.fillText(val, pad.left - 6, y + 4);
+          if (i > 0) {
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(255,255,255,0.07)";
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.moveTo(pad.left, y);
+            ctx.lineTo(pad.left + cW, y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+          }
+        }
 
         ctx.beginPath();
-        ctx.strokeStyle = "rgba(255,255,255,0.07)";
+        ctx.strokeStyle = "rgba(255,255,255,0.15)";
         ctx.lineWidth = 1;
-        if (i > 0) {
-          ctx.setLineDash([3, 3]);
-          ctx.moveTo(pad.left, y);
-          ctx.lineTo(pad.left + cW, y);
-          ctx.stroke();
-          ctx.setLineDash([]);
-        }
+        ctx.moveTo(pad.left, pad.top + cH);
+        ctx.lineTo(pad.left + cW, pad.top + cH);
+        ctx.stroke();
+
+        entries.forEach((e, i) => {
+          const barH = Math.max(2, (e.ms / maxMs) * cH);
+          const x = pad.left + i * step + (step - barW) / 2;
+          const y = pad.top + cH - barH;
+          const isHovered = i === hoveredIdx;
+
+          const grad = ctx.createLinearGradient(0, y, 0, y + barH);
+          grad.addColorStop(0, isHovered ? "#00ffb3" : "#00e5a0");
+          grad.addColorStop(1, isHovered ? "rgba(0,255,179,0.5)" : "rgba(0,229,160,0.35)");
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
+          else ctx.rect(x, y, barW, barH);
+          ctx.fill();
+
+          if (isHovered) {
+            ctx.strokeStyle = "rgba(0,255,179,0.6)";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+          }
+
+          const words = e.label.split(" ");
+          const line1 = words.slice(0, Math.ceil(words.length / 2)).join(" ");
+          const line2 = words.slice(Math.ceil(words.length / 2)).join(" ");
+          ctx.fillStyle = isHovered ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.45)";
+          ctx.font = `${isHovered ? "bold " : ""}10px ui-monospace,monospace`;
+          ctx.textAlign = "center";
+          const labelX = x + barW / 2;
+          ctx.fillText(line1, labelX, pad.top + cH + 16);
+          if (line2) ctx.fillText(line2, labelX, pad.top + cH + 28);
+
+          if (isHovered) {
+            const valLabel = (e.ms / 1000).toFixed(1) + "s";
+            ctx.fillStyle = "#00ffb3";
+            ctx.font = "bold 11px ui-monospace,monospace";
+            ctx.textAlign = "center";
+            ctx.fillText(valLabel, x + barW / 2, y - 6);
+          }
+        });
       }
 
-      // Baseline
-      ctx.beginPath();
-      ctx.strokeStyle = "rgba(255,255,255,0.15)";
-      ctx.lineWidth = 1;
-      ctx.moveTo(pad.left, pad.top + cH);
-      ctx.lineTo(pad.left + cW, pad.top + cH);
-      ctx.stroke();
-
-      // Bars
-      entries.forEach((e, i) => {
-        const barH = (e.ms / maxMs) * cH;
-        const x = pad.left + i * step + (step - barW) / 2;
-        const y = pad.top + cH - barH;
-
-        const grad = ctx.createLinearGradient(0, y, 0, y + barH);
-        grad.addColorStop(0, "#00e5a0");
-        grad.addColorStop(1, "rgba(0,229,160,0.35)");
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        if (ctx.roundRect) {
-          ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
-        } else {
-          ctx.rect(x, y, barW, barH);
-        }
-        ctx.fill();
-
-        // X label — angled
-        const shortLabel = e.label.length > 13 ? e.label.slice(0, 12) + "…" : e.label;
-        ctx.save();
-        ctx.translate(x + barW / 2, pad.top + cH + 10);
-        ctx.rotate(-Math.PI / 5);
-        ctx.fillStyle = "rgba(255,255,255,0.40)";
-        ctx.font = "10px ui-monospace,monospace";
-        ctx.textAlign = "right";
-        ctx.fillText(shortLabel, 0, 0);
-        ctx.restore();
-      });
+      redraw(-1);
     }
 
   })();
