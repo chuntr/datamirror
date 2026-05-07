@@ -27,13 +27,11 @@
           <div class="compareCard">
             <div class="compareCardLabel">Before Experience</div>
             <div class="compareCardScore" data-pre-score>0/8</div>
-            <div class="compareCardMeta" data-pre-pct>0% correct</div>
           </div>
 
           <div class="compareCard">
             <div class="compareCardLabel">After Experience</div>
             <div class="compareCardScore" data-post-score>0/8</div>
-            <div class="compareCardMeta" data-post-pct>0% correct</div>
           </div>
         </div>
 
@@ -46,45 +44,71 @@
       <section class="compareSection">
         <h2 class="sectionTitle">Browse 1 vs Browse 2 Comparison</h2>
 
-        <div class="compareCards">
-          <div class="compareCard compareGaugeCard">
-            <div class="compareCardLabel">Round 1</div>
+        <div class="compareCards" style="display:block;">
+          <div class="compareCard" style="padding:28px 32px;">
 
-            <div class="gauge gaugeSmall">
-              <svg viewBox="0 0 36 36" class="gaugeSvg" aria-hidden="true">
-                <path class="gaugeBg"
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                <path class="gaugeFill" data-gauge-fill-round1
-                  stroke-dasharray="100, 100" stroke-dashoffset="100"
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              </svg>
-              <div class="gaugeCenter">
-                <div class="gaugeNum"><span data-round1-score>0</span></div>
-                <div class="gaugeDen">/100</div>
+            <!-- Two gauges side by side -->
+            <div style="display:grid; grid-template-columns:1fr 1px 1fr; gap:24px; align-items:center;">
+
+              <!-- Round 1 -->
+              <div style="text-align:center;">
+                <div class="compareCardLabel">Round 1</div>
+                <div style="position:relative; width:190px; height:190px; margin:12px auto 8px;">
+                  <svg viewBox="0 0 200 200" style="width:190px;height:190px;display:block;">
+                    <circle fill="none" stroke="rgba(255,255,255,.08)" stroke-width="14" cx="100" cy="100" r="78"/>
+                    <circle data-gauge-fill-round1 cx="100" cy="100" r="78"
+                      fill="none" stroke="#ef4444" stroke-width="14" stroke-linecap="round"
+                      stroke-dasharray="490" stroke-dashoffset="490"
+                      style="transform:rotate(-90deg);transform-origin:100px 100px;"/>
+                  </svg>
+                  <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                    <span data-round1-score style="font-size:36px;font-weight:900;line-height:1;color:rgba(255,255,255,.96);">0</span>
+                    <span id="r1-denom" style="font-size:13px;font-weight:700;color:rgba(255,255,255,.28);margin-top:2px;">/100</span>
+                  </div>
+                </div>
+                <div style="color:rgba(255,255,255,.38);font-size:13px;margin-top:4px;">First Session</div>
               </div>
+
+              <!-- Divider -->
+              <div style="background:rgba(255,255,255,.08);align-self:stretch;"></div>
+
+              <!-- Round 2 -->
+              <div style="text-align:center;">
+                <div class="compareCardLabel">Round 2</div>
+                <div style="position:relative; width:190px; height:190px; margin:12px auto 8px;">
+                  <svg viewBox="0 0 200 200" style="width:190px;height:190px;display:block;">
+                    <circle fill="none" stroke="rgba(255,255,255,.08)" stroke-width="14" cx="100" cy="100" r="78"/>
+                    <circle data-gauge-fill-round2 cx="100" cy="100" r="78"
+                      fill="none" stroke="#f59e0b" stroke-width="14" stroke-linecap="round"
+                      stroke-dasharray="490" stroke-dashoffset="490"
+                      style="transform:rotate(-90deg);transform-origin:100px 100px;"/>
+                  </svg>
+                  <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                    <span data-round2-score style="font-size:36px;font-weight:900;line-height:1;color:rgba(255,255,255,.96);">0</span>
+                    <span id="r2-denom" style="font-size:13px;font-weight:700;color:rgba(255,255,255,.28);margin-top:2px;">/100</span>
+                  </div>
+                </div>
+                <div style="color:rgba(255,255,255,.38);font-size:13px;margin-top:4px;">Second Session</div>
+              </div>
+
             </div>
 
-            <div class="compareCardMeta">First Session</div>
-          </div>
-
-          <div class="compareCard compareGaugeCard">
-            <div class="compareCardLabel">Round 2</div>
-
-            <div class="gauge gaugeSmall">
-              <svg viewBox="0 0 36 36" class="gaugeSvg" aria-hidden="true">
-                <path class="gaugeBg"
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                <path class="gaugeFill" data-gauge-fill-round2
-                  stroke-dasharray="100, 100" stroke-dashoffset="100"
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              </svg>
-              <div class="gaugeCenter">
-                <div class="gaugeNum"><span data-round2-score>0</span></div>
-                <div class="gaugeDen">/100</div>
+            <!-- Single shared dropdown -->
+            <details class="score-breakdown-details" style="margin-top:20px;">
+              <summary class="score-breakdown-summary">What drove these scores? ▾</summary>
+              <div style="display:grid; grid-template-columns:1fr 1px 1fr; gap:24px; margin-top:14px;">
+                <div>
+                  <div class="privacy-tools-round" style="margin-bottom:8px;">Round 1</div>
+                  <div class="score-breakdown-body" id="breakdown-r1-body"></div>
+                </div>
+                <div style="background:rgba(255,255,255,.08);"></div>
+                <div>
+                  <div class="privacy-tools-round" style="margin-bottom:8px;">Round 2</div>
+                  <div class="score-breakdown-body" id="breakdown-r2-body"></div>
+                </div>
               </div>
-            </div>
+            </details>
 
-            <div class="compareCardMeta">Second Session</div>
           </div>
         </div>
 
@@ -92,49 +116,59 @@
           <div class="pointsNum" data-points>0 points</div>
           <div class="pointsMsg" data-points-msg>Same exposure both rounds. Awareness is the first step.</div>
         </div>
+        <!-- ── Privacy Tools Comparison ── -->
+        <section class="compare-section-card" style="margin-top:18px;">
+          <div class="compare-section-label">Privacy Tools Used</div>
+          <div class="privacy-tools-grid">
+            <div class="privacy-tools-col">
+              <div class="privacy-tools-round">Round 1</div>
+              <div class="privacy-tool-row" id="pt-vpn-r1"></div>
+              <div class="privacy-tool-row" id="pt-blocker-r1"></div>
+              <div class="privacy-tool-row" id="pt-cookies-r1"></div>
+            </div>
+            <div class="privacy-tools-divider"></div>
+            <div class="privacy-tools-col">
+              <div class="privacy-tools-round">Round 2</div>
+              <div class="privacy-tool-row" id="pt-vpn-r2"></div>
+              <div class="privacy-tool-row" id="pt-blocker-r2"></div>
+              <div class="privacy-tool-row" id="pt-cookies-r2"></div>
+            </div>
+          </div>
+        </section>
 
-        <div class="tableWrap">
+        <!-- ── Topic Profile Comparison ── -->
+        <section class="compare-section-card" style="margin-top:14px;">
+          <div class="compare-section-label">Topic Profile</div>
+          <div class="topic-compare-grid">
+            <div class="topic-compare-col">
+              <div class="privacy-tools-round">Round 1</div>
+              <div class="topic-chips" id="topics-r1"></div>
+            </div>
+            <div class="privacy-tools-divider"></div>
+            <div class="topic-compare-col">
+              <div class="privacy-tools-round">Round 2</div>
+              <div class="topic-chips" id="topics-r2"></div>
+            </div>
+          </div>
+        </section>
+        <div class="tableWrap" id="what-changed-table">
           <table class="compareTable">
             <thead>
               <tr>
-                <th>Metric</th>
+                <th>What Changed</th>
                 <th>Round 1</th>
                 <th>Round 2</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Clicks</td>
-                <td data-metric="clicks" data-round="1">0</td>
-                <td data-metric="clicks" data-round="2">0</td>
-              </tr>
-              <tr>
-                <td>Articles Opened</td>
-                <td data-metric="articles" data-round="1">0</td>
-                <td data-metric="articles" data-round="2">0</td>
-              </tr>
-              <tr>
-                <td>Time Spent (s)</td>
-                <td data-metric="timeMs" data-round="1">0</td>
-                <td data-metric="timeMs" data-round="2">0</td>
-              </tr>
-              <tr>
-                <td>Hover Targets</td>
-                <td data-metric="hovers" data-round="1">0</td>
-                <td data-metric="hovers" data-round="2">0</td>
-              </tr>
-              <tr>
-                <td>Categories</td>
-                <td data-metric="categories" data-round="1">0</td>
-                <td data-metric="categories" data-round="2">0</td>
-              </tr>
+            <tbody id="changed-rows">
+              <!-- populated by JS — only rows where values differ -->
             </tbody>
           </table>
         </div>
       </section>
 
       <div class="ctaRow">
-        <a class="btn-primary" href="recommendation.html">See Recommendations →</a>
+        <a class="did-cta" href="resources.html">>> SEE RESOURCES <span class="did-cta-chevron">›</span></a>
       </div>
 
     </div>
@@ -142,8 +176,202 @@
 
   <script src="assets/app.js"></script>
   <script>
-    window.GT?.renderStepper?.("compare");
-    window.GT?.initCompare?.();
+  (function () {
+    if (!window.GT) { console.warn("app.js missing"); return; }
+
+    window.GT.renderStepper("compare");
+
+    const st   = window.GT.loadState();
+    const pre  = st.preQuiz  || { score: 0, total: 8 };
+    const post = st.postQuiz || { score: 0, total: 8 };
+    const b1   = st.browse1  || {};
+    const b2   = st.browse2  || {};
+    const p1   = b1.privacy  || {};
+    const p2   = b2.privacy  || {};
+
+    const qs = sel => document.querySelector(sel);
+
+    // ── Quiz scores ──────────────────────────────────────────
+    const preScore  = pre.score  || 0;
+    const postScore = post.score || 0;
+    const preTotal  = pre.total  || 8;
+    const postTotal = post.total || 8;
+    const quizDelta = postScore - preScore;
+
+    qs("[data-pre-score]").textContent  = `${preScore}/${preTotal}`;
+    qs("[data-post-score]").textContent = `${postScore}/${postTotal}`;
+
+    const quizDeltaEl  = qs("[data-quiz-delta]");
+    const quizDeltaMsg = qs("[data-quiz-delta-msg]");
+    const quizDeltaBox = qs("[data-quiz-delta-box]");
+
+    if (quizDeltaEl)  quizDeltaEl.textContent = `${quizDelta >= 0 ? "+" : ""}${quizDelta}`;
+    if (quizDeltaMsg) {
+      if (quizDelta > 0) {
+        quizDeltaMsg.textContent = `You answered ${quizDelta} more question${quizDelta > 1 ? "s" : ""} correctly after the experience.`;
+        quizDeltaBox?.classList.add("is-up");
+      } else if (quizDelta < 0) {
+        quizDeltaMsg.textContent = `Your score dipped by ${Math.abs(quizDelta)} — don't worry, awareness builds over time.`;
+        quizDeltaBox?.classList.add("is-down");
+      } else {
+        quizDeltaMsg.textContent = "Same score both rounds — awareness is the first step.";
+        quizDeltaBox?.classList.add("is-same");
+      }
+    }
+
+    // ── Exposure scores ──────────────────────────────────────
+    const r1Score = Number(b1.exposureScore || 0);
+    const r2Score = Number(b2.exposureScore || 0);
+    const expDelta = r1Score - r2Score;
+
+    qs("[data-round1-score]").textContent = r1Score > 100 ? "100+" : r1Score;
+    qs("[data-round2-score]").textContent = r2Score;
+
+    const C = 2 * Math.PI * 78;
+
+    requestAnimationFrame(() => {
+      const g1 = qs("[data-gauge-fill-round1]");
+      const g2 = qs("[data-gauge-fill-round2]");
+      if (g1) {
+        const color1 = r1Score >= 70 ? "#ef4444" : r1Score >= 40 ? "#f59e0b" : "#22c55e";
+        g1.style.transition = "stroke-dashoffset .8s ease";
+        g1.style.stroke = color1;
+        g1.style.strokeDasharray = String(C);
+        g1.style.strokeDashoffset = String(C * (1 - Math.min(r1Score, 100) / 100));
+        const num1 = qs("[data-round1-score]");
+        if (num1) num1.style.color = color1;
+      }
+      if (g2) {
+        const color2 = r2Score >= 70 ? "#ef4444" : r2Score >= 40 ? "#f59e0b" : "#22c55e";
+        g2.style.transition = "stroke-dashoffset .8s ease";
+        g2.style.stroke = color2;
+        g2.style.strokeDasharray = String(C);
+        g2.style.strokeDashoffset = String(C * (1 - Math.min(r2Score, 100) / 100));
+        const num2 = qs("[data-round2-score]");
+        if (num2) num2.style.color = color2;
+      }
+    });
+
+    // ── Points panel ─────────────────────────────────────────
+    const pointsEl  = qs("[data-points]");
+    const pointsMsg = qs("[data-points-msg]");
+    const panel     = qs(".pointsPanel");
+
+    if (pointsEl) {
+      pointsEl.textContent = expDelta > 0
+        ? `↓ ${expDelta} points lower`
+        : expDelta < 0
+        ? `↑ ${Math.abs(expDelta)} points higher`
+        : "Same score both rounds";
+    }
+    if (pointsMsg) {
+      if (expDelta > 0)      pointsMsg.textContent = `Privacy tools reduced your exposure by ${expDelta} points in Round 2. Nice work.`;
+      else if (expDelta < 0) pointsMsg.textContent = `Your exposure increased by ${Math.abs(expDelta)} points in Round 2. Try using more privacy tools next time.`;
+      else                   pointsMsg.textContent = "Same exposure both rounds. Try enabling the VPN, blocker, or adjusting cookies in Round 2.";
+    }
+    if (panel && expDelta > 0) panel.classList.add("is-improved");
+
+    // ── Score breakdown dropdowns ────────────────────────────
+    function buildBreakdown(session, priv, bodyEl) {
+      if (!bodyEl) return;
+      const fc   = session.clicks        || 0;
+      const fa   = session.articlesOpened || 0;
+      const ft   = session.timeSpentSec  || 0;
+      const fh   = session.hoverEvents   || 0;
+      const fcat = session.categories    || 0;
+      const fcook = priv.cookieScore     || 0;
+      const fad  = priv.adClicks         || 0;
+
+      const rows = [
+        { label: "Clicks",           pts: Math.round(fc * 12),   detail: `${fc} × 12` },
+        { label: "Articles Opened",  pts: Math.round(fa * 14),   detail: `${fa} × 14` },
+        { label: "Time on Page",     pts: Math.round(ft * 0.16), detail: `${Math.round(ft)}s × 0.16` },
+        { label: "Hover Events",     pts: Math.round(fh * 4),    detail: `${fh} × 4` },
+        { label: "Categories",       pts: fcat * 10,             detail: `${fcat} × 10` },
+        { label: "Cookies",          pts: fcook,                 detail: fcook === 30 ? "All accepted" : fcook === 0 ? "Essential only" : "Custom" },
+        { label: "Ad Clicks",        pts: fad * 8,               detail: `${fad} × 8` },
+      ];
+
+      const multipliers = [];
+      if (priv.vpn)    multipliers.push("VPN −28%");
+      if (priv.blocker) multipliers.push("Blocker −22%");
+      if (priv.cookiesAccepted === "essential") multipliers.push("Essential cookies −15%");
+
+      bodyEl.innerHTML = rows.map(r => `
+        <div class="breakdown-row">
+          <span class="breakdown-label">${r.label}</span>
+          <span class="breakdown-detail">${r.detail}</span>
+          <span class="breakdown-pts">+${r.pts} pts</span>
+        </div>`).join("") +
+        (multipliers.length ? `<div class="breakdown-mults">${multipliers.map(m => `<span class="breakdown-mult-tag">${m}</span>`).join("")}</div>` : "");
+    }
+
+    buildBreakdown(b1, p1, document.getElementById("breakdown-r1-body"));
+    buildBreakdown(b2, p2, document.getElementById("breakdown-r2-body"));
+
+    // ── Privacy tools comparison ─────────────────────────────
+    function privacyRow(elId, icon, label, active) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      el.innerHTML = `
+        <span class="pt-icon">${icon}</span>
+        <span class="pt-label">${label}</span>
+        <span class="pt-status ${active ? "pt-on" : "pt-off"}">${active ? "✓ On" : "✗ Off"}</span>`;
+      el.style.borderColor = active ? "rgba(34,197,94,.28)" : "rgba(239,68,68,.18)";
+      el.style.background  = active ? "rgba(34,197,94,.06)" : "rgba(239,68,68,.04)";
+    }
+
+    privacyRow("pt-vpn-r1",     "🛡", "VPN",        !!p1.vpn);
+    privacyRow("pt-blocker-r1", "🧩", "Ad Blocker", !!p1.blocker);
+    privacyRow("pt-cookies-r1", "🍪", "Cookies",    p1.cookiesAccepted === "essential");
+    privacyRow("pt-vpn-r2",     "🛡", "VPN",        !!p2.vpn);
+    privacyRow("pt-blocker-r2", "🧩", "Ad Blocker", !!p2.blocker);
+    privacyRow("pt-cookies-r2", "🍪", "Cookies",    p2.cookiesAccepted === "essential");
+
+    const cookieLabel = c => c === "all" ? "All accepted" : c === "essential" ? "Essential only" : c === "custom" ? "Custom" : "Not set";
+    document.getElementById("pt-cookies-r1").querySelector(".pt-label").textContent = `Cookies: ${cookieLabel(p1.cookiesAccepted)}`;
+    document.getElementById("pt-cookies-r2").querySelector(".pt-label").textContent = `Cookies: ${cookieLabel(p2.cookiesAccepted)}`;
+
+    // ── Topic profile comparison ─────────────────────────────
+    function renderTopics(elId, topics) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      if (!topics || !topics.length) {
+        el.innerHTML = `<span class="topic-chip topic-chip--muted">No topics detected</span>`;
+        return;
+      }
+      el.innerHTML = topics.map(t => `<span class="topic-chip">${t}</span>`).join("");
+    }
+
+    renderTopics("topics-r1", b1.topics || []);
+    renderTopics("topics-r2", b2.topics || []);
+
+    // ── What Changed table (only differing rows) ─────────────
+    const tbody = document.getElementById("changed-rows");
+    const allMetrics = [
+      { label: "Clicks",          r1: b1.clicks ?? 0,           r2: b2.clicks ?? 0 },
+      { label: "Articles Opened", r1: b1.articlesOpened ?? 0,   r2: b2.articlesOpened ?? 0 },
+      { label: "Time Spent (s)",  r1: b1.timeSpentSec ?? 0,     r2: b2.timeSpentSec ?? 0 },
+      { label: "Hover Targets",   r1: b1.hoverEvents ?? 0,      r2: b2.hoverEvents ?? 0 },
+      { label: "Ads Clicked",     r1: p1.adClicks ?? 0,         r2: p2.adClicks ?? 0 },
+    ];
+
+    const differing = allMetrics.filter(m => m.r1 !== m.r2);
+    if (tbody) {
+      if (differing.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;color:rgba(255,255,255,.35);font-style:italic;padding:20px;">All metrics were identical both rounds.</td></tr>`;
+      } else {
+        tbody.innerHTML = differing.map(m => `
+          <tr>
+            <td>${m.label}</td>
+            <td>${m.r1}</td>
+            <td>${m.r2}</td>
+          </tr>`).join("");
+      }
+    }
+
+    window.GT.setDone("compare", true);
+  })();
   </script>
 </body>
 </html>

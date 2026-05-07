@@ -30,84 +30,56 @@
         </p>
       </div>
 
-      <!-- ── EXPOSURE SCORE ── -->
-      <section class="r1-card r1-score-card">
-        <div class="r1-score-ring-wrap">
-          <svg class="r1-ring-svg" viewBox="0 0 200 200">
-            <circle class="r1-ring-track" cx="100" cy="100" r="78"/>
-            <circle class="r1-ring-fill"  cx="100" cy="100" r="78"
-              data-ring
-              stroke-dasharray="490"
-              stroke-dashoffset="490"/>
-          </svg>
-          <div class="r1-score-inner">
-            <div class="r1-score-num"><span data-score>—</span><span class="r1-score-denom" data-score-denom>/100</span></div>
-            <div class="r1-score-lev" data-level>—</div>
-            <div class="r1-score-caption">Exposure Score</div>
+      <!-- ── EXPOSURE SCORE + FORMULA ── -->
+      <section class="r1-card r1-score-card" style="flex-direction: column; align-items: stretch;">
+        <div style="display:flex; align-items:center; gap:40px; flex-wrap:wrap; justify-content:center;">
+          <div class="r1-score-ring-wrap">
+            <svg class="r1-ring-svg" viewBox="0 0 200 200">
+              <circle class="r1-ring-track" cx="100" cy="100" r="78"/>
+              <circle class="r1-ring-fill"  cx="100" cy="100" r="78"
+                data-ring
+                stroke-dasharray="490"
+                stroke-dashoffset="490"/>
+            </svg>
+            <div class="r1-score-inner">
+              <div class="r1-score-num"><span data-score>—</span><span class="r1-score-denom" data-score-denom>/100</span></div>
+              <div class="r1-score-lev" data-level>—</div>
+              <div class="r1-score-caption">Exposure Score</div>
+            </div>
           </div>
-        </div>
-        <div class="r1-score-legend">
-          <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#22c55e;"></span><span>Low &nbsp;(0–39) — minimal data exposed</span></div>
-          <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#f59e0b;"></span><span>Moderate (40–69) — notable tracking</span></div>
-          <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#ef4444;"></span><span>High &nbsp;(70–100+) — heavy exposure</span></div>
-          <div class="r1-legend-note" data-legend-note>A <strong>higher score means more of your data was captured.</strong> Aim for a lower score.</div>
-        </div>
-      </section>
-
-      <!-- ── SCORE FORMULA ── -->
-      <!-- ── SCORE FORMULA ── -->
-      <section class="r1-card">
-        <div class="r1-section-head">
-          <h2 class="r1-section-title">How Your Score Is Calculated</h2>
-          <p class="r1-section-sub">Every action in the simulated browser contributes to your exposure score. Here's the exact formula — with your numbers filled in.</p>
-        </div>
-        <div class="r1-formula-grid">
-          <div class="r1-formula-row">
-            <span class="r1-formula-ic">↗</span>
-            <div class="r1-formula-label">Clicks</div>
-            <div class="r1-formula-val">× 12 pts each</div>
-          </div>
-          <div class="r1-formula-row">
-            <span class="r1-formula-ic">◉</span>
-            <div class="r1-formula-label">Articles Opened</div>
-            <div class="r1-formula-val">× 14 pts each</div>
-          </div>
-          <div class="r1-formula-row">
-            <span class="r1-formula-ic">⏱</span>
-            <div class="r1-formula-label">Time on Page</div>
-            <div class="r1-formula-val">× 0.16 pts/sec</div>
-          </div>
-          <div class="r1-formula-row">
-            <span class="r1-formula-ic">🖱</span>
-            <div class="r1-formula-label">Hover Events</div>
-            <div class="r1-formula-val">× 4 pts each</div>
-          </div>
-          <div class="r1-formula-row">
-            <span class="r1-formula-ic">🏷</span>
-            <div class="r1-formula-label">Categories Browsed</div>
-            <div class="r1-formula-val">× 10 pts each</div>
-          </div>
-          <div class="r1-formula-row">
-            <span class="r1-formula-ic">🍪</span>
-            <div class="r1-formula-label">Cookies Accepted</div>
-            <div class="r1-formula-val">up to +30 pts</div>
-          </div>
-          <div class="r1-formula-row">
-            <span class="r1-formula-ic">💰</span>
-            <div class="r1-formula-label">Ad Clicks</div>
-            <div class="r1-formula-val">× 8 pts each</div>
+          <div class="r1-score-legend">
+            <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#22c55e;"></span><span>Low &nbsp;(0–39) — minimal data exposed</span></div>
+            <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#f59e0b;"></span><span>Moderate (40–69) — notable tracking</span></div>
+            <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#ef4444;"></span><span>High &nbsp;(70–100+) — heavy exposure</span></div>
+            <div class="r1-legend-note" data-legend-note>A <strong>higher score means more of your data was captured.</strong> Aim for a lower score.</div>
           </div>
         </div>
 
-        <!-- Your numbers -->
-        <div class="r1-formula-equation" id="formula-equation"></div>
-
-        <div class="r1-formula-reducers">
-          <div class="r1-formula-reducer-title">Privacy tools reduce your score:</div>
-          <div class="r1-formula-reducer-row"><span class="r1-formula-reducer-tag">VPN on</span> × 0.72 (saves 28%)</div>
-          <div class="r1-formula-reducer-row"><span class="r1-formula-reducer-tag">Ad Blocker on</span> × 0.78 (saves 22%)</div>
-          <div class="r1-formula-reducer-row"><span class="r1-formula-reducer-tag">Essential cookies only</span> × 0.85 (saves 15%)</div>
-        </div>
+        <details class="r1-formula-details" style="margin-top:24px; border-top:1px solid rgba(255,255,255,.08); padding-top:20px;">
+          <summary class="r1-formula-summary">
+            <span>Curious how your score was calculated?</span>
+            <span class="r1-formula-arrow">▾</span>
+          </summary>
+          <div class="r1-formula-body">
+            <p class="r1-section-sub" style="margin-bottom:16px;">Every action in the simulated browser contributes to your exposure score. Here's the exact formula — with your numbers filled in.</p>
+            <div class="r1-formula-grid">
+              <div class="r1-formula-row"><span class="r1-formula-ic">↗</span><div class="r1-formula-label">Clicks</div><div class="r1-formula-val">× 12 pts each</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic">◉</span><div class="r1-formula-label">Articles Opened</div><div class="r1-formula-val">× 14 pts each</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic">⏱</span><div class="r1-formula-label">Time on Page</div><div class="r1-formula-val">× 0.16 pts/sec</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic">🖱</span><div class="r1-formula-label">Hover Events</div><div class="r1-formula-val">× 4 pts each</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic">🏷</span><div class="r1-formula-label">Categories Browsed</div><div class="r1-formula-val">× 10 pts each</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic">🍪</span><div class="r1-formula-label">Cookies Accepted</div><div class="r1-formula-val">up to +30 pts</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic">💰</span><div class="r1-formula-label">Ad Clicks</div><div class="r1-formula-val">× 8 pts each</div></div>
+            </div>
+            <div class="r1-formula-equation" id="formula-equation"></div>
+            <div class="r1-formula-reducers">
+              <div class="r1-formula-reducer-title">Privacy tools reduce your score:</div>
+              <div class="r1-formula-reducer-row"><span class="r1-formula-reducer-tag">VPN on</span> × 0.72 (saves 28%)</div>
+              <div class="r1-formula-reducer-row"><span class="r1-formula-reducer-tag">Ad Blocker on</span> × 0.78 (saves 22%)</div>
+              <div class="r1-formula-reducer-row"><span class="r1-formula-reducer-tag">Essential cookies only</span> × 0.85 (saves 15%)</div>
+            </div>
+          </div>
+        </details>
       </section>
 
       <!-- ── INFERENCES ── -->
