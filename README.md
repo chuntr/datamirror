@@ -5,6 +5,37 @@ Data Mirror is an interactive educational web project that helps users understan
 
 The experience is designed to highlight the gap between general awareness of data collection and practical understanding of how everyday interactions contribute to tracking, profiling, and personalization.
 
+## Firebase Hosting Deployment Guide
+
+This project is deployed using Firebase Hosting. Follow the steps below to run the website locally and deploy updates.
+
+---
+
+### 1. Clone the Repository:
+```bash
+git clone https://github.com/chuntr/datamirror.git
+cd datamirror
+cd frontend
+```
+The Firebase Hosting public directory is set to frontend. 
+
+### 2. Start a local development server:
+```bash
+python3 -m http.server 8000
+```
+Open the site in your browser: http://localhost:8000
+Stop the server if needed with CTRL + C
+
+### 3. Install Firebase CLI:
+```bash
+npm install -g firebase-tools
+```
+### 4. Deploy the Website:
+
+```bash
+cd ..
+firebase deploy
+```
 ---
 
 ## Project Goals
@@ -24,3 +55,5 @@ The experience is designed to highlight the gap between general awareness of dat
 (Exact structure will evolve as the project develops.)
 
 Hello - Alex
+
+
