@@ -1126,12 +1126,12 @@
     if (btn) {
       btn.addEventListener("click", () => {
         window.location.href =
-          pageRound === 1 ? "report1_explain.html" : "post-quiz.html";
+          pageRound === 1 ? "browse2_intro.html" : "post-quiz.html";
       });
     }
   }
 
-  // ---------- REPORT 1 EXPLAIN ----------
+  // ---------- BROWSE2 INTRO ----------
   function initReport1Explain() {
     applyTopbarPaddingFix();
     const __gtRoot = qs(".report-explain-page") || document.body;
@@ -1142,7 +1142,7 @@
     const btn = qs("[data-next]") || qs("[data-cta]") || qs(".btn-primary");
     if (btn) {
       btn.addEventListener("click", () => {
-        window.location.href = "browse2_intro.html";
+        window.location.href = "browse2.html";
       });
     }
   }

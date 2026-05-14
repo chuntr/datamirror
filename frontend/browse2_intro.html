@@ -4,24 +4,128 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GhostTrace — Browse 2 Intro</title>
+
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
+
 <body>
-  <div class="container center">
-    <div class="stack" style="width:min(820px,100%);">
-      <div class="stepper" data-stepper></div>
+  <!-- TOP PROGRESS -->
+  <header class="topbar">
+    <nav class="stepper" data-stepper></nav>
+  </header>
+
+  <main class="page report-explain-page">
+    <section class="container">
 
       <div class="card glow-purple" style="padding:22px;text-align:center;">
         <div class="badge">Round 2</div>
         <div class="h1" style="font-size:34px;margin:12px 0 8px;">Browse Mindfully</div>
-        <p class="sub" style="max-width:680px;">
+        <p class="sub" style="max-width:680px; margin: 0 auto; text-align:center;">
+          Every action you took was turned into data. Here's the pipeline that makes it possible.
           Now that you’ve seen what gets tracked, try to minimize your exposure.
-          Use these strategies while browsing.
         </p>
+      </div>
 
-        <div class="stack" style="max-width:680px;margin:14px auto 0;text-align:left;">
+      <!-- Pipeline rows -->
+      <section class="pipeline" aria-label="Tracking pipeline">
+
+        <!-- Row 1 -->
+        <div class="pipe-row">
+          <div class="pipe-left card">
+            <div class="pipe-kicker">YOUR ACTION</div>
+            <div class="pipe-text">You clicked on an article</div>
+          </div>
+
+          <div class="pipe-mid" aria-hidden="true">→</div>
+
+          <div class="pipe-right">
+            <div class="pipe-box pipe-signal card">
+              <div class="pipe-kicker">DATA SIGNAL</div>
+              <div class="pipe-text">Click event recorded with timestamp</div>
+            </div>
+            <div class="pipe-box pipe-infer card">
+              <div class="pipe-kicker">WHAT THEY INFER</div>
+              <div class="pipe-text">Reveals your interests and curiosity level</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="pipe-row">
+          <div class="pipe-left card">
+            <div class="pipe-kicker">YOUR ACTION</div>
+            <div class="pipe-text">You scrolled through content</div>
+          </div>
+
+          <div class="pipe-mid" aria-hidden="true">→</div>
+
+          <div class="pipe-right">
+            <div class="pipe-box pipe-signal card">
+              <div class="pipe-kicker">DATA SIGNAL</div>
+              <div class="pipe-text">Scroll depth measured as a percentage</div>
+            </div>
+            <div class="pipe-box pipe-infer card">
+              <div class="pipe-kicker">WHAT THEY INFER</div>
+              <div class="pipe-text">Shows how engaged you are with topics</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="pipe-row">
+          <div class="pipe-left card">
+            <div class="pipe-kicker">YOUR ACTION</div>
+            <div class="pipe-text">You spent time reading</div>
+          </div>
+
+          <div class="pipe-mid" aria-hidden="true">→</div>
+
+          <div class="pipe-right">
+            <div class="pipe-box pipe-signal card">
+              <div class="pipe-kicker">DATA SIGNAL</div>
+              <div class="pipe-text">Dwell time tracked per page</div>
+            </div>
+            <div class="pipe-box pipe-infer card">
+              <div class="pipe-kicker">WHAT THEY INFER</div>
+              <div class="pipe-text">Longer time = stronger interest signal for ad targeting</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="pipe-row">
+          <div class="pipe-left card">
+            <div class="pipe-kicker">YOUR ACTION</div>
+            <div class="pipe-text">You hovered over headlines</div>
+          </div>
+
+          <div class="pipe-mid" aria-hidden="true">→</div>
+
+          <div class="pipe-right">
+            <div class="pipe-box pipe-signal card">
+              <div class="pipe-kicker">DATA SIGNAL</div>
+              <div class="pipe-text">Mouse position tracked continuously</div>
+            </div>
+            <div class="pipe-box pipe-infer card">
+              <div class="pipe-kicker">WHAT THEY INFER</div>
+              <div class="pipe-text">Even hesitation reveals what catches your eye</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Quote / callout -->
+      <section class="quote card" role="note" aria-label="Key takeaway">
+        <p class="quote-text">
+          “You didn't share any personal information.<br/>
+          <strong>But your behavior told the whole story.</strong>”
+        </p>
+      </section>
+
+      <!--Strategies-->
+      <div class="stack" style="max-width:680px;margin:14px auto 0;text-align:left;">
           <div class="card">
-            <div class="cardTitle">Strategies</div>
             <div class="stack">
               <div class="option selected" style="cursor:default;"><span class="radio"></span><div class="optionText"><b>Skim quickly</b> — don’t linger</div></div>
               <div class="option selected" style="cursor:default;"><span class="radio"></span><div class="optionText"><b>Be intentional with clicks</b></div></div>
@@ -29,26 +133,36 @@
               <div class="option selected" style="cursor:default;"><span class="radio"></span><div class="optionText"><b>Spend less time overall</b></div></div>
             </div>
           </div>
-
-          <div class="mission-cta">
-            <a href="browse2.html" class="btn-primary">
-              Start Mindful Browsing <span aria-hidden="true">→</span>
-            </a>
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <script src="./assets/app.js"></script>
-<script>
-  if (window.GT && typeof GT.renderStepper === "function") {
-    GT.renderStepper("b2");
-  }
+      <!-- CTA -->
+      <section class="cta">
+        <p class="subtle" style="text-align:center;">
+          Now that you know how it works, can you change your data footprint?
+        </p>
 
-  document.querySelector("[data-begin-browse]")?.addEventListener("click", () => {
-    window.location.href = "browse2.html";
-  });
-</script>
+        <button class="btn btn-primary" type="button" data-next style="display:block; margin: 0 auto;">
+          Try Again — Round 2 <span class="btn-arrow">→</span>
+        </button>
+      </section>
+
+    </section>
+  </main>
+
+  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      // keep stepper highlighting Report 1
+      if (window.GT) window.GT.renderStepper("r1");
+
+      // next → Round 2 intro (tips page)
+      const btn = document.querySelector("[data-next]");
+      if (btn) {
+        btn.addEventListener("click", () => {
+          window.location.href = "browse2.html";
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
