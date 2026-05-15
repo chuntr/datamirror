@@ -63,13 +63,13 @@
           <div class="r1-formula-body">
             <p class="r1-section-sub" style="margin-bottom:16px;">Every action in the simulated browser contributes to your exposure score. Here's the exact formula — with your numbers filled in.</p>
             <div class="r1-formula-grid">
-              <div class="r1-formula-row"><span class="r1-formula-ic">↗</span><div class="r1-formula-label">Clicks</div><div class="r1-formula-val">× 12 pts each</div></div>
-              <div class="r1-formula-row"><span class="r1-formula-ic">◉</span><div class="r1-formula-label">Articles Opened</div><div class="r1-formula-val">× 14 pts each</div></div>
-              <div class="r1-formula-row"><span class="r1-formula-ic">⏱</span><div class="r1-formula-label">Time on Page</div><div class="r1-formula-val">× 0.16 pts/sec</div></div>
-              <div class="r1-formula-row"><span class="r1-formula-ic">🖱</span><div class="r1-formula-label">Hover Events</div><div class="r1-formula-val">× 4 pts each</div></div>
-              <div class="r1-formula-row"><span class="r1-formula-ic">🏷</span><div class="r1-formula-label">Categories Browsed</div><div class="r1-formula-val">× 10 pts each</div></div>
-              <div class="r1-formula-row"><span class="r1-formula-ic">🍪</span><div class="r1-formula-label">Cookies Accepted</div><div class="r1-formula-val">up to +30 pts</div></div>
-              <div class="r1-formula-row"><span class="r1-formula-ic">💰</span><div class="r1-formula-label">Ad Clicks</div><div class="r1-formula-val">× 8 pts each</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic"></span><div class="r1-formula-label">Clicks</div><div class="r1-formula-val">× 12 pts each</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic"></span><div class="r1-formula-label">Articles Opened</div><div class="r1-formula-val">× 14 pts each</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic"></span><div class="r1-formula-label">Time on Page</div><div class="r1-formula-val">× 0.16 pts/sec</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic"></span><div class="r1-formula-label">Hover Events</div><div class="r1-formula-val">× 4 pts each</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic"></span><div class="r1-formula-label">Categories Browsed</div><div class="r1-formula-val">× 10 pts each</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic"></span><div class="r1-formula-label">Cookies Accepted</div><div class="r1-formula-val">up to +30 pts</div></div>
+              <div class="r1-formula-row"><span class="r1-formula-ic"></span><div class="r1-formula-label">Ad Clicks</div><div class="r1-formula-val">× 8 pts each</div></div>
             </div>
             <div class="r1-formula-equation" id="formula-equation"></div>
             <div class="r1-formula-reducers">
@@ -130,7 +130,7 @@
         </div>
 
         <div class="r1-shield-tip" data-shield-tip hidden>
-          💡 In Round 2, open the <strong>⚙️ settings gear</strong> in the browser toolbar to enable the VPN, ad blocker, and manage your cookie preferences — each one reduces your exposure score.
+          In Round 2, try opening the ⚙️ settings gear in the browser toolbar to enable the VPN, ad blocker, and manage your cookie preferences! Enabling each one reduces your exposure score.
         </div>
       </section>
 
@@ -181,7 +181,9 @@
 
       <!-- ── CTA ── -->
       <div class="r1-cta">
-        <button class="btn-primary" type="button" data-next>Continue →</button>
+        <button class="did-cta" type="button" data-next>
+          <span class="did-cta-chevron">>></span> Continue
+        </button>
       </div>
 
     </div>
@@ -254,7 +256,7 @@
     const legendNote = qs("[data-legend-note]");
     if (legendNote) {
       if (score < 40) {
-        legendNote.innerHTML = `🎉 <strong>Great job!</strong> Your score is in the low range — you left a minimal data trail. See if you can maintain that in Round 2.`;
+        legendNote.innerHTML = `<strong>Great job!</strong> Your score is in the low range — you left a minimal data trail. See if you can maintain that in Round 2.`;
         legendNote.style.borderColor = "rgba(34,197,94,.28)";
         legendNote.style.background  = "rgba(34,197,94,.08)";
         legendNote.style.color       = "rgba(34,197,94,.92)";

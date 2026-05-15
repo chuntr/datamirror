@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GhostTrace - Resources</title>
   <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/resources.css" />
 </head>
 <body>
   <header class="topbar">
@@ -15,124 +16,482 @@
     </div>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <h1 class="h1">Learn More</h1>
-      <p class="sub">Key concepts explained in plain language</p>
-    </section>
+  <main class="container resources-page-main">
 
-    <section class="learnWrap">
+    <!-- Hero -->
+    <div class="res-hero">
+      <div class="res-hero-badge">Resources</div>
+      <h1 class="res-hero-title">Protect Your Digital Footprint</h1>
+      <p class="res-hero-sub">Tools, guides, and explainers to help you take back control of your online privacy.</p>
+    </div>
+
+    <!-- ── Team Recommendations ── -->
+    <div class="res-section">
+      <div class="res-section-header">
+        <div class="res-section-label">
+          <span>Team Recommendations</span>
+          <span class="res-section-label-line"></span>
+        </div>
+        <p class="res-section-desc">If you only do three things after this experience, these are the ones with the most immediate impact on your everyday privacy.</p>
+      </div>
+      <div class="res-grid">
+
+        <a class="res-card res-card--rec" href="https://duckduckgo.com" target="_blank" rel="noopener">
+          <span class="res-rec-badge">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Team Pick
+          </span>
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">DD</div>
+              <div>
+                <div class="res-card-name">DuckDuckGo</div>
+                <div class="res-card-use">Private search engine &amp; browser extension</div>
+              </div>
+            </div>
+            <div class="res-card-link">duckduckgo.com</div>
+          </div>
+          <div class="res-card-desc">Switching your default search engine is the single easiest privacy win. DuckDuckGo doesn't build a profile on you or filter results based on your history.</div>
+        </a>
+
+        <a class="res-card res-card--rec" href="https://signal.org" target="_blank" rel="noopener">
+          <span class="res-rec-badge">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Team Pick
+          </span>
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">SG</div>
+              <div>
+                <div class="res-card-name">Signal</div>
+                <div class="res-card-use">End-to-end encrypted messaging</div>
+              </div>
+            </div>
+            <div class="res-card-link">signal.org</div>
+          </div>
+          <div class="res-card-desc">Standard SMS and most chat apps are readable by the platforms running them. Signal encrypts messages so only you and the recipient can read them — nobody else.</div>
+        </a>
+
+        <a class="res-card res-card--rec" href="https://joindeleteme.com" target="_blank" rel="noopener">
+          <span class="res-rec-badge">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Team Pick
+          </span>
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">DM</div>
+              <div>
+                <div class="res-card-name">DeleteMe</div>
+                <div class="res-card-use">Remove yourself from data broker sites</div>
+              </div>
+            </div>
+            <div class="res-card-link">joindeleteme.com</div>
+          </div>
+          <div class="res-card-desc">Your name, address, phone number, and income estimate are already being sold. DeleteMe submits removal requests to data brokers on your behalf, on an ongoing basis.</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ── FAQ ── -->
+    <div class="res-faq-wrap">
+      <div class="res-section-header">
+        <div class="res-section-label">
+          <span>Key Concepts</span>
+          <span class="res-section-label-line"></span>
+        </div>
+        <p class="res-section-desc">Understanding the vocabulary of online tracking helps you make better decisions about the tools you use and the permissions you grant.</p>
+      </div>
       <div class="faqList">
         <details class="faqItem">
           <summary>What Are Cookies?</summary>
           <div class="faqBody">
-            Cookies are small files stored by websites on your device to remember preferences, login sessions, and browsing behavior.
+            Cookies are small files stored by websites on your device to remember preferences, login sessions, and browsing behavior. First-party cookies (from the site you're visiting) are mostly harmless — third-party cookies from advertisers are what fuel cross-site tracking.
           </div>
         </details>
-
         <details class="faqItem">
           <summary>What Is Browser Fingerprinting?</summary>
           <div class="faqBody">
-            Browser fingerprinting is a tracking method that combines details about your device, browser, and settings to identify you.
+            Browser fingerprinting combines details about your device, browser version, screen resolution, installed fonts, and dozens of other signals to identify you — even without cookies. It's harder to block because it leaves no file on your computer.
           </div>
         </details>
-
         <details class="faqItem">
           <summary>What Is a Data Broker?</summary>
           <div class="faqBody">
-            A data broker collects, packages, and sells personal information gathered from public records, apps, purchases, and online activity.
+            Data brokers collect, package, and sell personal information gathered from public records, apps, purchases, and online activity. Your name, address, income estimate, and browsing habits may already be for sale without your knowledge.
           </div>
         </details>
-
-        <details class="faqItem">
-          <summary>What Is End-to-End Encryption?</summary>
-          <div class="faqBody">
-            End-to-end encryption means only the sender and receiver can read the message, not the service provider in between.
-          </div>
-        </details>
-
         <details class="faqItem">
           <summary>What Are Tracking Pixels?</summary>
           <div class="faqBody">
-            Tracking pixels are tiny invisible images or snippets of code used to tell when a page or email has been viewed.
+            Tracking pixels are tiny invisible images or code snippets embedded in emails and webpages. When loaded, they tell the sender your IP address, email client, location estimate, and when you opened the message — all without any visible notification.
           </div>
         </details>
-
-        <details class="faqItem" open>
+        <details class="faqItem">
+          <summary>What Is End-to-End Encryption?</summary>
+          <div class="faqBody">
+            End-to-end encryption means only the sender and receiver can read a message — not the service provider in between. Apps like Signal use this by default. Standard SMS, email, and many chat apps do not.
+          </div>
+        </details>
+        <details class="faqItem">
           <summary>What Is a VPN?</summary>
           <div class="faqBody">
-            A Virtual Private Network creates a secure tunnel for your internet traffic, hiding your real IP address and location from websites and your internet provider.
+            A Virtual Private Network routes your internet traffic through a server in another location, hiding your real IP address from websites and your internet provider. It reduces one form of tracking but is not a complete privacy solution on its own.
           </div>
         </details>
       </div>
+    </div>
 
-      <h2 class="sectionTitle">Recommended Tools</h2>
-      <div class="toolsGrid">
-        <div class="toolCard">
-          <div class="toolIcon">U</div>
-          <div>
-            <div class="toolName">uBlock Origin</div>
-            <div class="toolDesc">Free ad & tracker blocker</div>
-          </div>
+    <!-- ── TOOLS: Scanning & Testing ── -->
+    <div class="res-section">
+      <div class="res-section-header">
+        <div class="res-section-label">
+          <span>Scanning &amp; Testing</span>
+          <span class="res-section-label-line"></span>
         </div>
-
-        <div class="toolCard">
-          <div class="toolIcon">F</div>
-          <div>
-            <div class="toolName">Firefox Browser</div>
-            <div class="toolDesc">Privacy-focused web browser</div>
-          </div>
-        </div>
-
-        <div class="toolCard">
-          <div class="toolIcon">B</div>
-          <div>
-            <div class="toolName">Brave Browser</div>
-            <div class="toolDesc">Blocks trackers by default</div>
-          </div>
-        </div>
-
-        <div class="toolCard">
-          <div class="toolIcon">D</div>
-          <div>
-            <div class="toolName">DuckDuckGo</div>
-            <div class="toolDesc">Private search engine</div>
-          </div>
-        </div>
-
-        <div class="toolCard">
-          <div class="toolIcon">S</div>
-          <div>
-            <div class="toolName">Signal</div>
-            <div class="toolDesc">Encrypted messaging app</div>
-          </div>
-        </div>
-
-        <div class="toolCard">
-          <div class="toolIcon">B</div>
-          <div>
-            <div class="toolName">Bitwarden</div>
-            <div class="toolDesc">Free password manager</div>
-          </div>
-        </div>
+        <p class="res-section-desc">See exactly what's happening when you visit a website. These tools make invisible tracking visible — no technical knowledge required.</p>
       </div>
+      <div class="res-grid">
 
-      <div class="completeBox">
-        <h2 class="completeTitle">Experience Complete</h2>
-        <p class="completeText">
-          You now understand how invisible tracking works. Share this with someone who should know.
-        </p>
+        <a class="res-card" href="https://themarkup.org/blacklight" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">BL</div>
+              <div>
+                <div class="res-card-name">Blacklight</div>
+                <div class="res-card-use">Scan any website for trackers &amp; cookies</div>
+              </div>
+            </div>
+            <div class="res-card-link">themarkup.org</div>
+          </div>
+          <div class="res-card-desc">Paste a URL and see exactly what tracking tech fires on that site — clear, visual, and built for non-technical users.</div>
+        </a>
+
+        <a class="res-card" href="https://coveryourtracks.eff.org" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">CT</div>
+              <div>
+                <div class="res-card-name">Cover Your Tracks</div>
+                <div class="res-card-use">Test your browser fingerprint exposure</div>
+              </div>
+            </div>
+            <div class="res-card-link">eff.org</div>
+          </div>
+          <div class="res-card-desc">From the EFF — shows how unique and trackable your browser appears to advertising networks, even without cookies.</div>
+        </a>
+
+        <a class="res-card" href="https://amiunique.org" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">AU</div>
+              <div>
+                <div class="res-card-name">AmIUnique</div>
+                <div class="res-card-use">Measure browser fingerprint uniqueness</div>
+              </div>
+            </div>
+            <div class="res-card-link">amiunique.org</div>
+          </div>
+          <div class="res-card-desc">A research-backed alternative to Cover Your Tracks that shows exactly which browser attributes make you identifiable.</div>
+        </a>
+
+        <a class="res-card" href="https://exodus-privacy.eu.org" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">EX</div>
+              <div>
+                <div class="res-card-name">Exodus</div>
+                <div class="res-card-use">Inspect Android app trackers &amp; permissions</div>
+              </div>
+            </div>
+            <div class="res-card-link">exodus-privacy.eu.org</div>
+          </div>
+          <div class="res-card-desc">Search any Android app to see which trackers are embedded and what permissions they request — before you install.</div>
+        </a>
+
       </div>
+    </div>
 
-      <div class="restartWrap">
-        <button class="restartBtn" type="button" data-start-over>
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>Start Over</span>
+    <!-- ── TOOLS: Blocking & Protection ── -->
+    <div class="res-section">
+      <div class="res-section-header">
+        <div class="res-section-label">
+          <span>Blocking &amp; Protection</span>
+          <span class="res-section-label-line"></span>
+        </div>
+        <p class="res-section-desc">Stop trackers before they load. These tools work in the background so you don't have to think about it on every site you visit.</p>
+      </div>
+      <div class="res-grid">
+
+        <a class="res-card" href="https://ublockorigin.com" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">UB</div>
+              <div>
+                <div class="res-card-name">uBlock Origin</div>
+                <div class="res-card-use">Free ad &amp; tracker blocker</div>
+              </div>
+            </div>
+            <div class="res-card-link">ublockorigin.com</div>
+          </div>
+          <div class="res-card-desc">The gold-standard browser extension for blocking ads and trackers. Lightweight, open source, and highly effective.</div>
+        </a>
+
+        <a class="res-card" href="https://adguard.com" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">AG</div>
+              <div>
+                <div class="res-card-name">AdGuard</div>
+                <div class="res-card-use">Block ads, trackers &amp; phishing</div>
+              </div>
+            </div>
+            <div class="res-card-link">adguard.com</div>
+          </div>
+          <div class="res-card-desc">Polished blocker with strong privacy framing, anti-phishing features, and both browser extension and system-wide options.</div>
+        </a>
+
+        <a class="res-card" href="https://consentomatic.au.dk" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">CM</div>
+              <div>
+                <div class="res-card-name">Consent-O-Matic</div>
+                <div class="res-card-use">Auto-decline cookie banners</div>
+              </div>
+            </div>
+            <div class="res-card-link">consentomatic.au.dk</div>
+          </div>
+          <div class="res-card-desc">Automatically handles cookie consent popups by selecting privacy-friendly options — fights dark patterns on your behalf.</div>
+        </a>
+
+        <a class="res-card" href="https://joindeleteme.com" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">DM</div>
+              <div>
+                <div class="res-card-name">DeleteMe</div>
+                <div class="res-card-use">Remove yourself from data broker sites</div>
+              </div>
+            </div>
+            <div class="res-card-link">joindeleteme.com</div>
+          </div>
+          <div class="res-card-desc">A service that submits removal requests to data brokers on your behalf, reducing how much personal info is for sale.</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ── TOOLS: Privacy Browsers & Search ── -->
+    <div class="res-section">
+      <div class="res-section-header">
+        <div class="res-section-label">
+          <span>Privacy Browsers &amp; Search</span>
+          <span class="res-section-label-line"></span>
+        </div>
+        <p class="res-section-desc">Your browser and search engine are two of the biggest sources of behavioral data. Swapping them out is one of the highest-leverage changes you can make.</p>
+      </div>
+      <div class="res-grid">
+
+        <a class="res-card" href="https://www.mozilla.org/firefox" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">FF</div>
+              <div>
+                <div class="res-card-name">Firefox</div>
+                <div class="res-card-use">Privacy-focused web browser</div>
+              </div>
+            </div>
+            <div class="res-card-link">mozilla.org</div>
+          </div>
+          <div class="res-card-desc">Open-source browser with strong built-in privacy protections, enhanced tracking protection, and no data collection by default.</div>
+        </a>
+
+        <a class="res-card" href="https://brave.com" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">BR</div>
+              <div>
+                <div class="res-card-name">Brave Browser</div>
+                <div class="res-card-use">Blocks trackers &amp; ads by default</div>
+              </div>
+            </div>
+            <div class="res-card-link">brave.com</div>
+          </div>
+          <div class="res-card-desc">Chromium-based browser that blocks trackers out of the box. No setup needed — privacy is the default, not an add-on.</div>
+        </a>
+
+        <a class="res-card" href="https://duckduckgo.com" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">DD</div>
+              <div>
+                <div class="res-card-name">DuckDuckGo</div>
+                <div class="res-card-use">Private search engine &amp; browser extension</div>
+              </div>
+            </div>
+            <div class="res-card-link">duckduckgo.com</div>
+          </div>
+          <div class="res-card-desc">Search without being profiled. Their browser extension also blocks trackers on any site and forces encrypted connections where possible.</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ── TOOLS: Transparency & Education ── -->
+    <div class="res-section">
+      <div class="res-section-header">
+        <div class="res-section-label">
+          <span>Transparency &amp; Education</span>
+          <span class="res-section-label-line"></span>
+        </div>
+        <p class="res-section-desc">Tracking thrives on complexity and fine print. These resources translate the opaque into the understandable — journalism, policy summaries, and data visualizers.</p>
+      </div>
+      <div class="res-grid">
+
+        <a class="res-card" href="https://themarkup.org/series/pixel-hunt" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">TM</div>
+              <div>
+                <div class="res-card-name">The Markup: Pixel Hunt</div>
+                <div class="res-card-use">Investigative reporting on hidden tracking pixels</div>
+              </div>
+            </div>
+            <div class="res-card-link">themarkup.org</div>
+          </div>
+          <div class="res-card-desc">Journalism that makes invisible tracking concrete — shows how pixels embedded in hospital and tax websites sent your data to Facebook.</div>
+        </a>
+
+        <a class="res-card" href="https://tosdr.org" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">TS</div>
+              <div>
+                <div class="res-card-name">Terms of Service; Didn't Read</div>
+                <div class="res-card-use">Plain-language privacy policy grades</div>
+              </div>
+            </div>
+            <div class="res-card-link">tosdr.org</div>
+          </div>
+          <div class="res-card-desc">Translates dense legal privacy policies into letter grades and plain-language summaries so you know what you're actually agreeing to.</div>
+        </a>
+
+        <a class="res-card" href="https://ghostery.com/whotracksme" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">WT</div>
+              <div>
+                <div class="res-card-name">WhoTracks.Me</div>
+                <div class="res-card-use">Tracker database &amp; ecosystem map</div>
+              </div>
+            </div>
+            <div class="res-card-link">ghostery.com</div>
+          </div>
+          <div class="res-card-desc">Data on which trackers appear most across the web, how they're categorized, and what companies are behind them.</div>
+        </a>
+
+        <a class="res-card" href="https://foundation.mozilla.org/privacynotincluded" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">MZ</div>
+              <div>
+                <div class="res-card-name">Mozilla: Privacy Not Included</div>
+                <div class="res-card-use">Product privacy reviews in plain language</div>
+              </div>
+            </div>
+            <div class="res-card-link">foundation.mozilla.org</div>
+          </div>
+          <div class="res-card-desc">Rates apps, smart devices, and connected products on how well they protect your data — perfect before you buy something new.</div>
+        </a>
+
+        <a class="res-card" href="https://personaldata.info" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">PD</div>
+              <div>
+                <div class="res-card-name">PersonalData.info</div>
+                <div class="res-card-use">Visualize what data is being collected</div>
+              </div>
+            </div>
+            <div class="res-card-link">personaldata.info</div>
+          </div>
+          <div class="res-card-desc">A simple visual breakdown of the types of personal data collected online and who uses it — good for understanding the big picture.</div>
+        </a>
+
+        <a class="res-card" href="https://apple.com/privacy/labels" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">AP</div>
+              <div>
+                <div class="res-card-name">Apple Privacy Labels</div>
+                <div class="res-card-use">Compare app data collection disclosures</div>
+              </div>
+            </div>
+            <div class="res-card-link">apple.com</div>
+          </div>
+          <div class="res-card-desc">Apple's nutrition-label-style privacy disclosures show what data each app collects before you download — a mainstream transparency standard.</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ── TOOLS: Secure Messaging & Passwords ── -->
+    <div class="res-section">
+      <div class="res-section-header">
+        <div class="res-section-label">
+          <span>Secure Messaging &amp; Passwords</span>
+          <span class="res-section-label-line"></span>
+        </div>
+        <p class="res-section-desc">Who can read your messages, and how many accounts would fall if one password leaked? These two tools close two of the most common vulnerabilities.</p>
+      </div>
+      <div class="res-grid">
+
+        <a class="res-card" href="https://signal.org" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">SG</div>
+              <div>
+                <div class="res-card-name">Signal</div>
+                <div class="res-card-use">End-to-end encrypted messaging</div>
+              </div>
+            </div>
+            <div class="res-card-link">signal.org</div>
+          </div>
+          <div class="res-card-desc">The most trusted end-to-end encrypted messaging app. Open source, no ads, no data collection. Used by journalists and security researchers worldwide.</div>
+        </a>
+
+        <a class="res-card" href="https://bitwarden.com" target="_blank" rel="noopener">
+          <div class="res-card-top">
+            <div class="res-card-left">
+              <div class="res-card-icon">BW</div>
+              <div>
+                <div class="res-card-name">Bitwarden</div>
+                <div class="res-card-use">Free, open-source password manager</div>
+              </div>
+            </div>
+            <div class="res-card-link">bitwarden.com</div>
+          </div>
+          <div class="res-card-desc">A free and open-source password manager that stores your credentials securely. Reusing passwords is one of the biggest security risks online.</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ── Completion box ── -->
+    <div class="res-complete">
+      <h2 class="res-complete-title">Experience Complete</h2>
+      <p class="res-complete-text">
+        You've seen how invisible tracking works — and now you have the tools to push back.<br>
+        Share this with someone who should know.
+      </p>
+      <div class="restartWrap" style="margin-top: 0;">
+        <button class="did-cta" type="button" data-start-over>
+          <span class="did-cta-chevron">>></span> Start Over
         </button>
       </div>
-    </section>
+    </div>
+
   </main>
 
   <script src="assets/app.js"></script>

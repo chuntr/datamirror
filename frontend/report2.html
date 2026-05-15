@@ -107,7 +107,7 @@
         </div>
 
         <div class="r1-shield-tip" data-shield-tip hidden>
-          💡 You didn't use all three tools. Compare your score against Round 1 — even one tool can make a measurable difference.
+          You didn't use all three tools. Compare your score against Round 1 — even one tool can make a measurable difference.
         </div>
       </section>
 
@@ -161,7 +161,9 @@
 
       <!-- ── CTA ── -->
       <div class="r1-cta">
-        <button class="btn-primary" type="button" data-next>Continue →</button>
+        <button class="did-cta" type="button" data-next>
+          <span class="did-cta-chevron">>></span> Continue
+        </button>
       </div>
 
     </div>
@@ -415,7 +417,7 @@
     function drawBar(canvas, entries) {
       const ctx  = canvas.getContext("2d");
       const W = canvas.width, H = canvas.height;
-      const pad  = { top: 16, right: 14, bottom: 54, left: 44 };
+      const pad  = { top: 16, right: 14, bottom: 70, left: 44 };
       const cW   = W - pad.left - pad.right;
       const cH   = H - pad.top  - pad.bottom;
       const maxMs = Math.max(...entries.map(e => e.ms));
@@ -472,15 +474,15 @@
         }
         ctx.fill();
 
-        const shortLabel = e.label.length > 13 ? e.label.slice(0, 12) + "…" : e.label;
-        ctx.save();
-        ctx.translate(x + barW / 2, pad.top + cH + 10);
-        ctx.rotate(-Math.PI / 5);
-        ctx.fillStyle = "rgba(255,255,255,0.40)";
+        const words = e.label.split(" ");
+        const line1 = words.slice(0, Math.ceil(words.length / 2)).join(" ");
+        const line2 = words.slice(Math.ceil(words.length / 2)).join(" ");
+        ctx.fillStyle = "rgba(255,255,255,0.45)";
         ctx.font = "10px ui-monospace,monospace";
-        ctx.textAlign = "right";
-        ctx.fillText(shortLabel, 0, 0);
-        ctx.restore();
+        ctx.textAlign = "center";
+        const labelX = x + barW / 2;
+        ctx.fillText(line1, labelX, pad.top + cH + 16);
+        if (line2) ctx.fillText(line2, labelX, pad.top + cH + 28);
       });
     }
 
