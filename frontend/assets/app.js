@@ -2,27 +2,23 @@
   const KEY = "ghosttrace_v1";
 
   const STEPS = [
-    { id: "intro", label: "Intro", href: "index.html" },
-    { id: "pre", label: "Pre-Quiz", href: "pre-quiz.html" },
-    { id: "b1", label: "Browse 1", href: "browse1.html" },
-    { id: "r1", label: "Report 1", href: "report1.html" },
-    { id: "b2", label: "Browse 2", href: "browse2.html" },
-    { id: "r2", label: "Report 2", href: "report2.html" },
-    { id: "post", label: "Post-Quiz", href: "post-quiz.html" },
-    { id: "compare", label: "Compare", href: "quiz_comparison.html" },
-    { id: "resources", label: "Resources", href: "resources.html" },
+    { id: "intro",     label: "Intro",      href: "index.html" },
+    { id: "pre",       label: "Pre-Quiz",   href: "pre-quiz.html" },
+    { id: "b1",        label: "Browse 1",   href: "browse1.html" },
+    { id: "r1",        label: "Report 1",   href: "report1.html" },
+    { id: "b2",        label: "Browse 2",   href: "browse2.html" },
+    { id: "r2",        label: "Report 2",   href: "report2.html" },
+    { id: "post",      label: "Post-Quiz",  href: "post-quiz.html" },
+    { id: "compare",   label: "Compare",    href: "quiz_comparison.html" },
+    { id: "resources", label: "Resources",  href: "resources.html" },
   ];
 
   // ---------- helpers ----------
-  const qs = (sel, root = document) => root.querySelector(sel);
+  const qs  = (sel, root = document) => root.querySelector(sel);
   const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
   function safeParse(json, fallback) {
-    try {
-      return JSON.parse(json);
-    } catch {
-      return fallback;
-    }
+    try { return JSON.parse(json); } catch { return fallback; }
   }
 
   function loadState() {
@@ -36,33 +32,17 @@
 
   function defaultState() {
     return {
-      intro: { done: false },
-      preQuiz: { done: false, score: 0, total: 8, answers: [] },
-      browse1: {
-        done: false,
-        clicks: 0,
-        articlesOpened: 0,
-        hoverEvents: 0,
-        timeSpentSec: 0,
-        categories: 0,
-        topics: [],
-        exposureScore: 0,
-      },
-      report1: { done: false },
-      browse2: {
-        done: false,
-        clicks: 0,
-        articlesOpened: 0,
-        hoverEvents: 0,
-        timeSpentSec: 0,
-        categories: 0,
-        topics: [],
-        exposureScore: 0,
-      },
-      report2: { done: false },
+      intro:    { done: false },
+      pre:      { done: false, score: 0, total: 8, answers: [] },
+      preQuiz:  { done: false, score: 0, total: 8, answers: [] },
+      browse1:  { done: false, clicks: 0, articlesOpened: 0, hoverEvents: 0, timeSpentSec: 0, categories: 0, topics: [], exposureScore: 0 },
+      report1:  { done: false },
+      browse2:  { done: false, clicks: 0, articlesOpened: 0, hoverEvents: 0, timeSpentSec: 0, categories: 0, topics: [], exposureScore: 0 },
+      report2:  { done: false },
+      post:     { done: false, score: 0, total: 8, answers: [] },
       postQuiz: { done: false, score: 0, total: 8, answers: [] },
-      compare: { done: false },
-      resources: { done: false },
+      compare:  { done: false },
+      resources:{ done: false },
     };
   }
 
@@ -96,6 +76,25 @@
   window.addEventListener("resize", applyTopbarPaddingFix);
 
   // ---------- stepper ----------
+  // Maps stepper step IDs to the state keys that mark them complete.
+  // A step lights up when ANY of its mapped state keys has done === true.
+  const STEP_STATE_KEYS = {
+    intro:     ["intro"],
+    pre:       ["pre", "preQuiz"],
+    b1:        ["browse1"],
+    r1:        ["report1", "r1"],
+    b2:        ["browse2"],
+    r2:        ["report2", "r2"],
+    post:      ["post", "postQuiz"],
+    compare:   ["compare"],
+    resources: ["resources"],
+  };
+
+  function isStepDone(stepId, s) {
+    const keys = STEP_STATE_KEYS[stepId] || [stepId];
+    return keys.some(k => !!s[k]?.done);
+  }
+
   function renderStepper(activeId) {
     applyTopbarPaddingFix();
 
@@ -105,29 +104,47 @@
     const s = loadState();
     el.innerHTML = "";
 
-    STEPS.forEach((step) => {
-      const a = document.createElement("a");
-      a.href = step.href;
-      a.className = "step";
-      a.dataset.step = step.id;
+    // ── Inject non-clickable stepper styles once ──────────────────────
+    if (!document.getElementById("gt-stepper-lock-style")) {
+      const style = document.createElement("style");
+      style.id = "gt-stepper-lock-style";
+      style.textContent = `
+        /* Progress bar — no navigation allowed */
+        [data-stepper] .step {
+          pointer-events: none !important;
+          cursor: default !important;
+          text-decoration: none !important;
+        }
+        [data-stepper] .step:hover {
+          opacity: 1 !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
 
-      const dot = document.createElement("span");
+    STEPS.forEach((step) => {
+      // Use a <div> instead of <a> so there is no href to accidentally follow
+      const el2 = document.createElement("div");
+      el2.className = "step";
+      el2.dataset.step = step.id;
+
+      const dot   = document.createElement("span");
       dot.className = "dot";
 
       const label = document.createElement("span");
       label.className = "label";
       label.textContent = step.label;
 
-      a.appendChild(dot);
-      a.appendChild(label);
+      el2.appendChild(dot);
+      el2.appendChild(label);
 
       const isActive = step.id === activeId;
-      const isDone = !!s[step.id]?.done;
+      const isDone   = isStepDone(step.id, s);
 
-      if (isActive) a.classList.add("active");
-      if (isDone) a.classList.add("done");
+      if (isActive) el2.classList.add("active");
+      if (isDone)   el2.classList.add("done");
 
-      el.appendChild(a);
+      el.appendChild(el2);
     });
   }
 
@@ -245,32 +262,29 @@
         "Clicks, hover time, scroll patterns, and category choices are enough to build a detailed behavioral profile without you typing a single word.",
     },
   ];
- 
+
   function initQuiz(kindOrOpts) {
     applyTopbarPaddingFix();
-    const opts =
-      typeof kindOrOpts === "string"
-        ? { kind: kindOrOpts }
-        : (kindOrOpts || {});
+    const opts = typeof kindOrOpts === "string" ? { kind: kindOrOpts } : (kindOrOpts || {});
     const kind = opts.kind || "pre";
-   
+
     const root =
       qs("[data-quiz]") ||
       qs("[data-quiz-root]") ||
       qs(".quiz-wrap") ||
       document.body;
-   
+
     if (root.dataset.gtWiredQuiz === kind) return;
     root.dataset.gtWiredQuiz = kind;
-   
+
     renderStepper(kind === "pre" ? "pre" : "post");
-   
+
     const s = loadState();
     const stateKey = kind === "pre" ? "preQuiz" : "postQuiz";
     const total = QUIZ.length;
     s[stateKey].total = total;
     saveState(s);
-   
+
     const elQTitle   = qs("[data-qtitle]");
     const elOptions  = qs("[data-options]");
     const elKicker   = qs("[data-qkicker]");
@@ -281,49 +295,43 @@
     const elFbTitle  = qs("[data-feedback-title]");
     const elFbText   = qs("[data-feedback-text]");
     const elNextBtn  = qs("[data-next-button]");
-   
+
     const useA = !!(elQTitle && elOptions);
-   
+
     let idx = 0;
     const answers = Array(total).fill(null);
     let answered = false;
-   
-    // ── Wire up Next button once (not per-question) ──
-    if (elNextBtn) {
-      elNextBtn.addEventListener("click", advance);
-    }
-   
+
+    if (elNextBtn) elNextBtn.addEventListener("click", advance);
+
     function hideFeedback() {
       if (!elFeedback) return;
       elFeedback.setAttribute("hidden", "");
-      // Clear stale content so old correct/incorrect text never bleeds through
       if (elFbTitle) {
         elFbTitle.textContent = "";
         elFbTitle.className = "quiz-feedback-title";
       }
       if (elFbText) elFbText.textContent = "";
     }
-   
+
     function setProgress() {
       const shown = idx + 1;
       if (elCount)   elCount.textContent   = `Question ${shown} of ${total}`;
       if (elPercent) elPercent.textContent = `${Math.round((idx / total) * 100)}% complete`;
       if (elFill)    elFill.style.width    = `${(idx / total) * 100}%`;
     }
-   
+
     function renderQuestion() {
       answered = false;
       const item = QUIZ[idx];
       setProgress();
-   
-      // ── Always hide + clear feedback when rendering a new question ──
       hideFeedback();
-   
+
       if (!useA) return;
-   
+
       if (elKicker) elKicker.textContent = `Question ${idx + 1} of ${total}`;
       if (elQTitle) elQTitle.textContent = item.q;
-   
+
       elOptions.innerHTML = "";
       item.options.forEach((opt, oi) => {
         const btn = document.createElement("button");
@@ -331,36 +339,25 @@
         btn.className = "quiz-option";
         btn.dataset.oi = String(oi);
         btn.innerHTML = `<span class="opt-letter">${String.fromCharCode(65 + oi)}</span><span class="opt-text">${opt}</span>`;
-   
-        btn.addEventListener("click", () => {
-          if (!answered) revealResult(oi);
-        });
-   
+        btn.addEventListener("click", () => { if (!answered) revealResult(oi); });
         elOptions.appendChild(btn);
       });
     }
-   
+
     function revealResult(choice) {
       answered = true;
       answers[idx] = choice;
       const item = QUIZ[idx];
       const isCorrect = choice === item.correct;
-   
-      // Style the options
+
       qsa(".quiz-option", elOptions).forEach((btn, i) => {
         btn.classList.remove("correct", "incorrect", "quiz-option--muted");
         btn.disabled = true;
-   
-        if (i === item.correct) {
-          btn.classList.add("correct");
-        } else if (i === choice && !isCorrect) {
-          btn.classList.add("incorrect");
-        } else {
-          btn.classList.add("quiz-option--muted");
-        }
+        if (i === item.correct)            btn.classList.add("correct");
+        else if (i === choice && !isCorrect) btn.classList.add("incorrect");
+        else                               btn.classList.add("quiz-option--muted");
       });
-   
-      // Populate and show the floating feedback panel
+
       if (elFeedback) {
         if (elFbTitle) {
           elFbTitle.textContent = isCorrect ? "Correct!" : "Incorrect";
@@ -369,22 +366,17 @@
         if (elFbText) elFbText.textContent = item.explain;
         elFeedback.removeAttribute("hidden");
       }
-   
-      // Update next button label on last question
+
       if (elNextBtn) {
         elNextBtn.textContent = idx < total - 1 ? "Next Question →" : "See My Results →";
       }
     }
-   
+
     function advance() {
-      if (idx < total - 1) {
-        idx += 1;
-        renderQuestion(); // hideFeedback() is called inside here
-      } else {
-        finishQuiz();
-      }
+      if (idx < total - 1) { idx += 1; renderQuestion(); }
+      else                  { finishQuiz(); }
     }
-   
+
     function computeScore() {
       let score = 0;
       for (let i = 0; i < total; i++) {
@@ -392,19 +384,22 @@
       }
       return score;
     }
-   
+
     function finishQuiz() {
       const score = computeScore();
       const st = loadState();
-      st[stateKey] = { done: true, score, total, answers: answers.slice() };
-      setDone(kind === "pre" ? "pre" : "post", true);
+      // Write to BOTH the legacy key AND the stepper key so the dot lights up
+      const legacyKey  = kind === "pre" ? "preQuiz" : "postQuiz";
+      const stepperKey = kind === "pre" ? "pre"     : "post";
+      st[legacyKey]  = { done: true, score, total, answers: answers.slice() };
+      st[stepperKey] = { done: true, score, total, answers: answers.slice() };
       saveState(st);
       window.location.href = kind === "pre" ? "browse1_intro.html" : "quiz_comparison.html";
     }
-   
+
     renderQuestion();
   }
- 
+
   function initQuizV2(opts) {
     const kind = typeof opts === "string" ? opts : (opts?.kind || "pre");
     return initQuiz(kind);
@@ -455,17 +450,15 @@
     const timer = setInterval(updateTopStats, 1000);
 
     function wireCards() {
-      const hoverStart     = {};  // card id → mouseenter timestamp
-      const hoverByArticle = {};  // card id → total ms hovered
-      const articleClicks  = {};  // card id → click count
-     
-      // Expose so finish handler can save them
+      const hoverStart     = {};
+      const hoverByArticle = {};
+      const articleClicks  = {};
       privacy._hoverByArticle = hoverByArticle;
       privacy._articleClicks  = articleClicks;
-     
+
       qsa("[data-card]").forEach(card => {
         const cardId = card.dataset.cardId;
-     
+
         card.addEventListener("mouseenter", () => {
           hoverStart[cardId] = Date.now();
           hoverCount++;
@@ -477,36 +470,35 @@
             spawnTrackerDot();
           }
         });
-     
+
         card.addEventListener("mouseleave", () => {
           if (hoverStart[cardId]) {
             hoverByArticle[cardId] = (hoverByArticle[cardId] || 0) + (Date.now() - hoverStart[cardId]);
             delete hoverStart[cardId];
           }
         });
-     
+
         card.addEventListener("click", () => {
-          // Close any open hover timer on click
           if (hoverStart[cardId]) {
             hoverByArticle[cardId] = (hoverByArticle[cardId] || 0) + (Date.now() - hoverStart[cardId]);
             delete hoverStart[cardId];
           }
-     
+
           clicks++;
           opened++;
           articleClicks[cardId] = (articleClicks[cardId] || 0) + 1;
-     
+
           const topic = card.dataset.topic ||
             card.querySelector(".pill")?.textContent?.trim() || "General";
           openedTopics.add(topic);
-     
+
           const isSponsored =
             card.dataset.sponsored === "true" ||
             card.classList.contains("sponsored");
           if (isSponsored) {
             privacy.adClicks = (privacy.adClicks || 0) + 1;
           }
-     
+
           if (elTip && pageRound === 2) {
             elTip.classList.add("show");
             setTimeout(() => elTip.classList.remove("show"), 2500);
@@ -514,8 +506,7 @@
           updateTopStats();
         });
       });
-     
-      // Ad slot click tracking
+
       qsa(".ad-slot").forEach(slot => {
         slot.addEventListener("click", () => {
           clicks++;
@@ -560,11 +551,8 @@
           </div>
         </div>`;
 
-      if (trackingBar) {
-        trackingBar.insertAdjacentElement("afterend", chrome);
-      } else {
-        document.body.prepend(chrome);
-      }
+      if (trackingBar) trackingBar.insertAdjacentElement("afterend", chrome);
+      else document.body.prepend(chrome);
 
       qs("#chip-vpn").addEventListener("click", () => {
         if (pageRound === 1) {
@@ -602,12 +590,10 @@
     function applyBlocker() {
       qsa(".ad-slot, .article-card.sponsored, [data-sponsored='true']").forEach(el => {
         if (privacy.blocker) {
-          el.classList.add("blocked");
-          el.classList.add("sponsor-blocked");
+          el.classList.add("blocked", "sponsor-blocked");
           privacy.blockerBlocked++;
         } else {
-          el.classList.remove("blocked");
-          el.classList.remove("sponsor-blocked");
+          el.classList.remove("blocked", "sponsor-blocked");
         }
       });
       updateCookieChip();
@@ -659,18 +645,9 @@
       t._timer = setTimeout(() => { t.style.opacity = "0"; }, 2800);
     }
 
-    // ── Cookie banner ──────────────────────────────────────
-    // If the page has its own in-browser banner (.in-browser-cookie-banner),
-    // skip building the old dark floating one entirely.
     function buildCookieBanner() {
-      if (qs(".in-browser-cookie-banner") || qs(".cookie-bar-fixed")) {
-        // Page has its own in-browser cookie UI — wire privacy state updates only
-        // and let the HTML-side script handle the UI.
-        // Delay slightly so window._gtPrivacy is set before the page script runs.
-        return;
-      }
+      if (qs(".in-browser-cookie-banner") || qs(".cookie-bar-fixed")) return;
 
-      // ── Original dark floating banner (used by other pages) ──
       const banner = document.createElement("div");
       banner.className = "cookie-banner";
       banner.id = "cookie-banner";
@@ -747,9 +724,7 @@
         banner.classList.remove("show");
         updateCookieChip();
         showToast("All cookies accepted. Tracking scripts active.", "warn");
-        if (pageRound === 1) {
-          setTimeout(() => showNewsletterPopup(), 6000);
-        }
+        if (pageRound === 1) setTimeout(() => showNewsletterPopup(), 6000);
       });
 
       qs("#cookie-manage").addEventListener("click", () => {
@@ -937,12 +912,10 @@
         let exposureScore = Math.round(
           clicks * 12 + opened * 14 + hoverCount * 4 + sec * 0.16 + categories * 10
         );
-
         exposureScore += privacy.cookieScore;
-        // Ad clicks add extra exposure — clicking ads signals strong interest
         exposureScore += (privacy.adClicks || 0) * 8;
-        if (privacy.vpn)    exposureScore = Math.round(exposureScore * 0.72);
-        if (privacy.blocker) exposureScore = Math.round(exposureScore * 0.78);
+        if (privacy.vpn)                          exposureScore = Math.round(exposureScore * 0.72);
+        if (privacy.blocker)                      exposureScore = Math.round(exposureScore * 0.78);
         if (privacy.cookiesAccepted === "essential") exposureScore = Math.round(exposureScore * 0.85);
         exposureScore = Math.max(0, exposureScore);
 
@@ -967,30 +940,31 @@
             adClicks: privacy.adClicks || 0,
           },
         };
+        // Also mark the stepper-facing key done (b1 / b2)
+        const stepKey = pageRound === 1 ? "b1" : "b2";
+        if (!st[stepKey]) st[stepKey] = {};
+        st[stepKey].done = true;
+
         saveState(st);
-        setDone(pageRound === 1 ? "b1" : "b2", true);
         window.location.href = pageRound === 1 ? "report1.html" : "report2.html";
       });
     }
 
-    // Boot sequence — wifi modal removed, boot directly
     buildBrowserChrome();
     injectR2HintBar();
     injectAdSlots();
     wireCards();
-    buildCookieBanner(); // no-op on browse1.html; active on browse2.html
+    buildCookieBanner();
     updateTopStats();
   }
 
   // ---------- REPORT ----------
-  function clamp(n, a, b) {
-    return Math.max(a, Math.min(b, n));
-  }
+  function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
 
   function exposureLevel(score) {
-    if (score >= 70) return { label: "High", tone: "high" };
-    if (score >= 40) return { label: "Moderate", tone: "mid" };
-    return { label: "Low", tone: "low" };
+    if (score >= 70) return { label: "High",     tone: "high" };
+    if (score >= 40) return { label: "Moderate", tone: "mid"  };
+    return                  { label: "Low",      tone: "low"  };
   }
 
   function initReport(round) {
@@ -1002,11 +976,21 @@
     if (root.dataset.gtWiredReport === String(pageRound)) return;
     root.dataset.gtWiredReport = String(pageRound);
 
-    renderStepper(pageRound === 1 ? "r1" : "r2");
+    // Determine which stepper step this is and mark it done immediately
+    const stepperStepId = pageRound === 1 ? "r1" : "r2";
+    const stateReportKey = pageRound === 1 ? "report1" : "report2";
+    renderStepper(stepperStepId);
 
     const st = loadState();
+    // Mark both the legacy key and the stepper step key
+    if (!st[stateReportKey]) st[stateReportKey] = {};
+    st[stateReportKey].done = true;
+    if (!st[stepperStepId]) st[stepperStepId] = {};
+    st[stepperStepId].done = true;
+    saveState(st);
+
     const session = st[pageRound === 1 ? "browse1" : "browse2"] || {};
-    const score = Number(session.exposureScore || 0);
+    const score   = Number(session.exposureScore || 0);
 
     function exposureLabel(n) {
       if (n >= 70) return "High Data Exposure";
@@ -1015,7 +999,7 @@
     }
 
     function formatTime(sec) {
-      const s = Number(sec || 0);
+      const s  = Number(sec || 0);
       const mm = String(Math.floor(s / 60));
       const ss = String(s % 60).padStart(2, "0");
       return `${mm}:${ss}`;
@@ -1029,10 +1013,7 @@
     if (gaugeVal)  gaugeVal.textContent  = String(score);
     if (gaugeText) gaugeText.textContent = exposureLabel(score);
 
-    const setText = (selector, value) => {
-      const el = qs(selector);
-      if (el) el.textContent = value;
-    };
+    const setText = (selector, value) => { const el = qs(selector); if (el) el.textContent = value; };
 
     setText("[data-s-clicks]",   String(session.clicks ?? 0));
     setText("[data-s-articles]", String(session.articlesOpened ?? 0));
@@ -1062,16 +1043,10 @@
     if (inferWrap) {
       inferWrap.innerHTML = "";
       const cards = [];
-      if ((session.timeSpentSec || 0) >= 180) {
-        cards.push(["Engaged Reader", "High confidence"]);
-      } else {
-        cards.push(["Quick Scanner", "Medium confidence"]);
-      }
-      if ((session.categories || 0) <= 1) {
-        cards.push(["Low interaction footprint", "High confidence"]);
-      } else {
-        cards.push(["Broad interest pattern", "Medium confidence"]);
-      }
+      if ((session.timeSpentSec || 0) >= 180) cards.push(["Engaged Reader",           "High confidence"]);
+      else                                     cards.push(["Quick Scanner",            "Medium confidence"]);
+      if ((session.categories || 0) <= 1)      cards.push(["Low interaction footprint","High confidence"]);
+      else                                     cards.push(["Broad interest pattern",   "Medium confidence"]);
       cards.forEach(([title, conf]) => {
         const card = document.createElement("div");
         card.className = "infer-card";
@@ -1090,7 +1065,7 @@
       const b2 = st.browse2 || {};
       const r1Score = Number(b1.exposureScore || 0);
       const r2Score = Number(b2.exposureScore || 0);
-      const delta = r1Score - r2Score;
+      const delta   = r1Score - r2Score;
 
       setText("[data-r1-score]", `${r1Score}/100`);
       setText("[data-r2-score]", `${r2Score}/100`);
@@ -1098,9 +1073,9 @@
 
       const summaryEl = qs("[data-compare-summary]");
       if (summaryEl) {
-        if (delta > 0)      summaryEl.textContent = `You reduced exposure by ${delta} points in Round 2.`;
+        if (delta > 0)       summaryEl.textContent = `You reduced exposure by ${delta} points in Round 2.`;
         else if (delta === 0) summaryEl.textContent = "Same exposure both rounds.";
-        else                summaryEl.textContent = `Exposure increased by ${Math.abs(delta)} points in Round 2.`;
+        else                 summaryEl.textContent = `Exposure increased by ${Math.abs(delta)} points in Round 2.`;
       }
 
       const metricMap = {
@@ -1122,13 +1097,10 @@
       });
     }
 
-    setDone(pageRound === 1 ? "r1" : "r2", true);
-
     const btn = qs("[data-next]");
     if (btn) {
       btn.addEventListener("click", () => {
-        window.location.href =
-          pageRound === 1 ? "browse2_intro.html" : "post-quiz.html";
+        window.location.href = pageRound === 1 ? "browse2_intro.html" : "post-quiz.html";
       });
     }
   }
@@ -1142,11 +1114,7 @@
     __gtRoot.dataset[__gtKey] = "1";
     renderStepper("r1");
     const btn = qs("[data-next]") || qs("[data-cta]") || qs(".btn-primary");
-    if (btn) {
-      btn.addEventListener("click", () => {
-        window.location.href = "browse2.html";
-      });
-    }
+    if (btn) btn.addEventListener("click", () => { window.location.href = "browse2.html"; });
   }
 
   // ---------- QUIZ COMPARISON ----------
@@ -1158,7 +1126,7 @@
     __gtRoot.dataset[__gtKey] = "1";
     renderStepper("compare");
 
-    const st = loadState();
+    const st   = loadState();
     const pre  = st.preQuiz  || { score: 0, total: QUIZ.length };
     const post = st.postQuiz || { score: 0, total: QUIZ.length };
     const delta = (post.score || 0) - (pre.score || 0);
@@ -1172,9 +1140,9 @@
     if (elPost)     elPost.textContent     = `${post.score}/${post.total}`;
     if (elDelta)    elDelta.textContent    = `${delta >= 0 ? "+" : ""}${delta} questions`;
     if (elDeltaMsg) {
-      if (delta > 0)      elDeltaMsg.textContent = "Nice — your understanding improved.";
+      if (delta > 0)       elDeltaMsg.textContent = "Nice — your understanding improved.";
       else if (delta === 0) elDeltaMsg.textContent = "Same score. Awareness is the first step.";
-      else                elDeltaMsg.textContent = "Don't worry — awareness takes time to build.";
+      else                 elDeltaMsg.textContent = "Don't worry — awareness takes time to build.";
     }
 
     const btn = qs("[data-next]") || qs("[data-cta]") || qs(".btn-primary");
@@ -1226,23 +1194,23 @@
     try {
       applyTopbarPaddingFix();
       const p = currentPathName();
-      if (p === "index.html" || p === "")         initIntro();
-      else if (p === "pre-quiz.html")             initQuiz("pre");
-      else if (p === "post-quiz.html")            initQuiz("post");
-      else if (p === "browse1_intro.html")        initMissionScreen("b1", "browse1.html");
-      else if (p === "browse2_intro.html")        initMissionScreen("b2", "browse2.html");
-      else if (p === "browse1.html")              initBrowse(1);
-      else if (p === "browse2.html")              initBrowse(2);
-      else if (p === "report1.html")              { renderStepper("r1"); applyTopbarPaddingFix(); }
-      else if (p === "report2.html")              { renderStepper("r2"); applyTopbarPaddingFix(); }
+      if      (p === "index.html" || p === "")  initIntro();
+      else if (p === "pre-quiz.html")            initQuiz("pre");
+      else if (p === "post-quiz.html")           initQuiz("post");
+      else if (p === "browse1_intro.html")       initMissionScreen("b1", "browse1.html");
+      else if (p === "browse2_intro.html")       initMissionScreen("b2", "browse2.html");
+      else if (p === "browse1.html")             initBrowse(1);
+      else if (p === "browse2.html")             initBrowse(2);
+      else if (p === "report1.html")             initReport(1);
+      else if (p === "report2.html")             initReport(2);
       else if (p === "report1_explain.html") {
         renderStepper("r1");
         const btn = qs("[data-next]");
         if (btn) btn.addEventListener("click", () => { window.location.href = "browse2_intro.html"; });
       }
-      else if (p === "quiz_comparison.html")      initQuizComparison();
-      else if (p === "recommendation.html")       initRecommendations();
-      else if (p === "resources.html")            initResources();
+      else if (p === "quiz_comparison.html")     initQuizComparison();
+      else if (p === "recommendation.html")      initRecommendations();
+      else if (p === "resources.html")           initResources();
     } catch (err) {
       console.warn("[GT] auto-init error:", err);
     }
@@ -1342,9 +1310,9 @@
     applyTopbarPaddingFix,
   };
 
-  window.GT = GT;
+  window.GT          = GT;
   window.renderStepper = renderStepper;
-  window.initQuiz = (kind) => initQuiz(kind);
-  window.initReport = (round = 1) => initReport(Number(round) || 1);
-  window.initBrowse = (round = 1) => initBrowse(Number(round) || 1);
+  window.initQuiz    = (kind)        => initQuiz(kind);
+  window.initReport  = (round = 1)  => initReport(Number(round) || 1);
+  window.initBrowse  = (round = 1)  => initBrowse(Number(round) || 1);
 })();
