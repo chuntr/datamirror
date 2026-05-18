@@ -17,7 +17,7 @@ git clone https://github.com/chuntr/datamirror.git
 cd datamirror
 cd frontend
 ```
-The Firebase Hosting public directory is set to frontend. 
+The Firebase Hosting public directory is set to frontend.
 
 ### 2. Start a local development server:
 ```bash
@@ -30,7 +30,13 @@ Stop the server if needed with CTRL + C
 ```bash
 npm install -g firebase-tools
 ```
-### 4. Deploy the Website:
+
+### 4. Authenticate to Firebase CLI:
+```bash
+firebase login --reauth
+```
+
+### 5. Deploy the Website:
 
 ```bash
 cd ..
@@ -49,8 +55,8 @@ firebase deploy
 
 ## What’s in This Repository
 
-- `README.md` – Project overview and documentation  
-- `LICENSE` – Licensing information  
+- `README.md` – Project overview and documentation
+- `LICENSE` – Licensing information
 
 (Exact structure will evolve as the project develops.)
 
