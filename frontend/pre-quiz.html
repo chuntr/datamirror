@@ -23,11 +23,6 @@
         8 questions. No hints. Can you get a perfect score before the experience changes how you see the web?
       </p>
 
-      <!-- How-to notice -->
-      <div class="quiz-how-to">
-        <span><strong>Click once</strong> to pick your answer and see if you're right. <strong>Click again</strong> to move on to the next question.</span>
-      </div>
-
       <!-- progress -->
       <div class="quiz-progress">
         <div class="quiz-progress-left" data-qcount>Question 1 of 8</div>
@@ -37,19 +32,24 @@
         <div class="quiz-progress-fill" data-qfill style="width:0%"></div>
       </div>
 
-      <!-- Question card -->
+      <!-- Question card — unchanged from original -->
       <section class="quiz-card quiz-card--light" data-card>
         <div class="quiz-kicker" data-qkicker>Question 1 of 8</div>
         <h2 class="quiz-question" data-qtitle></h2>
         <div class="quiz-options" data-options></div>
-        <p class="quiz-click-hint" data-click-hint>Click your answer to see if you got it right</p>
       </section>
 
-      <!-- Feedback -->
-      <section class="quiz-feedback quiz-feedback--light" data-feedback hidden>
-        <div class="quiz-feedback-title" data-feedback-title></div>
-        <div class="quiz-feedback-text" data-feedback-text></div>
-      </section>
+      <!-- Floating feedback panel — pops out to the right, not part of flow -->
+      <div class="quiz-float-panel" data-feedback hidden>
+        <div class="quiz-float-inner">
+          <div class="quiz-feedback-title" data-feedback-title></div>
+          <div class="quiz-feedback-text" data-feedback-text></div>
+          <button class="quiz-next-button" data-next-button>
+            <span style="font-size:11px; opacity:0.7; letter-spacing:-0.02em;">&gt;&gt;</span>
+            Next Question
+          </button>
+        </div>
+      </div>
 
     </div>
   </main>

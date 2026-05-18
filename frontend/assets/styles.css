@@ -133,6 +133,151 @@
   font-family: 'Audiowide', ui-sans-serif, sans-serif;
 }
 
+/* =========================================================
+   QUIZ FLOATING FEEDBACK PANEL
+   Paste at the bottom of styles.css
+   ========================================================= */
+
+/* Anchor point: quiz-wrap needs position:relative so the
+   panel can be positioned relative to it */
+   .quiz-wrap {
+    position: relative;
+  }
+  
+  /* The floating panel — sits outside normal flow, pops to the right */
+  .quiz-float-panel {
+    position: absolute;
+    /* Align top with roughly where the quiz card starts
+       (progress bar height ~70px + card top margin ~24px) */
+    top: 210px;
+    left: calc(100% + 24px);
+    width: 280px;
+  
+    /* Animate in from the right */
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+  
+  /* When feedback is visible, slide in */
+  .quiz-float-panel:not([hidden]) {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  
+  /* Override hidden so the transition works — 
+     [hidden] sets display:none which kills transitions.
+     We manage visibility via opacity/pointer-events instead. */
+  .quiz-float-panel[hidden] {
+    display: block !important; /* keep in DOM for transition */
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .quiz-float-inner {
+    padding: 18px 18px 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(16, 20, 30, 0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 16px 48px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.04);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* Feedback title inside float panel */
+  .quiz-float-panel .quiz-feedback-title {
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .10em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  
+  .quiz-float-panel .quiz-feedback-title.ok  { color: rgba(0,255,153,.96); }
+  .quiz-float-panel .quiz-feedback-title.bad { color: #ff7c7c; }
+  
+  /* Explanation text */
+  .quiz-float-panel .quiz-feedback-text {
+    font-size: 13px;
+    color: rgba(255,255,255,.65);
+    line-height: 1.58;
+  }
+  
+  /* Divider between text and button */
+  .quiz-float-panel .quiz-feedback-text + .quiz-next-button {
+    margin-top: 6px;
+    border-top: 1px solid rgba(255,255,255,.07);
+    padding-top: 14px;
+  }
+  
+  .quiz-next-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: transparent;
+    border: 2px solid #00ff41;
+    border-radius: 4px;
+    color: #00ff41;
+    font-family: 'Rajdhani', ui-sans-serif, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    justify-content: center;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .quiz-next-button:hover {
+    background: rgba(0,255,65,0.08);
+    box-shadow: 0 0 24px rgba(0,255,65,0.22);
+  }
+  
+  .quiz-next-button:active {
+    transform: translateY(0);
+  }
+  
+  /* ── Responsive ──────────────────────────────────────────
+     On narrower screens, float panel won't fit to the right.
+     Below 1200px, pin it as a fixed bottom-right toast instead.
+     ========================================================= */
+  @media (max-width: 1200px) {
+    .quiz-float-panel {
+      position: fixed;
+      top: auto;
+      left: auto;
+      bottom: 28px;
+      right: 24px;
+      width: 300px;
+      z-index: 200;
+      /* Re-apply transition for fixed position */
+      transform: translateY(8px);
+    }
+  
+    .quiz-float-panel:not([hidden]) {
+      transform: translateY(0);
+    }
+  
+    .quiz-float-panel[hidden] {
+      transform: translateY(8px);
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .quiz-float-panel {
+      bottom: 16px;
+      right: 12px;
+      left: 12px;
+      width: auto;
+    }
+  }
+
 :root{
   --bg: #07090b;
   --panel: rgba(255,255,255,.03);
@@ -1292,7 +1437,8 @@ main[data-resources] {
 }
 
 .privacy-tool-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
@@ -1301,9 +1447,10 @@ main[data-resources] {
   background: rgba(255,255,255,.03);
   font-size: 13px;
 }
-.pt-icon { font-size: 16px; flex-shrink: 0; }
-.pt-label { flex: 1; color: rgba(255,255,255,.75); }
-.pt-status { font-size: 12px; font-weight: 700; font-family: ui-monospace, monospace; }
+
+.pt-icon  { text-align: center; flex-shrink: 0; font-size: 16px; }
+.pt-label { font-size: 13px; color: rgba(255,255,255,.75); }
+.pt-status { font-size: 12px; font-weight: 700; font-family: ui-monospace, monospace; white-space: nowrap; }
 .pt-on  { color: #22c55e; }
 .pt-off { color: rgba(255,255,255,.28); }
 

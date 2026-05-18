@@ -253,24 +253,24 @@
         ? { kind: kindOrOpts }
         : (kindOrOpts || {});
     const kind = opts.kind || "pre";
- 
+   
     const root =
       qs("[data-quiz]") ||
       qs("[data-quiz-root]") ||
       qs(".quiz-wrap") ||
       document.body;
- 
+   
     if (root.dataset.gtWiredQuiz === kind) return;
     root.dataset.gtWiredQuiz = kind;
- 
+   
     renderStepper(kind === "pre" ? "pre" : "post");
- 
+   
     const s = loadState();
     const stateKey = kind === "pre" ? "preQuiz" : "postQuiz";
     const total = QUIZ.length;
     s[stateKey].total = total;
     saveState(s);
- 
+   
     const elQTitle   = qs("[data-qtitle]");
     const elOptions  = qs("[data-options]");
     const elKicker   = qs("[data-qkicker]");
@@ -280,39 +280,50 @@
     const elFeedback = qs("[data-feedback]");
     const elFbTitle  = qs("[data-feedback-title]");
     const elFbText   = qs("[data-feedback-text]");
-    const elHint     = qs("[data-click-hint]");
- 
+    const elNextBtn  = qs("[data-next-button]");
+   
     const useA = !!(elQTitle && elOptions);
- 
+   
     let idx = 0;
     const answers = Array(total).fill(null);
- 
-    // phase: "pick" → waiting for first click
-    //        "confirm" → result shown, waiting for any second click to advance
-    let phase = "pick";
- 
+    let answered = false;
+   
+    // ── Wire up Next button once (not per-question) ──
+    if (elNextBtn) {
+      elNextBtn.addEventListener("click", advance);
+    }
+   
+    function hideFeedback() {
+      if (!elFeedback) return;
+      elFeedback.setAttribute("hidden", "");
+      // Clear stale content so old correct/incorrect text never bleeds through
+      if (elFbTitle) {
+        elFbTitle.textContent = "";
+        elFbTitle.className = "quiz-feedback-title";
+      }
+      if (elFbText) elFbText.textContent = "";
+    }
+   
     function setProgress() {
       const shown = idx + 1;
       if (elCount)   elCount.textContent   = `Question ${shown} of ${total}`;
       if (elPercent) elPercent.textContent = `${Math.round((idx / total) * 100)}% complete`;
       if (elFill)    elFill.style.width    = `${(idx / total) * 100}%`;
     }
- 
+   
     function renderQuestion() {
-      phase = "pick";
+      answered = false;
       const item = QUIZ[idx];
       setProgress();
- 
+   
+      // ── Always hide + clear feedback when rendering a new question ──
+      hideFeedback();
+   
       if (!useA) return;
- 
+   
       if (elKicker) elKicker.textContent = `Question ${idx + 1} of ${total}`;
       if (elQTitle) elQTitle.textContent = item.q;
-      if (elFeedback) elFeedback.hidden  = true;
-      if (elHint) {
-        elHint.textContent = "Click your answer to see if you got it right";
-        elHint.classList.remove("quiz-hint--confirm");
-      }
- 
+   
       elOptions.innerHTML = "";
       item.options.forEach((opt, oi) => {
         const btn = document.createElement("button");
@@ -320,69 +331,60 @@
         btn.className = "quiz-option";
         btn.dataset.oi = String(oi);
         btn.innerHTML = `<span class="opt-letter">${String.fromCharCode(65 + oi)}</span><span class="opt-text">${opt}</span>`;
- 
+   
         btn.addEventListener("click", () => {
-          if (phase === "pick") {
-            // ── First click: reveal result ──
-            revealResult(oi);
-          } else if (phase === "confirm") {
-            // ── Second click on any button: advance ──
-            advance();
-          }
+          if (!answered) revealResult(oi);
         });
- 
+   
         elOptions.appendChild(btn);
       });
     }
- 
+   
     function revealResult(choice) {
-      phase = "confirm";
+      answered = true;
       answers[idx] = choice;
-      const item   = QUIZ[idx];
+      const item = QUIZ[idx];
       const isCorrect = choice === item.correct;
- 
-      // Apply visual states — do NOT disable so buttons remain clickable for 2nd click
+   
+      // Style the options
       qsa(".quiz-option", elOptions).forEach((btn, i) => {
         btn.classList.remove("correct", "incorrect", "quiz-option--muted");
+        btn.disabled = true;
+   
         if (i === item.correct) {
           btn.classList.add("correct");
         } else if (i === choice && !isCorrect) {
           btn.classList.add("incorrect");
         } else {
-          // Dim other options so focus is on correct/wrong
           btn.classList.add("quiz-option--muted");
         }
       });
- 
-      // Show feedback
+   
+      // Populate and show the floating feedback panel
       if (elFeedback) {
-        elFeedback.hidden = false;
         if (elFbTitle) {
-          elFbTitle.textContent = isCorrect ? "✓ Correct!" : "✗ Not quite";
-          elFbTitle.className   = "quiz-feedback-title " + (isCorrect ? "ok" : "bad");
+          elFbTitle.textContent = isCorrect ? "Correct!" : "Incorrect";
+          elFbTitle.className = "quiz-feedback-title " + (isCorrect ? "ok" : "bad");
         }
         if (elFbText) elFbText.textContent = item.explain;
+        elFeedback.removeAttribute("hidden");
       }
- 
-      // Update hint
-      if (elHint) {
-        elHint.textContent = idx < total - 1
-          ? "Click again to go to the next question →"
-          : "Click again to see your results →";
-        elHint.classList.add("quiz-hint--confirm");
+   
+      // Update next button label on last question
+      if (elNextBtn) {
+        elNextBtn.textContent = idx < total - 1 ? "Next Question →" : "See My Results →";
       }
     }
- 
+   
     function advance() {
-      phase = "pick";
       if (idx < total - 1) {
         idx += 1;
-        renderQuestion();
+        renderQuestion(); // hideFeedback() is called inside here
       } else {
         finishQuiz();
       }
     }
- 
+   
     function computeScore() {
       let score = 0;
       for (let i = 0; i < total; i++) {
@@ -390,7 +392,7 @@
       }
       return score;
     }
- 
+   
     function finishQuiz() {
       const score = computeScore();
       const st = loadState();
@@ -399,7 +401,7 @@
       saveState(st);
       window.location.href = kind === "pre" ? "browse1_intro.html" : "quiz_comparison.html";
     }
- 
+   
     renderQuestion();
   }
  

@@ -321,12 +321,12 @@
       el.style.background  = active ? "rgba(34,197,94,.06)" : "rgba(239,68,68,.04)";
     }
 
-    privacyRow("pt-vpn-r1",     "VPN",        !!p1.vpn);
-    privacyRow("pt-blocker-r1", "Ad Blocker", !!p1.blocker);
-    privacyRow("pt-cookies-r1", "Cookies",    p1.cookiesAccepted === "essential");
-    privacyRow("pt-vpn-r2",     "VPN",        !!p2.vpn);
-    privacyRow("pt-blocker-r2", "Ad Blocker", !!p2.blocker);
-    privacyRow("pt-cookies-r2", "Cookies",    p2.cookiesAccepted === "essential");
+    privacyRow("pt-vpn-r1",     "", "VPN",        !!p1.vpn);
+    privacyRow("pt-blocker-r1", "", "Ad Blocker", !!p1.blocker);
+    privacyRow("pt-cookies-r1", "", "Cookies",    p1.cookiesAccepted === "essential" || p1.cookiesAccepted === "custom");
+    privacyRow("pt-vpn-r2",     "", "VPN",        !!p2.vpn);
+    privacyRow("pt-blocker-r2", "", "Ad Blocker", !!p2.blocker);
+    privacyRow("pt-cookies-r2", "", "Cookies",    p2.cookiesAccepted === "essential" || p2.cookiesAccepted === "custom");
 
     const cookieLabel = c => c === "all" ? "All accepted" : c === "essential" ? "Essential only" : c === "custom" ? "Custom" : "Not set";
     document.getElementById("pt-cookies-r1").querySelector(".pt-label").textContent = `Cookies: ${cookieLabel(p1.cookiesAccepted)}`;

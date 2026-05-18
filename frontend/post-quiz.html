@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pre-Quiz</title>
+  <title>Post-Quiz</title>
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
-<body data-quiz-kind="pre">
+<body data-quiz-kind="post">
+
   <!-- TOP PROGRESS -->
   <header class="top-progress">
     <div class="container">
@@ -16,6 +17,7 @@
 
   <main class="quiz-page">
     <div class="container quiz-wrap" data-quiz>
+
       <div class="pill">POST-EXPERIENCE QUIZ</div>
       <h1 class="quiz-title">Now That You've Seen It</h1>
       <p class="quiz-sub">
@@ -31,19 +33,25 @@
         <div class="quiz-progress-fill" data-qfill style="width:0%"></div>
       </div>
 
-      <!-- card -->
+      <!-- Question card — unchanged from original -->
       <section class="quiz-card" data-card>
-        <div class="quiz-kicker" data-qkicker>Question 1</div>
+        <div class="quiz-kicker" data-qkicker>Question 1 of 8</div>
         <h2 class="quiz-question" data-qtitle></h2>
-
         <div class="quiz-options" data-options></div>
       </section>
 
-      <!-- feedback -->
-      <section class="quiz-feedback" data-feedback hidden>
-        <div class="quiz-feedback-title" data-feedback-title></div>
-        <div class="quiz-feedback-text" data-feedback-text></div>
-      </section>
+      <!-- Floating feedback panel — pops out to the right, not part of flow -->
+      <div class="quiz-float-panel" data-feedback hidden>
+        <div class="quiz-float-inner">
+          <div class="quiz-feedback-title" data-feedback-title></div>
+          <div class="quiz-feedback-text" data-feedback-text></div>
+          <button class="quiz-next-button" data-next-button>
+            <span style="font-size:11px; opacity:0.7; letter-spacing:-0.02em;">&gt;&gt;</span>
+            Next Question
+          </button>
+        </div>
+      </div>
+
     </div>
   </main>
 
