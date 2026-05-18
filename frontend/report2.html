@@ -200,7 +200,8 @@
     }
 
     // ── Score ring ──────────────────────────────────────────
-    qs("[data-score]").textContent = score;
+    qs("[data-score]").textContent = score > 100 ? "100+" : score;
+if (score > 100) qs("[data-score-denom]").textContent = "";
     const levEl = qs("[data-level]");
     levEl.textContent = scoreLabel(score);
     levEl.style.color = scoreColor(score);
@@ -210,7 +211,7 @@
     ring.style.stroke = scoreColor(score);
     requestAnimationFrame(() => {
       ring.style.transition = "stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)";
-      ring.style.strokeDashoffset = String(C * (1 - score / 100));
+      ring.style.strokeDashoffset = String(C * (1 - Math.min(score, 100) / 100));
     });
 
     // ── Round comparison in legend ──────────────────────────
