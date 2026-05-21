@@ -22,7 +22,7 @@
         <div class="h1 section-title" style="font-size:34px;margin:12px 0 8px;">Browse Mindfully</div>
         <p class="sub" style="max-width:680px; margin: 0 auto; text-align:center;">
           Every action you took was turned into data. Here's the pipeline that makes it possible.
-          Now that you’ve seen what gets tracked, try to minimize your exposure.
+          Now that you've seen what gets tracked, try to minimize your exposure.
         </p>
       </div>
 
@@ -100,22 +100,15 @@
       <!-- Quote / callout -->
       <section class="quote card" role="note" aria-label="Key takeaway">
         <p class="quote-text">
-          “You didn't share any personal information.<br/>
-          <strong>But your behavior told the whole story.</strong>”
+          "You didn't share any personal information.<br/>
+          <strong>But your behavior told the whole story.</strong>"
         </p>
       </section>
 
-      <!--Strategies
-      <div class="stack" style="max-width:680px;margin:14px auto 0;text-align:left;">
-          <div class="card">
-            <div class="stack">
-              <div class="option selected" style="cursor:default;"><span class="radio"></span><div class="optionText"><b>Skim quickly</b> — don’t linger</div></div>
-              <div class="option selected" style="cursor:default;"><span class="radio"></span><div class="optionText"><b>Be intentional with clicks</b></div></div>
-              <div class="option selected" style="cursor:default;"><span class="radio"></span><div class="optionText"><b>Limit scroll depth</b></div></div>
-              <div class="option selected" style="cursor:default;"><span class="radio"></span><div class="optionText"><b>Spend less time overall</b></div></div>
-            </div>
-          </div>
-        </div> -->
+      <!-- Privacy tools reminder — only shown if user didn't use all 3 tools in Round 1 -->
+      <div class="r1-shield-tip r1-shield-tip--full" id="tools-reminder" hidden>
+        In Round 2, try opening the ⚙️ settings gear in the browser toolbar to enable the VPN, ad blocker, and manage your cookie preferences! Enabling each one reduces your exposure score.
+      </div>
 
       <!-- CTA -->
       <section class="cta">
@@ -137,7 +130,24 @@
       // keep stepper highlighting Report 1
       if (window.GT) window.GT.renderStepper("r1");
 
-      // next → Round 2 intro (tips page)
+      // Show privacy tools reminder if user didn't use all 3 tools in Round 1
+      if (window.GT) {
+        const st   = window.GT.loadState();
+        const priv = (st.browse1 || {}).privacy || {};
+
+        const usedBlocker  = !!priv.blocker;
+        const usedVpn      = !!priv.vpn;
+        const rejCookies   = priv.cookiesAccepted === "essential";
+        const shieldTotal  = [usedBlocker, usedVpn, rejCookies].filter(Boolean).length;
+
+        // Only show if they missed at least one tool
+        if (shieldTotal < 3) {
+          const tip = document.getElementById("tools-reminder");
+          if (tip) tip.removeAttribute("hidden");
+        }
+      }
+
+      // next → Round 2
       const btn = document.querySelector("[data-next]");
       if (btn) {
         btn.addEventListener("click", () => {

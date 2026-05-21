@@ -3244,11 +3244,6 @@ main[data-resources] {
   margin: 10px 10px 0 10px;
 }
 
-/* Hide pill in round 1 */
-.round-1-browse .pill {
-  display: none !important;
-}
-
 /* Pills visible in round 2 / browser context */
 .browser-window-content .pill {
   display: inline-flex;
@@ -4083,6 +4078,15 @@ main[data-resources] {
 }
 .r1-shield-tip--success strong {
   color: rgba(34,197,94,1);
+}
+
+.r1-shield-tip--full {
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 28px;
+  box-sizing: border-box;
+  font-size: 16px;
 }
 
 /* ── Stats row ── */
