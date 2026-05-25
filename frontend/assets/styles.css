@@ -4487,3 +4487,7 @@ main[data-resources] {
   border-top: 1px solid rgba(255,255,255,.08);
   padding-top: 20px;
 }
+
+.center {
+  text-align: center;
+}
