@@ -42,7 +42,7 @@
                 stroke-dashoffset="490"/>
             </svg>
             <div class="r1-score-inner">
-              <div class="r1-score-num"><span data-score>—</span><span class="r1-score-denom" data-score-denom>/100</span></div>
+              <div class="r1-score-num"><span data-score>—</span><span class="r1-score-denom" data-score-denom></span></div>
               <div class="r1-score-lev" data-level>—</div>
               <div class="r1-score-caption">Exposure Score</div>
             </div>
@@ -237,8 +237,7 @@
     }
 
     // ── Score ring ───────────────────────────────────────────
-    qs("[data-score]").textContent = score > 100 ? "100+" : score;
-    if (score > 100) qs("[data-score-denom]").textContent = "";
+    qs("[data-score]").textContent = score;
     const levEl = qs("[data-level]");
     levEl.textContent = scoreLabel(score);
     levEl.style.color = scoreColor(score);
@@ -302,7 +301,7 @@
           <span class="r1-formula-eq-op">=</span>
           <span class="r1-formula-eq-base">${base}</span>${multStr}
           <span class="r1-formula-eq-op">=</span>
-          <span class="r1-formula-eq-result" style="color:${scoreColor(score)}">${score > 100 ? "100+" : score}</span>
+          <span class="r1-formula-eq-result" style="color:${scoreColor(score)}">${score}</span>
         </div>`;
     }
 

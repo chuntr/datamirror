@@ -42,7 +42,7 @@
               stroke-dashoffset="490"/>
           </svg>
           <div class="r1-score-inner">
-            <div class="r1-score-num"><span data-score>—</span><span class="r1-score-denom">/100</span></div>
+            <div class="r1-score-num"><span data-score>—</span><span class="r1-score-denom"></span></div>
             <div class="r1-score-lev" data-level>—</div>
             <div class="r1-score-caption">Exposure Score</div>
           </div>
@@ -50,7 +50,7 @@
         <div class="r1-score-legend">
           <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#22c55e;"></span><span>Low &nbsp;(0–39) — minimal data exposed</span></div>
           <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#f59e0b;"></span><span>Moderate (40–69) — notable tracking</span></div>
-          <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#ef4444;"></span><span>High &nbsp;(70–100) — heavy exposure</span></div>
+          <div class="r1-legend-row"><span class="r1-legend-dot" style="background:#ef4444;"></span><span>High &nbsp;(70–100+) — heavy exposure</span></div>
           <div class="r1-legend-note">
             Round 1 score: <strong data-r1-score>—</strong> &nbsp;·&nbsp;
             Round 2 score: <strong data-r2-score>—</strong> &nbsp;·&nbsp;
@@ -200,8 +200,7 @@
     }
 
     // ── Score ring ──────────────────────────────────────────
-    qs("[data-score]").textContent = score > 100 ? "100+" : score;
-if (score > 100) qs("[data-score-denom]").textContent = "";
+    qs("[data-score]").textContent = score;
     const levEl = qs("[data-level]");
     levEl.textContent = scoreLabel(score);
     levEl.style.color = scoreColor(score);
@@ -215,8 +214,8 @@ if (score > 100) qs("[data-score-denom]").textContent = "";
     });
 
     // ── Round comparison in legend ──────────────────────────
-    qs("[data-r1-score]").textContent = score1 + "/100";
-    qs("[data-r2-score]").textContent = score + "/100";
+    qs("[data-r1-score]").textContent = score1;
+    qs("[data-r2-score]").textContent = score;
     const deltaEl = qs("[data-score-delta]");
     const delta = score1 - score;
     if (delta > 0) {

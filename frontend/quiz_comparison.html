@@ -16,7 +16,7 @@
   <main class="page compare-page">
     <div class="container compareWrap">
       <h1 class="compareTitle">Before vs After</h1>
-      <p class="compareSub">Let’s see how your knowledge and behavior compared.</p>
+      <p class="compareSub">Let's see how your knowledge and behavior compared.</p>
 
       <section class="compareSection">
         <h2 class="sectionTitle">Quiz Score Comparison</h2>
@@ -61,7 +61,7 @@
                   </svg>
                   <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
                     <span data-round1-score style="font-size:36px;font-weight:900;line-height:1;color:rgba(255,255,255,.96);">0</span>
-                    <span id="r1-denom" style="font-size:13px;font-weight:700;color:rgba(255,255,255,.28);margin-top:2px;">/100</span>
+                    <span id="r1-denom" style="font-size:13px;font-weight:700;color:rgba(255,255,255,.28);margin-top:2px;"></span>
                   </div>
                 </div>
                 <div style="color:rgba(255,255,255,.38);font-size:13px;margin-top:4px;">First Session</div>
@@ -83,7 +83,7 @@
                   </svg>
                   <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
                     <span data-round2-score style="font-size:36px;font-weight:900;line-height:1;color:rgba(255,255,255,.96);">0</span>
-                    <span id="r2-denom" style="font-size:13px;font-weight:700;color:rgba(255,255,255,.28);margin-top:2px;">/100</span>
+                    <span id="r2-denom" style="font-size:13px;font-weight:700;color:rgba(255,255,255,.28);margin-top:2px;"></span>
                   </div>
                 </div>
                 <div style="color:rgba(255,255,255,.38);font-size:13px;margin-top:4px;">Second Session</div>
@@ -224,7 +224,7 @@
     const r2Score = Number(b2.exposureScore || 0);
     const expDelta = r1Score - r2Score;
 
-    qs("[data-round1-score]").textContent = r1Score > 100 ? "100+" : r1Score;
+    qs("[data-round1-score]").textContent = r1Score;
     qs("[data-round2-score]").textContent = r2Score;
 
     const C = 2 * Math.PI * 78;
