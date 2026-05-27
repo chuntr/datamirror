@@ -1067,8 +1067,8 @@
       const r2Score = Number(b2.exposureScore || 0);
       const delta   = r1Score - r2Score;
 
-      setText("[data-r1-score]", `${r1Score}/100`);
-      setText("[data-r2-score]", `${r2Score}/100`);
+      setText("[data-r1-score]", `${r1Score}`);
+      setText("[data-r2-score]", `${r2Score}`);
       setText("[data-delta]",    `${delta > 0 ? "+" : ""}${delta} points`);
 
       const summaryEl = qs("[data-compare-summary]");
